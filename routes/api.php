@@ -22,5 +22,6 @@ Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api\v1'
 ], function () {
-    Route::get('/register', 'Auth\RegistrationController@store');
+    Route::post('/register', 'Auth\RegisterController@store');
+    Route::post('/login', 'Auth\LoginController@login');
 });
