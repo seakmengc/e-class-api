@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group([
+    'prefix' => 'v1',
     'namespace' => 'Api\v1'
 ], function () {
     Route::get('/register', 'Auth\RegistrationController@store');

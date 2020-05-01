@@ -40,7 +40,6 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        dd(1);
         return $user->can('Register Any User');
     }
 

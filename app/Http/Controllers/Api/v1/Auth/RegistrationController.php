@@ -10,7 +10,7 @@ class RegistrationController extends Controller
 {
     public function store(Request $request)
     {
-        $this->authorize('view', [User::class, User::class]);
+        $this->authorize('create', User::class);
 
         return 1;
     }
