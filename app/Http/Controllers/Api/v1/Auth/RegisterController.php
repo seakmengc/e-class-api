@@ -3,22 +3,25 @@
 namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterValidator;
 use App\Models\User;
+use DB;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    public function store(Request $request)
+    public function store(RegisterValidator $request)
     {
-        $data = $request->validate([
-            'username' => 'required|min:5|unique:users',
-            'email' => 'required|email|unique:users',
-            'phone_number' => 'required',
-            'password' => 'required|min:8|confirmed'
+        DB::beginTransaction();
+
+        $user = User::create($request->user_validated());
+        $user->identity()->create($request->identity_validated());
+        //TODO: 
+
+        DB::commit();
+
+        return $this->created([
+            $user, $user->identity
         ]);
-
-        $data['password'] = bcrypt($data['password']);
-
-        return $this->created(User::create($data));
     }
 }

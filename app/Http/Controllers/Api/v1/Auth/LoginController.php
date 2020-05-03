@@ -29,7 +29,7 @@ class LoginController extends Controller
         return $this->created([
             'user' => $user,
             'token' => [
-                'accessToken' => $token->accessToken,
+                'access_token' => $token->accessToken,
                 'expires_at' => $token->token->expires_at
             ]
         ]);
@@ -37,10 +37,16 @@ class LoginController extends Controller
 
     public function logout()
     {
+        request()->user()->token->delete();
+
+        return $this->ok_with_msg('Logged out.');
     }
 
-    public function logout_all()
+    public function logoutAll()
     {
+        request()->user()->tokens()->each->delete();
+
+        return $this->ok_with_msg('Logged out from all devices.');
     }
 
     private function resolveIdentity($identity)
@@ -51,9 +57,10 @@ class LoginController extends Controller
             return 'username';
     }
 
-    public function getTokenAndRefreshToken(Client $oClient, $username, $password)
+    public function getTokenAndRefreshToken($username, $password)
     {
-        $response = Http::post('http://localhost:8003/oauth/token', [
+        $oClient = Client::where('password_client', 1)->first();
+        $response = Http::post('127.0.0.1:8000/oauth/token', [
             'form_params' => [
                 'grant_type' => 'password',
                 'client_id' => $oClient->id,

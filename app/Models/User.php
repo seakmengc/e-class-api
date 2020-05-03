@@ -14,4 +14,9 @@ class User extends Authenticatable
     protected $guard_name = 'api';
 
     protected $guarded = ['id'];
+
+    public function identity()
+    {
+        return $this->hasOne(Identity::class);
+    }
 }
