@@ -15,7 +15,7 @@ class RolesPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        $defaultRoles = ['super admin', 'teacher', 'student'];
+        $defaultRoles = ['Super Admin', 'Teacher', 'Student'];
 
         $ownActions = [
             'View Own',
