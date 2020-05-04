@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1\Auth;
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterValidator;
-use App\Models\User;
-use DB;
-use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {

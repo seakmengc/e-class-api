@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Identity;
+use Intervention\Image\Facades\Image;
+use Storage;
 
 class IdentityObserver
 {
@@ -33,9 +35,11 @@ class IdentityObserver
         $identity->first_name = strtolower($identity->first_name);
         $identity->last_name = strtolower($identity->last_name);
 
-        //TODO: set this
         if (isset($identity->photo)) {
+            $img = Image::make($identity->photo);
+            $img->save($path = Storage::path('portraits/' . $identity->user_id));
 
+            $identity->photo_url = $path;
             unset($identity->photo);
         }
     }
