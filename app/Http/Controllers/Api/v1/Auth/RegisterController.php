@@ -12,12 +12,13 @@ class RegisterController extends Controller
 {
     public function store(RegisterValidator $request)
     {
+        $this->authorize('create', User::class);
+
         DB::beginTransaction();
 
         $user = User::create($request->user_validated());
         $user->identity()->create($request->identity_validated());
-        //TODO: 
-
+        //TODO: assign role
         DB::commit();
 
         return $this->created([

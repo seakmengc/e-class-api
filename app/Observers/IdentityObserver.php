@@ -8,28 +8,6 @@ use Storage;
 
 class IdentityObserver
 {
-    /**
-     * Handle the identity "created" event.
-     *
-     * @param  \App\Models\Identity  $identity
-     * @return void
-     */
-    public function created(Identity $identity)
-    {
-        //
-    }
-
-    /**
-     * Handle the identity "updated" event.
-     *
-     * @param  \App\Models\Identity  $identity
-     * @return void
-     */
-    public function updated(Identity $identity)
-    {
-        //
-    }
-
     public function saving(Identity $identity)
     {
         $identity->first_name = strtolower($identity->first_name);
@@ -37,43 +15,15 @@ class IdentityObserver
 
         if (isset($identity->photo)) {
             $img = Image::make($identity->photo);
-            $img->save($path = Storage::path('portraits/' . $identity->user_id));
+            $path = Storage::path(Identity::$photoPath);
 
-            $identity->photo_url = $path;
+            if (!file_exists($path))
+                exec("mkdir -p {$path}");
+
+            $img->save($path . $identity->user_id . '.jpg', 90, 'jpg');
+
+            $identity->photo_url = Identity::$photoPath . $identity->user_id . '.jpg';
             unset($identity->photo);
         }
-    }
-
-    /**
-     * Handle the identity "deleted" event.
-     *
-     * @param  \App\Models\Identity  $identity
-     * @return void
-     */
-    public function deleted(Identity $identity)
-    {
-        //
-    }
-
-    /**
-     * Handle the identity "restored" event.
-     *
-     * @param  \App\Models\Identity  $identity
-     * @return void
-     */
-    public function restored(Identity $identity)
-    {
-        //
-    }
-
-    /**
-     * Handle the identity "force deleted" event.
-     *
-     * @param  \App\Models\Identity  $identity
-     * @return void
-     */
-    public function forceDeleted(Identity $identity)
-    {
-        //
     }
 }

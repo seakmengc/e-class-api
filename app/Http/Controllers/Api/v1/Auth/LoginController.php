@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -19,10 +20,11 @@ class LoginController extends Controller
         ]);
 
         $user = User::firstWhere($this->resolveIdentity($request->identity), $request->identity);
+        dd($user);
         if (!$user)
             throw new AuthenticationException;
         elseif (!password_verify($request->password, $user->password))
-            throw new AuthenticationException('Username or Password is wrong');
+            throw new Exception('Username or Password is wrong', 404);
 
         $token = $user->createToken('PAT');
 
