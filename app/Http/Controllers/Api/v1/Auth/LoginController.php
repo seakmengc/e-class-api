@@ -20,10 +20,8 @@ class LoginController extends Controller
         ]);
 
         $user = User::firstWhere($this->resolveIdentity($request->identity), $request->identity);
-        dd($user);
-        if (!$user)
-            throw new AuthenticationException;
-        elseif (!password_verify($request->password, $user->password))
+
+        if (!$user or !password_verify($request->password, $user->password))
             throw new Exception('Username or Password is wrong', 404);
 
         $token = $user->createToken('PAT');
@@ -39,14 +37,14 @@ class LoginController extends Controller
 
     public function logout()
     {
-        request()->user()->token->delete();
+        request()->user()->token()->delete();
 
         return $this->ok_with_msg('Logged out.');
     }
 
     public function logoutAll()
     {
-        request()->user()->tokens()->each->delete();
+        request()->user()->tokens->each->delete();
 
         return $this->ok_with_msg('Logged out from all devices.');
     }

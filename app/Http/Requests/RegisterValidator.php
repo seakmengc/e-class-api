@@ -31,7 +31,7 @@ class RegisterValidator extends FormRequest
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'gender' => 'required|in:male,female,others',
-            'photo' => 'image'
+            'photo' => 'image|max:5120'
         ];
     }
 

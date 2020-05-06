@@ -10,7 +10,6 @@ class UserObserver
     {
         $user->username = strtolower($user->username);
         $user->email = strtolower($user->email);
-        // if($user->password == '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi')
-        $user->password = bcrypt($user->passsword);
+        $user->password = bcrypt($user->password);
     }
 }

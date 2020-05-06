@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api\v1'
 ], function () {
     Route::post('/register', 'Auth\RegisterController@store');
     Route::post('/login', 'Auth\LoginController@login');
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('/logout', 'Auth\LoginController@logout');
+        Route::post('/logout-all', 'Auth\LoginController@logoutAll');
+    });
 });
