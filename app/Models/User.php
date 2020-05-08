@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -23,6 +22,9 @@ class User extends Authenticatable
 
     public function findForPassport($username)
     {
-        return $this->whereUsername($username)->first();
+        if (filter_var($username, FILTER_VALIDATE_EMAIL))
+            return $this->where('email', $username)->first();
+
+        return $this->where('username', $username)->first();
     }
 }

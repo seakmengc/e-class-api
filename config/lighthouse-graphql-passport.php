@@ -53,7 +53,7 @@ return [
     | If you publish the migrations set this to false.
     |
     */
-    'migrations' => true,
+    'migrations' => false,
     /*
     |--------------------------------------------------------------------------
     | Settings for email verification
@@ -63,7 +63,7 @@ return [
     |
     */
     'verify_email' => [
-        'base_url' => env('FRONT_URL').'/email-verify',
+        'base_url' => env('FRONT_URL') . '/email-verify',
     ],
 
 ];
