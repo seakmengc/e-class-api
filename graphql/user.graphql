@@ -1,3 +1,9 @@
+enum Gender {
+    MALE @enum(value: "male")
+    FEMALE @enum(value: "female")
+    OTHERS @enum(value: "others")
+}
+
 type User {
     id: ID!
     uuid: String
@@ -13,11 +19,11 @@ type Identity {
     user_id: Int!
     first_name: String!
     last_name: String!
-    gender: String!
+    gender: Gender!
     photo_url: String
     contact_number: String!
-    created_at: DateTime!
-    updated_at: DateTime!
+    created_at: DateTimeTz!
+    updated_at: DateTimeTz!
 }
 
 input CreateUserInput {
@@ -28,7 +34,7 @@ input CreateUserInput {
     password_confirmation: String!
     first_name: String!
     last_name: String!
-    gender: String!
+    gender: Gender!
     photo: Upload
 }
 
