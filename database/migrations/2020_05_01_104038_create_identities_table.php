@@ -14,8 +14,6 @@ class CreateIdentitiesTable extends Migration
     public function up()
     {
         Schema::create('identities', function (Blueprint $table) {
-            $table->id();
-
             $table->foreignId('user_id')
                 ->constrained()
                 ->onDelete('cascade');
@@ -24,6 +22,7 @@ class CreateIdentitiesTable extends Migration
             $table->string('last_name');
             $table->enum('gender', ['male', 'female', 'others']);
             $table->string('photo_url')->nullable();
+            $table->string('contact_number');
 
             $table->timestamps();
         });

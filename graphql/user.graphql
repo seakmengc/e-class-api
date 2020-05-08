@@ -1,0 +1,42 @@
+type User {
+    id: ID!
+    uuid: String
+    username: String!
+    email: String!
+    created_at: DateTimeTz!
+    updated_at: DateTimeTz!
+    identity: Identity @hasOne
+}
+
+type Identity {
+    id: ID!
+    user_id: Int!
+    first_name: String!
+    last_name: String!
+    gender: String!
+    photo_url: String
+    contact_number: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+input CreateUserInput {
+    username: String! @rules(apply: ["max:255", "unique:users,username"])
+    email: String! @rules(apply: ["email", "max:255", "unique:users,email"])
+    contact_number: String!
+    password: String! @rules(apply: ["min:8"])
+    first_name: String!
+    last_name: String!
+    gender: String!
+    photo: Upload
+}
+
+type Mutation {
+    createUser(input: CreateUserInput! @spread): User!
+}
+
+type Query @middleware(checks: ["auth:api"]) {
+    users: [User!]! @paginate(defaultCount: 10)
+    user(id: ID @eq): User @find
+    userFindByUsername(username: String @eq): User @find
+}

@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "e-class-api": {
+      "schemaPath": "schema.graphql",
+      "extensions": {
+        "endpoints": {
+          "default": "http://localhost"
+        }
+      }
+    }
+  }
+}

@@ -10,8 +10,8 @@ class IdentityObserver
 {
     public function saving(Identity $identity)
     {
-        $identity->first_name = ucwords(strtolower($identity->first_name));
-        $identity->last_name = ucwords(strtolower($identity->last_name));
+        $identity->first_name = ucwords(strtolower(trim($identity->first_name)));
+        $identity->last_name = ucwords(strtolower(trim($identity->last_name)));
 
         if (!is_null($identity->photo)) {
             $img = Image::make($identity->photo);

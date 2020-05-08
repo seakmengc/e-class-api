@@ -14,10 +14,15 @@ class User extends Authenticatable
 
     protected $guard_name = 'api';
 
-    protected $guarded = ['id'];
+    protected $fillable = ['username', 'email', 'phone_number', 'password'];
 
     public function identity()
     {
         return $this->hasOne(Identity::class);
+    }
+
+    public function findForPassport($username)
+    {
+        return $this->whereUsername($username)->first();
     }
 }
