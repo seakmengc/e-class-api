@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Identity extends Model
 {
     //photo will transfer in observer to photo_url
-    protected $fillable = ['first_name', 'last_name', 'gender', 'photo'];
+    protected $fillable = ['first_name', 'last_name', 'gender', 'contact_number', 'photo'];
 
     public static $photoPath = 'portraits/';
 
