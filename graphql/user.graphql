@@ -21,7 +21,7 @@ type Identity {
     last_name: String!
     gender: Gender!
     photo_url: String
-    contact_number: String!
+    contact_number: String
     created_at: DateTimeTz!
     updated_at: DateTimeTz!
 }
@@ -29,12 +29,12 @@ type Identity {
 input CreateUserInput {
     username: String!
     email: String!
-    contact_number: String!
     password: String!
     password_confirmation: String!
     first_name: String!
     last_name: String!
     gender: Gender!
+    contact_number: String
     photo: Upload
 }
 

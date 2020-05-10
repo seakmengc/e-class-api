@@ -1,5 +1,6 @@
 <?php
 
+use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $threads = Thread::getAllLatest()->get();
+    // $threads = Thread::getAllLatest()->get();
 
-    dd($threads);
+    $thread = Thread::forUserWithNewMessages(83)->latest('updated_at')->first();
+
+    dd($thread, $thread->messages, $thread->getLatestMessageAttribute(), $thread->users);
 });
