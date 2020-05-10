@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cmgmyr\Messenger\Traits\Messagable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -9,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, HasRoles;
+    use Notifiable, HasApiTokens, HasRoles, Messagable;
 
     protected $guard_name = 'api';
 

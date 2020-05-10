@@ -1,5 +1,6 @@
 <?php
 
+use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $threads = Thread::getAllLatest()->get();
+
+    dd($threads);
 });
