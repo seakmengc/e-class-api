@@ -38,11 +38,21 @@ input CreateUserInput {
     photo: Upload
 }
 
-type Mutation {
-    createUser(input: CreateUserInput! @spread): User! @createUserValidation
+input UpdateIdentityInput {
+    user_id: ID!
+    first_name: String
+    last_name: String
+    gender: Gender
+    contact_number: String
+    photo: Upload
 }
 
-type Query @middleware(checks: ["auth:api"]) {
+type Mutation {
+    createUser(input: CreateUserInput! @spread): User! @createUserValidation
+    updateIdentity(input: UpdateIdentityInput! @spread): User @updateIdentityValidation
+}
+
+type Query  {
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
     userFindByUsername(username: String! @eq): User @find
