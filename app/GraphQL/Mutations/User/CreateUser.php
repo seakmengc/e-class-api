@@ -1,12 +1,13 @@
 <?php
 
-namespace App\GraphQL\Mutations;
+namespace App\GraphQL\Mutations\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class UpdateIdentity
+class CreateUser
 {
     /**
      * Return a value for the field.
@@ -19,9 +20,12 @@ class UpdateIdentity
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $user = User::findOrFail($args['user_id']);
+        DB::beginTransaction();
 
-        $user->identity->update($args);
+        $user = User::create($args);
+        $user->identity()->create($args);
+        //TODO: assign role
+        DB::commit();
 
         return $user;
     }

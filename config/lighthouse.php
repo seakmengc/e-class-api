@@ -34,7 +34,7 @@ return [
             // Logs in a user if they are authenticated. In contrast to Laravel's 'auth'
             // middleware, this delegates auth and permission checks to the field level.
             // If you want to use another guard, change the suffix (remove for default).
-            \Nuwave\Lighthouse\Support\Http\Middleware\AttemptAuthentication::class.':api',
+            \Nuwave\Lighthouse\Support\Http\Middleware\AttemptAuthentication::class . ':api',
         ],
 
         /*
@@ -90,7 +90,7 @@ return [
     'namespaces' => [
         'models' => ['App', 'App\\Models'],
         'queries' => 'App\\GraphQL\\Queries',
-        'mutations' => 'App\\GraphQL\\Mutations',
+        'mutations' => ['App\\GraphQL\\Mutations', 'App\\GraphQL\\Mutations\\User'],
         'subscriptions' => 'App\\GraphQL\\Subscriptions',
         'interfaces' => 'App\\GraphQL\\Interfaces',
         'unions' => 'App\\GraphQL\\Unions',
@@ -282,7 +282,7 @@ return [
             ],
             'pusher' => [
                 'driver' => 'pusher',
-                'routes' => \Nuwave\Lighthouse\Subscriptions\SubscriptionRouter::class.'@pusher',
+                'routes' => \Nuwave\Lighthouse\Subscriptions\SubscriptionRouter::class . '@pusher',
                 'connection' => 'pusher',
             ],
         ],

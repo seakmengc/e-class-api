@@ -48,8 +48,8 @@ input UpdateIdentityInput {
 }
 
 type Mutation {
-    createUser(input: CreateUserInput! @spread): User! @createUserValidation
-    updateIdentity(input: UpdateIdentityInput! @spread): User @updateIdentityValidation
+    createUser(input: CreateUserInput! @spread): User! @createUserValidation @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateUser@__invoke")
+    updateIdentity(input: UpdateIdentityInput! @spread): User @updateIdentityValidation @field(resolver: "App\\GraphQL\\Mutations\\User\\UpdateIdentity@__invoke")
 }
 
 type Query  {
