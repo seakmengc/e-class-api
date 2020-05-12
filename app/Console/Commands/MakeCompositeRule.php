@@ -49,4 +49,14 @@ class MakeCompositeRule extends GeneratorCommand
     {
         return $rootNamespace . '\Rules\Composite';
     }
+
+    /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        return trim($this->argument('name')) . 'Rule';
+    }
 }

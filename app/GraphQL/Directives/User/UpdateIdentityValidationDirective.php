@@ -2,6 +2,11 @@
 
 namespace App\GraphQL\Directives\User;
 
+use App\Rules\Composite\User\PhotoRule;
+use App\Rules\Composite\User\GenderRule;
+use App\Rules\Composite\User\LastNameRule;
+use App\Rules\Composite\User\FirstNameRule;
+use App\Rules\Composite\User\ContactNumberRule;
 use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
 class UpdateIdentityValidationDirective extends ValidationDirective
@@ -13,11 +18,11 @@ class UpdateIdentityValidationDirective extends ValidationDirective
     {
         return [
             'user_id' => 'required',
-            'contact_number' => 'max:255',
-            'first_name' => 'max:255',
-            'last_name' => 'max:255',
-            'gender' => 'in:male,female,others',
-            'photo' => 'image|max:5120'
+            'first_name' => new FirstNameRule(),
+            'last_name' => new LastNameRule(),
+            'gender' => new GenderRule(),
+            'contact_number' => new ContactNumberRule(),
+            'photo' => new PhotoRule()
         ];
     }
 }

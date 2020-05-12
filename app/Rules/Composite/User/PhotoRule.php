@@ -1,13 +1,13 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Rules\Composite\User;
 
 use Illuminatech\Validation\Composite\CompositeRule;
 
-class {{ class }} extends CompositeRule
+class PhotoRule extends CompositeRule
 {
     protected function rules(): array
     {
-        //
+        return ['image', 'max:5120'];
     }
 }
