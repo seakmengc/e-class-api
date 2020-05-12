@@ -14,6 +14,7 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
+        "illuminatech/validation-composite": "^1.2",
         "intervention/image": "^2.5",
         "joselfonseca/lighthouse-graphql-passport-auth": "^4.1",
         "laravel/framework": "^7.0",

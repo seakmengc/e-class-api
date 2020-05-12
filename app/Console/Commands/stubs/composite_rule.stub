@@ -1,0 +1,10 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminatech\Validation\Composite\CompositeRule;
+
+class {{ class }}Rule extends CompositeRule
+{
+    //
+}
