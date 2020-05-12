@@ -1,5 +1,13 @@
 <?php
 
+$customMutations = array_map(function ($each) {
+    return 'App\GraphQL\Mutations\\' . $each;
+}, array_diff(scandir(app_path('/GraphQL/Mutations')), ['..', '.']));
+
+$customDirectives = array_map(function ($each) {
+    return 'App\GraphQL\Directives\\' . $each;
+}, array_diff(scandir(app_path('/GraphQL/Directives')), ['..', '.']));
+
 return [
 
     /*
@@ -90,12 +98,12 @@ return [
     'namespaces' => [
         'models' => ['App', 'App\\Models'],
         'queries' => 'App\\GraphQL\\Queries',
-        'mutations' => ['App\\GraphQL\\Mutations', 'App\\GraphQL\\Mutations\\User'],
+        'mutations' => ['App\\GraphQL\\Mutations', ...$customMutations],
         'subscriptions' => 'App\\GraphQL\\Subscriptions',
         'interfaces' => 'App\\GraphQL\\Interfaces',
         'unions' => 'App\\GraphQL\\Unions',
         'scalars' => 'App\\GraphQL\\Scalars',
-        'directives' => ['App\\GraphQL\\Directives', 'App\\GraphQL\\Directives\\User'],
+        'directives' => ['App\\GraphQL\\Directives', ...$customDirectives],
     ],
 
     /*
