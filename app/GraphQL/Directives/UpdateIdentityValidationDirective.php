@@ -12,6 +12,7 @@ class UpdateIdentityValidationDirective extends ValidationDirective
     public function rules(): array
     {
         return [
+            'user_id' => 'required',
             'contact_number' => 'max:255',
             'first_name' => 'max:255',
             'last_name' => 'max:255',

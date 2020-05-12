@@ -47,10 +47,20 @@ input UpdateIdentityInput {
     photo: Upload
 }
 
+input UpdateUserCredentials {
+    user_id: ID!
+    email: String
+    username: String
+    uuid: String
+    password: String
+    password_confirmation: String
+}
+
 type Mutation {
-    createUser(input: CreateUserInput! @spread): User! @createUserValidation @field(resolver: "App\\GraphQL\\Mutations\\User\\CreateUser@__invoke")
-    deleteUser(id: ID! @eq): User @field(resolver: "App\\GraphQL\\Mutations\\User\\DeleteUser@__invoke")
-    updateIdentity(input: UpdateIdentityInput! @spread): User @updateIdentityValidation @field(resolver: "App\\GraphQL\\Mutations\\User\\UpdateIdentity@__invoke")
+    createUser(input: CreateUserInput! @spread): User! @createUserValidation
+    updateUserCredentials(input: UpdateUserCredentials! @spread): User! @updateUserCredentialsValidation
+    deleteUser(id: ID! @eq): User!
+    updateIdentity(input: UpdateIdentityInput! @spread): User! @updateIdentityValidation
 }
 
 type Query  {

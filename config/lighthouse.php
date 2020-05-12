@@ -90,12 +90,12 @@ return [
     'namespaces' => [
         'models' => ['App', 'App\\Models'],
         'queries' => 'App\\GraphQL\\Queries',
-        'mutations' => 'App\\GraphQL\\Mutations',
+        'mutations' => ['App\\GraphQL\\Mutations', 'App\\GraphQL\\Mutations\\User'],
         'subscriptions' => 'App\\GraphQL\\Subscriptions',
         'interfaces' => 'App\\GraphQL\\Interfaces',
         'unions' => 'App\\GraphQL\\Unions',
         'scalars' => 'App\\GraphQL\\Scalars',
-        'directives' => ['App\\GraphQL\\Directives'],
+        'directives' => ['App\\GraphQL\\Directives', 'App\\GraphQL\\Directives\\User'],
     ],
 
     /*
