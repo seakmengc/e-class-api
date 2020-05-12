@@ -57,6 +57,7 @@ input UpdateUserCredentials {
 }
 
 type Mutation {
+    me: User! @auth(guard: "api")
     createUser(input: CreateUserInput! @spread): User! @createUserValidation
     updateUserCredentials(input: UpdateUserCredentials! @spread): User! @updateUserCredentialsValidation
     deleteUser(id: ID! @eq): User!

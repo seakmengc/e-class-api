@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Directives;
+namespace App\GraphQL\Directives\User;
 
 use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
