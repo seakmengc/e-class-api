@@ -1,0 +1,8 @@
+# input CreateClassContentInput{
+#   name: String!
+#   class: Int!
+# }
+#
+# extend type Mutation {
+#   createClassContent(input: CreateClassInput! @spread): Classes! @create @createClassesValidation
+# }

@@ -1,0 +1,76 @@
+
+
+type Classes{
+     id: ID!
+     name: String!
+     code: String!
+     user: User! @belongsTo
+}
+
+
+extend type Query @guard{
+    classes: [Classes!]! @paginate(defaultCount: 10)
+    class(id: ID @eq): Classes @find
+}
+
+#
+extend type Mutation {
+  createClass(input: CreateClassInput! @spread): Classes @create @createClassesValidation
+  updateClass(input: UpdateClassInput! @spread): Classes @update @createClassesValidation
+  deleteClass(id: ID! @eq): Classes! @delete
+}
+
+#create
+    input CreateClassInput{
+      name: String!
+      code: String!
+      user: CreateUserBelongsTo
+      # identity: CreateIdentityBelongsTo
+    }
+    input CreateUserBelongsTo {
+       connect: ID
+       create: CreateTeacherInput
+       update: UpdateTeacherInput
+       upsert: UpsertTeacherInput
+     }
+
+
+#update
+    input UpdateClassInput {
+      id: ID!
+      name: String!
+      code: String!
+      user: UpdateUserBelongsTo
+    }
+
+   input UpdateUserBelongsTo{
+      connect: ID
+      create: CreateTeacherInput
+      update: UpdateTeacherInput
+      upsert: UpsertTeacherInput
+      disconnect: Boolean
+      delete: Boolean
+    }
+#delete
+  input DeleteClassInput{
+    id: ID!
+    user_id: ID!
+  }
+#create update upsert of Teacher
+    input CreateTeacherInput{
+       username: String!
+       email: String!
+       password: String!
+    }
+    input UpdateTeacherInput{
+      id: ID!
+      username: String!
+      email: String!
+      password: String!
+    }
+    input UpsertTeacherInput{
+      id: ID!
+      username: String!
+      email: String!
+      password: String!
+    }
