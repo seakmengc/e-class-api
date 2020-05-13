@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Identity extends Model
 {
@@ -11,8 +13,15 @@ class Identity extends Model
 
     public static $photoPath = 'portraits/';
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function classes(): HasMany
+    {
+
+      return $this->hasMany(Classes::class);
+
     }
 }
