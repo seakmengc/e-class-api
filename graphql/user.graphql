@@ -56,15 +56,15 @@ input UpdateUserCredentials {
     password_confirmation: String
 }
 
-type Mutation {
-    me: User! @auth(guard: "api")
+type Mutation @guard {
     createUser(input: CreateUserInput! @spread): User! @createUserValidation
     updateUserCredentials(input: UpdateUserCredentials! @spread): User! @updateUserCredentialsValidation
     deleteUser(id: ID! @eq): User!
     updateIdentity(input: UpdateIdentityInput! @spread): User! @updateIdentityValidation
 }
 
-type Query  {
+type Query @guard {
+    me: User @auth
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
     userFindByUsername(username: String! @eq): User @find
