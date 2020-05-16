@@ -15,7 +15,7 @@ class Classes extends Model
     'id', 'name', 'code',
   ];
 
-  public function user(): BelongsTo
+  public function teacher(): BelongsTo
   {
     return $this->belongsTo(User::class, 'teacher_id');
   }

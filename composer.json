@@ -24,6 +24,7 @@
         "mll-lab/graphql-php-scalars": "^3.0",
         "mll-lab/laravel-graphql-playground": "^2.1",
         "nuwave/lighthouse": "^4.12",
+        "pusher/pusher-php-server": "^4.1",
         "react/promise": "^2.7",
         "spatie/laravel-permission": "^3.11"
     },
