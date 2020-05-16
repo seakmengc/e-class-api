@@ -5,12 +5,12 @@ type Classes {
     user: User @belongsTo
 }
 
-extend type Query {
+extend type Query @guard {
     classes: [Classes!]! @paginate(defaultCount: 10)
     class(id: ID @eq): Classes @find
 }
 
-extend type Mutation {
+extend type Mutation @guard {
     createClass(input: CreateClassInput! @spread): Classes
         @create
         @createClassesValidation
