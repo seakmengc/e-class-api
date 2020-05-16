@@ -14,7 +14,7 @@ type Identity{
   user: User! @belongsTo
 }
 
-extend type Mutation @guard {
+extend type Mutation {
   CreateIdentity(input: CreateIdentityInput @spread): Identity! @create @updateIdentityValidation
   UpdateIdentity(input: UpdateIdentityInput @spread): Identity! @update @updateIdentityValidation
   DeleteIdentity(id: ID! @eq): Identity! @delete

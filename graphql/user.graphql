@@ -4,7 +4,7 @@ enum Gender {
     OTHERS @enum(value: "others")
 }
 
-type User @guard {
+type User {
     id: ID!
     uuid: String
     username: String!
@@ -56,8 +56,6 @@ input UpdateUserCredentials {
     password_confirmation: String
 }
 
-
-
 type Mutation {
     me: User! @auth(guard: "api")
     createUser(input: CreateUserInput! @spread): User! @createUserValidation
@@ -66,7 +64,7 @@ type Mutation {
     updateIdentity(input: UpdateIdentityInput! @spread): User! @updateIdentityValidation
 }
 
-type Query @guard {
+type Query {
     me: User @auth
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
