@@ -9,9 +9,9 @@
 
 ## Contributor
 
--   Sovath Chean
--   Piseth Lee
--   Seakmeng Chheang
+-   [Piseth Lee](https://github.com/rancou)
+-   [Sovath Chean](https://github.com/SovathChean)
+-   [Seakmeng Chheang](https://github.com/SeakmengChheang)
 
 ## License
 
