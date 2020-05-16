@@ -2,17 +2,18 @@
 
 namespace App\GraphQL\Directives\Classes;
 
-use Nuwave\Lighthouse\Schema\Directives\BaseDirective;
+use Illuminate\Validation\Rule;
+use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
-class CreateClassesValidationDirective extends BaseDirective
+class CreateClassesValidationDirective extends ValidationDirective
 {
 
   public function rules(): array
   {
       return [
-        'name' => 'required|min::4|unique::classes',
-        'code' => 'required|unique::classes'
-        // 'teacher_id' => 'required|unique::classes'
+        'name' => 'required|min:4|unique:classes',
+        'code' => 'required|min:4|unique:classes',
+        'teacher_id' => 'unique:classes'
       ];
   }
 }

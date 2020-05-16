@@ -1,0 +1,39 @@
+enum Gender {
+    MALE @enum(value: "male")
+    FEMALE @enum(value: "female")
+    OTHERS @enum(value: "others")
+}
+
+type Identity{
+  id: ID!
+  first_name: String!
+  last_name: String!
+  gender: Gender
+  photo_url: String
+  contact_number: String
+  user: User! @belongsTo
+}
+
+extend type Mutation @guard {
+  CreateIdentity(input: CreateIdentityInput @spread): Identity! @create @updateIdentityValidation
+  UpdateIdentity(input: UpdateIdentityInput @spread): Identity! @update @updateIdentityValidation
+  DeleteIdentity(id: ID! @eq): Identity! @delete
+}
+
+input CreateIdentityInput {
+  first_name: String!
+  last_name: String!
+  gender: Gender
+  photo_url: String
+  contact_number: String
+  user: CreateUserBelongsTo
+}
+
+input UpdateIdentityInput{
+  id: ID!
+  last_name: String!
+  gender: Gender
+  photo_url: String
+  contact_number: String
+  user: UpdateUserBelongsTo
+}

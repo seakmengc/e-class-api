@@ -14,18 +14,17 @@ extend type Query @guard{
 }
 
 #
-extend type Mutation {
+extend type Mutation @guard{
   createClass(input: CreateClassInput! @spread): Classes @create @createClassesValidation
-  updateClass(input: UpdateClassInput! @spread): Classes @update @createClassesValidation
+  updateClass(input: UpdateClassInput! @spread): Classes @update
   deleteClass(id: ID! @eq): Classes! @delete
 }
 
 #create
     input CreateClassInput{
-      name: String!
+      name: String! 
       code: String!
       user: CreateUserBelongsTo
-      # identity: CreateIdentityBelongsTo
     }
     input CreateUserBelongsTo {
        connect: ID
