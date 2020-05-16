@@ -17,7 +17,7 @@ class CreateClassesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code');
-            $table->integer('teacher_id');
+            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->timestamps();
         });
     }

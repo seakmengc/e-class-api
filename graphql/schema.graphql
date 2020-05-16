@@ -11,5 +11,5 @@ scalar DateTimeTz @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Da
 scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
 #import identity.graphql
-#import classes.graphql
 #import user.graphql
+#import classes.graphql
