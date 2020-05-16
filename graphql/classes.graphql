@@ -2,7 +2,7 @@ type Classes {
     id: ID!
     name: String!
     code: String!
-    user: User @belongsTo
+    teacher: User @belongsTo
 }
 
 extend type Query @guard {
@@ -22,7 +22,7 @@ extend type Mutation @guard {
 input CreateClassInput {
     name: String!
     code: String!
-    user: CreateUserBelongsTo
+    teacher: CreateUserBelongsTo
 }
 
 input CreateUserBelongsTo {
@@ -34,7 +34,7 @@ input CreateUserBelongsTo {
 #update
 input UpdateClassInput {
     id: ID!
-    user: UpdateUserBelongsTo
+    teacher: UpdateUserBelongsTo
 }
 
 input UpdateUserBelongsTo {
