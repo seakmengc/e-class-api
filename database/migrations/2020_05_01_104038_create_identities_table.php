@@ -16,7 +16,9 @@ class CreateIdentitiesTable extends Migration
         Schema::create('identities', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
 
             $table->string('first_name');
             $table->string('last_name');

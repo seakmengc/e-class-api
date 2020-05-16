@@ -48,10 +48,8 @@ class RolesPermissionsSeeder extends Seeder
 
             array_walk($actions, fn ($permName) => $pg->permissions()->create([
                 'name' => $permName,
-                'display_name' => $permName
             ]));
         }
-
 
         DB::commit();
     }

@@ -18,6 +18,10 @@ class CreateClassesTable extends Migration
             $table->string('name');
             $table->string('code');
             $table->unsignedBigInteger('teacher_id')->nullable();
+            $table->foreign('teacher_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

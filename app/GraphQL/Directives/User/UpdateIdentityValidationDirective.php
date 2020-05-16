@@ -17,7 +17,7 @@ class UpdateIdentityValidationDirective extends ValidationDirective
     public function rules(): array
     {
         return [
-            'user_id' => 'required',
+            'user_id' => '',
             'first_name' => new FirstNameRule(),
             'last_name' => new LastNameRule(),
             'gender' => new GenderRule(),

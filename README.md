@@ -7,14 +7,12 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## Packages
+## Contributor
 
-- [Laravel Passport](https://laravel.com/docs/7.x/passport).
-- [Laravel Permission](https://docs.spatie.be/laravel-permission/v3/introduction/).
-- [Laravel Messenger](https://github.com/cmgmyr/laravel-messenger).
-
+-   Sovath Chean
+-   Piseth Lee
+-   Seakmeng Chheang
 
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-

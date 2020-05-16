@@ -19,7 +19,8 @@ class UpdateIdentity
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $user = User::findOrFail($args['user_id']);
+        $userId = (int) ($args['user_id'] ?? request()->user()->id);
+        $user = User::findOrFail($userId);
 
         $user->identity->update($args);
 

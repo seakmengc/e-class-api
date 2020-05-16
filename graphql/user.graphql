@@ -14,32 +14,34 @@ type User {
     identity: Identity @hasOne
 }
 
-# type Identity {
-#     id: ID!
-#     user_id: Int!
-#     first_name: String!
-#     last_name: String!
-#     gender: Gender
-#     photo_url: String
-#     contact_number: String
-#     # created_at: DateTimeTz
-#     # updated_at: DateTimeTz
-# }
-
-input CreateUserInput {
-    username: String!
-    email: String!
-    password: String!
-    password_confirmation: String!
+type Identity {
+    id: ID!
     first_name: String!
     last_name: String!
-    gender: Gender!
+    gender: Gender
+    photo_url: String
+    contact_number: String
+    user: User! @belongsTo
+    created_at: DateTimeTz
+    updated_at: DateTimeTz
+}
+
+input CreateIdentityBelongsTo {
+    connect: ID
+    create: CreateIdentityInput
+}
+
+input CreateIdentityInput {
+    first_name: String
+    last_name: String
+    gender: Gender
     contact_number: String
     photo: Upload
+    user: CreateUserBelongsTo
 }
 
 input UpdateIdentityInput {
-    user_id: ID!
+    user_id: ID
     first_name: String
     last_name: String
     gender: Gender
@@ -47,8 +49,16 @@ input UpdateIdentityInput {
     photo: Upload
 }
 
-input UpdateUserCredentials {
-    user_id: ID!
+input CreateUserInput {
+    username: String!
+    email: String!
+    password: String!
+    password_confirmation: String!
+    identity: CreateIdentityBelongsTo
+}
+
+input UpdateUserInput {
+    id: ID!
     email: String
     username: String
     uuid: String
@@ -58,11 +68,15 @@ input UpdateUserCredentials {
 
 type Mutation @guard {
     me: User! @auth(guard: "api")
-    createUser(input: CreateUserInput! @spread): User! @createUserValidation
-    updateUserCredentials(input: UpdateUserCredentials! @spread): User!
-        @updateUserCredentialsValidation
-    deleteUser(id: ID! @eq): User!
-    updateIdentity(input: UpdateIdentityInput! @spread): User!
+    createUser(input: CreateUserInput! @spread): User!
+        @create
+        @createUserValidation
+    updateUser(input: UpdateUserInput! @spread): User!
+        @update
+        @updateUserValidation
+    deleteUser(id: ID! @eq): User! @delete
+
+    updateIdentity(input: UpdateIdentityInput @spread): User!
         @updateIdentityValidation
 }
 
