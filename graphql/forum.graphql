@@ -6,11 +6,17 @@ type Forum {
     author: User! @belongsTo
     comments: [Comment] @morphMany
     answer: Comment @hasOne
+    created_at: DateTimeTz
+    updated_at: DateTimeTz
 }
 
 type ForumAnswer {
     forum: Forum! @belongsTo
     comment: Comment! @belongsTo
+}
+
+input CreateForumBelongsTo {
+    connect: ID!
 }
 
 input CreateClassContentBelongsTo {
@@ -31,13 +37,18 @@ input UpdateForumInput {
 }
 
 input setForumAnswerInput {
-    forum_id: ID!
-    comment_id: ID!
+    forum: CreateForumBelongsTo
+    comment: CreateCommentBelongsTo
 }
 
-extend type mutation @guard {
+extend type Mutation @guard {
     createForum(input: CreateForumInput! @spread): Forum! @create
     updateForum(input: CreateForumInput! @spread): Forum! @update
     deleteForum(id: ID! @eq): Forum! @delete
     setForumAnswer(input: setForumAnswerInput! @spread): Forum! @create
+}
+
+extend type Query @guard {
+    forum(id: ID! @eq): Forum! @find
+    forumsInClass(class_id: ID! @eq): Forum! @find
 }
