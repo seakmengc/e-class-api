@@ -1,0 +1,43 @@
+type Forum {
+    id: ID!
+    title: String
+    description: String
+    class_content: ClassContent! @belongsTo
+    author: User! @belongsTo
+    comments: [Comment] @morphMany
+    answer: Comment @hasOne
+}
+
+type ForumAnswer {
+    forum: Forum! @belongsTo
+    comment: Comment! @belongsTo
+}
+
+input CreateClassContentBelongsTo {
+    connect: ID!
+}
+
+input CreateForumInput {
+    id: ID!
+    title: String @rules(apply: ["required", "max:255", "string"])
+    description: String @rules(apply: ["required", "max:60000"])
+    class_content: CreateClassContentBelongsTo
+}
+
+input UpdateForumInput {
+    id: ID!
+    title: String
+    description: String
+}
+
+input setForumAnswerInput {
+    forum_id: ID!
+    comment_id: ID!
+}
+
+extend type mutation @guard {
+    createForum(input: CreateForumInput! @spread): Forum! @create
+    updateForum(input: CreateForumInput! @spread): Forum! @update
+    deleteForum(id: ID! @eq): Forum! @delete
+    setForumAnswer(input: setForumAnswerInput! @spread): Forum! @create
+}

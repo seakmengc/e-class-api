@@ -15,3 +15,5 @@ scalar Upload
 
 #import user.graphql
 #import classes.graphql
+#import comment.graphql
+#import forum.graphql
