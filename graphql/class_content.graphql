@@ -12,9 +12,19 @@ type ClassContents{
 
 extend type Mutation{
   createClassContent(input: createClassContentInput @spread): ClassContents! @createClassContentValidation
+  updateClassContent(input: updateClassContentInput @spread): ClassContents! @updateClassContentValidation
+  deleteClassContent(id: ID!): ClassContents! @deleteClassContentValidation
 }
 
 input createClassContentInput{
+  name: String!
+  description: String!
+  class_id: Int
+  file_url: Upload!
+}
+
+input updateClassContentInput{
+  id: ID!
   name: String!
   description: String!
   class_id: Int

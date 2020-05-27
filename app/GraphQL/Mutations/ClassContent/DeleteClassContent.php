@@ -6,7 +6,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\Models\ClassContent;
 
-class UploadFileClassContent
+class DeleteClassContent
 {
     /**
      * Return a value for the field.
@@ -19,9 +19,11 @@ class UploadFileClassContent
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $ClassContent = ClassContent::findOrFail(1);
-        $item = $ClassContent->addMedia($args['file'])->toMediaCollection();
+        $classContent = ClassContent::findOrFail($args['id']);
+        $classContent->delete();
+        //delete previous media
+        $classContent->clearMediaCollection('class-content');
 
-        return $ClassContent->getMedia();
+        return $classContent;
     }
 }
