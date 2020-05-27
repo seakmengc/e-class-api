@@ -1,8 +1,22 @@
-# input CreateClassContentInput{
-#   name: String!
-#   class: Int!
-# }
-#
-# extend type Mutation {
-#   createClassContent(input: CreateClassInput! @spread): Classes! @create @createClassesValidation
-# }
+
+scalar Upload
+  @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
+
+type ClassContents{
+  id: ID!
+  class_id: Int
+  name: String!
+  description: String!
+  file_url: String
+}
+
+extend type Mutation{
+  createClassContent(input: createClassContentInput @spread): ClassContents! @createClassContentValidation
+}
+
+input createClassContentInput{
+  name: String!
+  description: String!
+  class_id: Int
+  file_url: Upload!
+}
