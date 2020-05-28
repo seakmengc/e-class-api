@@ -1,0 +1,36 @@
+union Commentable = Forum | ClassContent
+
+enum CommentableTypes {
+    FORUM @enum(value: "App\\Models\\Forum")
+    CLASSCONTENT @enum(value: "App\\Models\\ClassContent")
+}
+
+type Comment {
+    id: ID!
+    comment: String!
+    author: User! @belongsTo
+    commentable: Commentable! @morphOne
+    created_at: DateTimeTz
+    updated_at: DateTimeTz
+}
+
+input CreateCommentBelongsTo {
+    connect: ID
+    disconnect: ID
+}
+
+input CreateCommentableOperations {
+    create: ConnectCommentableInput
+    delete: Boolean
+}
+
+input CreateCommentInput {
+    comment: String!
+    author: ID!
+    commentable: CreateCommentableOperations
+}
+
+input ConnectCommentableInput {
+    type: CommentableTypes!
+    id: ID!
+}
