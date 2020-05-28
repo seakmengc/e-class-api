@@ -24,7 +24,7 @@ class CreateUserValidationDirective extends ValidationDirective
             'username' => new UsernameRule(),
             'email' => new EmailRule(),
             'uuid' => new UuidRule(),
-            'password' => ['confirmed', new PasswordRule()],
+            'password' => [new PasswordRule()],
             'first_name' => new FirstNameRule(),
             'last_name' => new LastNameRule(),
             'gender' => new GenderRule(),

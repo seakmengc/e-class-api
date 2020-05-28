@@ -12,16 +12,11 @@ class Classes extends Model
   protected $guard_name = 'api';
 
   protected $fillable = [
-    'id', 'name', 'code',
+    'name', 'code', 'teacher_id'
   ];
 
-  public function user(): BelongsTo
+  public function teacher(): BelongsTo
   {
     return $this->belongsTo(User::class, 'teacher_id');
-  }
-
-  public function identity(): BelongsTo
-  {
-    return $this->belongsTo(Identity::class, 'teacher_id');
   }
 }

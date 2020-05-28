@@ -1,32 +1,33 @@
-
 scalar Upload
-  @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
-type ClassContents{
-  id: ID!
-  class_id: Int
-  name: String!
-  description: String!
-  file_url: String
+type ClassContent {
+    id: ID!
+    class_id: Int
+    name: String!
+    description: String!
+    file_url: String
 }
 
-extend type Mutation{
-  createClassContent(input: createClassContentInput @spread): ClassContents! @createClassContentValidation
-  updateClassContent(input: updateClassContentInput @spread): ClassContents! @updateClassContentValidation
-  deleteClassContent(id: ID!): ClassContents! @deleteClassContentValidation
+extend type Mutation {
+    createClassContent(input: createClassContentInput @spread): ClassContent!
+        @createClassContentValidation
+    updateClassContent(input: updateClassContentInput @spread): ClassContent!
+        @updateClassContentValidation
+    deleteClassContent(id: ID!): ClassContent! @deleteClassContentValidation
 }
 
-input createClassContentInput{
-  name: String!
-  description: String!
-  class_id: Int
-  file_url: Upload!
+input createClassContentInput {
+    name: String!
+    description: String!
+    class_id: Int
+    file_url: Upload
 }
 
-input updateClassContentInput{
-  id: ID!
-  name: String!
-  description: String!
-  class_id: Int
-  file_url: Upload!
+input updateClassContentInput {
+    id: ID!
+    name: String!
+    description: String!
+    class_id: Int
+    file_url: Upload
 }

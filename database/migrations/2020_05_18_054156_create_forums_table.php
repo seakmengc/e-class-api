@@ -22,8 +22,13 @@ class CreateForumsTable extends Migration
             $table->string('title');
             $table->text('description');
 
-            $table->foreignId('author')
+            $table->foreignId('author_id')
                 ->constrained('users', 'id')
+                ->cascadeOnDelete();
+
+            $table->foreignId('answer_id')
+                ->nullable()
+                ->constrained('comments', 'id')
                 ->cascadeOnDelete();
 
             $table->timestamps();

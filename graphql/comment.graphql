@@ -16,21 +16,30 @@ type Comment {
 
 input CreateCommentBelongsTo {
     connect: ID
-    disconnect: ID
+    disconnect: Boolean
+}
+
+input UpdateCommentBelongsTo {
+    connect: ID
+    disconnect: Boolean
+    delete: Boolean
 }
 
 input CreateCommentableOperations {
-    create: ConnectCommentableInput
-    delete: Boolean
+    connect: ConnectCommentableInput
 }
 
 input CreateCommentInput {
     comment: String!
-    author: ID!
+    author: CreateUserBelongsTo
     commentable: CreateCommentableOperations
 }
 
 input ConnectCommentableInput {
     type: CommentableTypes!
     id: ID!
+}
+
+extend type Mutation {
+    createComment(input: CreateCommentInput! @spread): Comment! @create
 }
