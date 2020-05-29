@@ -4,7 +4,7 @@ type Forum {
     description: String
     classContent: ClassContent! @belongsTo
     author: User! @belongsTo
-    comments: [Comment] @morphMany
+    comments: [Comment!] @morphMany
     answer: Comment @belongsTo
     created_at: DateTimeTz
     updated_at: DateTimeTz

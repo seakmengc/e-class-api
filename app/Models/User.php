@@ -22,12 +22,12 @@ class User extends Authenticatable
         return $this->hasOne(Identity::class);
     }
 
-    public function learning()
+    public function learnings()
     {
-        return $this->belongsToMany(Classes::class, 'student_has_classes', 'student_id', 'class_id')->withTimestamps();
+        return $this->belongsToMany(Classes::class, 'student_has_classes', 'student_id', 'class_id');
     }
 
-    public function teaching()
+    public function teachings()
     {
         return $this->hasMany(Classes::class, 'teacher_id');
     }

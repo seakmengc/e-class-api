@@ -13,13 +13,14 @@ class CreateStudentHasClassesTables extends Migration
      */
     public function up()
     {
-        Schema::create('student_has_classes_tables', function (Blueprint $table) {
-            $table->id();
+        Schema::create('student_has_classes', function (Blueprint $table) {
+            $table->foreignId('student_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
 
-            $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('class_id');
-
-            $table->timestamps();
+            $table->foreignId('class_id')
+                ->constrained()
+                ->cascadeOnDelete();
         });
     }
 

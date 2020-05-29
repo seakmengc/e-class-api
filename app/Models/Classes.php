@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Classes extends Model
 {
+  protected $table = 'classes';
+
   protected $fillable = [
     'name', 'code', 'teacher_id'
   ];
@@ -19,6 +21,6 @@ class Classes extends Model
 
   public function students(): BelongsToMany
   {
-    return $this->belongsToMany(User::class, 'student_id', 'class_id');
+    return $this->belongsToMany(User::class, 'student_has_classes', 'class_id', 'student_id');
   }
 }
