@@ -3,6 +3,7 @@ type Classes {
     name: String!
     code: String!
     teacher: User @belongsTo
+    students: [User]! @belongsToMany
 }
 
 extend type Query {
@@ -16,6 +17,7 @@ extend type Mutation {
         @createClassesValidation
     updateClass(input: UpdateClassInput! @spread): Classes @update
     deleteClass(id: ID! @eq): Classes! @delete
+    addStudents(ids: [ID!] @in(key: "student_id")): Classes!
 }
 
 #create

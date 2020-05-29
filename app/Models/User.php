@@ -22,6 +22,16 @@ class User extends Authenticatable
         return $this->hasOne(Identity::class);
     }
 
+    public function learning()
+    {
+        return $this->belongsToMany(Classes::class, 'student_has_classes', 'student_id', 'class_id')->withTimestamps();
+    }
+
+    public function teaching()
+    {
+        return $this->hasMany(Classes::class, 'teacher_id');
+    }
+
     public function findForPassport($username)
     {
         return $this->where(self::usernameOrEmail($username), $username)->first();
