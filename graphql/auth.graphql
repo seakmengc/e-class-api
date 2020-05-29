@@ -29,6 +29,13 @@ type LogoutResponse {
 
 type ForgotPasswordResponse {
     status: String!
+    statusCode: Int!
+    message: String
+}
+
+type ResetPasswordResponse {
+    status: String!
+    statusCode: Int!
     message: String
 }
 
@@ -38,17 +45,13 @@ type UpdatePasswordResponse {
 }
 
 input ForgotPasswordInput {
-    email: String! @rules(apply: ["required", "email"])
+    username: String! @rules(apply: ["required"])
 }
 
-input NewPasswordWithCodeInput {
-    email: String! @rules(apply: ["required", "email"])
-    token: String! @rules(apply: ["required", "string"])
-    password: String! @rules(apply: ["required", "confirmed", "min:8"])
-}
-
-input VerifyEmailInput {
-    token: String!
+input NewPasswordWithOtpInput {
+    username: String!
+    otp: Int! @rules(apply: ["required"])
+    password: String! @rules(apply: ["required", "min:8"])
 }
 
 input UpdatePassword {
@@ -58,10 +61,23 @@ input UpdatePassword {
 }
 
 extend type Mutation {
-    login(input: LoginInput @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Login@resolve")
-    refreshToken(input: RefreshTokenInput @spread): RefreshTokenPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\RefreshToken@resolve")
-    logout: LogoutResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve")
-    forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ForgotPassword@resolve")
-    updateForgottenPassword(input: NewPasswordWithCodeInput @spread): ForgotPasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\ResetPassword@resolve")
-    updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve") @guard(with: ["api"])
+    login(input: LoginInput @spread): AuthPayload!
+        @field(
+            resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Login@resolve"
+        )
+    refreshToken(input: RefreshTokenInput @spread): RefreshTokenPayload!
+        @field(
+            resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\RefreshToken@resolve"
+        )
+    logout: LogoutResponse!
+        @field(
+            resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve"
+        )
+    forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse!
+    resetPassword(input: NewPasswordWithOtpInput @spread): ResetPasswordResponse
+    updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse!
+        @field(
+            resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve"
+        )
+        @guard(with: ["api"])
 }

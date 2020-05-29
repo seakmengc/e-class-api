@@ -24,9 +24,14 @@ class User extends Authenticatable
 
     public function findForPassport($username)
     {
-        if (filter_var($username, FILTER_VALIDATE_EMAIL))
-            return $this->where('email', $username)->first();
+        return $this->where(self::usernameOrEmail($username), $username)->first();
+    }
 
-        return $this->where('username', $username)->first();
+    public static function usernameOrEmail($input)
+    {
+        if (filter_var($input, FILTER_VALIDATE_EMAIL))
+            return 'email';
+
+        return 'username';
     }
 }

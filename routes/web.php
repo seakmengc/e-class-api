@@ -14,11 +14,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    // $threads = Thread::getAllLatest()->get();
-
-    $thread = Thread::forUserWithNewMessages(83)->latest('updated_at')->first();
-
-    dd($thread, $thread->messages, $thread->getLatestMessageAttribute(), $thread->users);
-});
