@@ -3,7 +3,9 @@
 namespace App\GraphQL\Mutations\Auth;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
+use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
@@ -30,13 +32,19 @@ class ResetPassword
         $pwReset = DB::table('password_resets')->where('user_id', $user->id)->first();
         if (!$pwReset)
             throw new NotFoundHttpException('User not found');
+        elseif (Carbon::parse($pwReset->created_at)->addHour()->diffInSeconds(now(), false) >= 0)
+            throw new ExpiredException('OTP token expired.');
 
         if (!password_verify($args['otp'], $pwReset->token))
             throw new Exception('OTP incorrect');
 
-        $user->update([
-            'password' => $args['password']
-        ]);
+        DB::beginTransaction(function () use ($user, $args) {
+            $user->update([
+                'password' => $args['password']
+            ]);
+
+            DB::table('password_resets')->where('user_id', $user->id)->delete();
+        });
 
         return [
             'status' => 'RESET_PASSWORD',
