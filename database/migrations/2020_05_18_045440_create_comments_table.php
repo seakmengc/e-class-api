@@ -1,11 +1,10 @@
 <?php
 
-use Cmgmyr\Messenger\Models\Models;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParticipantsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +13,18 @@ class CreateParticipantsTable extends Migration
      */
     public function up()
     {
-        Schema::create(Models::table('participants'), function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('thread_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
-            $table->timestamp('last_read')->nullable();
+
+            $table->unsignedBigInteger('commentable_id');
+            $table->string('commentable_type');
+
+            $table->text('comment');
+
+            $table->foreignId('author_id')
+                ->constrained('users', 'id')
+                ->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
@@ -30,6 +36,6 @@ class CreateParticipantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(Models::table('participants'));
+        Schema::dropIfExists('comments');
     }
 }

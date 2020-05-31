@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, HasRoles, Messagable;
+    use Notifiable, HasApiTokens, HasRoles;
 
     protected $guard_name = 'api';
 

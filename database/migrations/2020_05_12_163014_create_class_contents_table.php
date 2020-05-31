@@ -15,6 +15,11 @@ class CreateClassContentsTable extends Migration
     {
         Schema::create('class_contents', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->longText('description');
+            $table->foreignId('class_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

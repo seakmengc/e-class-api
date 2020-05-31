@@ -5,7 +5,7 @@ type Classes {
     teacher: User @belongsTo
 }
 
-extend type Query @guard {
+extend type Query {
     classes: [Classes!]! @paginate(defaultCount: 10)
     class(id: ID @eq): Classes @find
 }
