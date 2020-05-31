@@ -12,6 +12,8 @@ type User {
     created_at: DateTimeTz!
     updated_at: DateTimeTz!
     identity: Identity @hasOne
+    learnings: [Classes!] @belongsToMany
+    teachings: [Classes!] @hasMany
 }
 
 type Identity {

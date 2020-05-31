@@ -3,10 +3,11 @@ type Classes {
     name: String!
     code: String!
     teacher: User @belongsTo
+    students: [User!] @belongsToMany
 }
 
 extend type Query {
-    classes: [Classes!]! @paginate(defaultCount: 10)
+    classes: [Classes!] @paginate(defaultCount: 10)
     class(id: ID @eq): Classes @find
 }
 
@@ -16,6 +17,16 @@ extend type Mutation @guard {
         @createClassesValidation
     updateClass(input: UpdateClassInput! @spread): Classes! @update
     deleteClass(id: ID! @eq): Classes! @delete
+    syncStudents(input: SyncStudentsToClassInput @spread): Classes
+}
+
+input SyncStudentsToClassInput {
+    class_id: ID!
+    students: CreateStudentsRelation
+}
+
+input CreateStudentsRelation {
+    sync: [ID!]
 }
 
 #create

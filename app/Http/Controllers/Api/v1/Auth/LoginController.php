@@ -14,6 +14,7 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
+        dd($request, $request->requestUri);
         $request->validate([
             'identity' => 'required|min:5',
             'password' => 'required|min:8'
