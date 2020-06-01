@@ -25,8 +25,10 @@
         "mll-lab/laravel-graphql-playground": "^2.1",
         "nuwave/lighthouse": "^4.12",
         "react/promise": "^2.7",
+        "rebing/graphql-laravel": "^5.1",
         "spatie/laravel-medialibrary": "^8.0.0",
-        "spatie/laravel-permission": "^3.11"
+        "spatie/laravel-permission": "^3.11",
+        "webonyx/graphql-php": "^0.13.8"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",

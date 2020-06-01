@@ -11,11 +11,11 @@ extend type Query {
     class(id: ID @eq): Classes @find
 }
 
-extend type Mutation {
-    createClass(input: CreateClassInput! @spread): Classes
+extend type Mutation @guard {
+    createClass(input: CreateClassInput! @spread): Classes!
         @create
         @createClassesValidation
-    updateClass(input: UpdateClassInput! @spread): Classes @update
+    updateClass(input: UpdateClassInput! @spread): Classes! @update
     deleteClass(id: ID! @eq): Classes! @delete
     syncStudents(input: SyncStudentsToClassInput @spread): Classes
 }
