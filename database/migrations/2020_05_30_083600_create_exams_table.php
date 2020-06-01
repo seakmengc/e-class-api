@@ -24,9 +24,10 @@ class CreateExamsTable extends Migration
             $table->float('possible');
             $table->longText('description')->nullable();
             $table->json('qa')->nullable();
-            $table->unsignedTinyInteger('attempt');
+            $table->unsignedTinyInteger('attempt')->default(0);
 
-            $table->timestamp('due_at');
+            $table->timestamp('publishes_at')->nullable();
+            $table->timestamp('due_at')->nullable();
             $table->timestamps();
         });
     }

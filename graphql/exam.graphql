@@ -1,3 +1,68 @@
+enum QuestionTypes {
+    QCM @enum(value: "qcm")
+    ESSAY @enum(value: "essay")
+    UPLOAD @enum(value: "upload")
+}
+
+type Question {
+    id: ID!
+    question: String!
+    type: QuestionTypes!
+    answers: [String!]
+    possibles: [String!]
+    points: Float!
+}
+
 type Exam {
     id: ID!
+    name: String!
+    possible: Float!
+    description: String
+    qa: [Question!]
+    attempt: Int!
+    due_at: DateTimeTz
+    publishes_at: DateTimeTz
+    created_at: DateTimeTz
+    updated_at: DateTimeTz
+}
+
+input CreateExamInput {
+    name: String!
+    possible: Float!
+    description: String
+    qa: [CreateQuestionInput]
+    attempt: Int!
+    due_at: DateTimeTz
+    publishes_at: DateTimeTz
+}
+
+input CreateQuestionInput {
+    question: String!
+    type: QuestionTypes!
+    answers: [String!]
+    possibles: [String!]
+    points: Float!
+}
+
+input UpdateExamInput {
+    id: ID!
+    name: String!
+    possible: Float!
+    description: String
+    qa: [CreateQuestionInput]
+    attempt: Int!
+    due_at: DateTimeTz
+    publishes_at: DateTimeTz
+}
+
+extend type Mutation {
+    createExam(input: CreateExamInput! @spread): Exam!
+        @create
+        @createExamValidation
+    updateExam(input: UpdateExamInput! @spread): Exam! @update
+    deleteExam(id: ID! @eq): Exam! @delete
+}
+
+extend type Query {
+    exam(id: ID! @eq): Exam! @find
 }
