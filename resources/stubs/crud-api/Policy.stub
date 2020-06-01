@@ -1,0 +1,63 @@
+<?php
+
+namespace {{modelNamespace}}\{{modelDir}};
+
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class {{modelName}}Policy
+{
+    use HandlesAuthorization;
+
+    public function before($user, $ability)
+    {
+        if($user->can('Admin {{modelName}}'))
+            return true;
+    }
+
+    public function viewAny(User $user)
+    {
+        return $this->determine($user, 'ViewAny');
+    }
+
+    public function view(User $user, {{modelName}} ${{modelCamelCaseName}})
+    {
+        return $this->determine($user, 'View', ${{modelCamelCaseName}});
+    }
+    
+    public function create(User $user)
+    {
+        return $this->determine($user, 'Create');
+    }
+
+    public function update(User $user, {{modelName}} ${{modelCamelCaseName}})
+    {
+        return $this->determine($user, 'Update', ${{modelCamelCaseName}});
+    }
+
+    public function delete(User $user, {{modelName}} ${{modelCamelCaseName}})
+    {
+        return $this->determine($user, 'Delete', ${{modelCamelCaseName}});
+    }
+
+    public function restore(User $user, {{modelName}} ${{modelCamelCaseName}})
+    {
+        return $this->determine($user, 'Restore', ${{modelCamelCaseName}});
+    }
+
+    //Gate before will handle this case
+    public function forceDelete(User $user, {{modelName}} ${{modelCamelCaseName}})
+    {
+        return false;
+    }
+
+    private function determine(User $user, $action, {{modelName}} ${{modelCamelCaseName}} = null)
+    {
+        if ($user->can($action . ' Any {{modelName}}'))
+            return true;
+
+        if ($user->can($action . ' Own {{modelName}}'))
+            return $user->id == ${{modelCamelCaseName}}->user_id;
+
+        return false;
+    }
+}

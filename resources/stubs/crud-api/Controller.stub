@@ -1,0 +1,60 @@
+<?php
+
+namespace {{modelNamespace}}\{{modelDir}};
+
+use App\Http\Controllers\Controller;
+
+use App\Models\{{modelDir}}\{{modelName}};
+use App\Http\Requests\{{modelDir}}\{{modelName}}Request;
+use App\Http\Resources\{{modelDir}}\{{modelName}}Resource;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+
+class {{modelName}}Controller extends Controller
+{
+    public function index()
+    {
+        // $this->authorize("viewAny", {{modelName}}::class);
+        //
+    }
+
+    public function store({{modelName}}Request $request)
+    {
+        // $this->authorize("create", {{modelName}}::class);
+        //
+    }
+
+    public function show({{modelName}} ${{modelCamelCaseName}})
+    {
+        // $this->authorize("view", {{modelName}}::class);
+        //
+    }
+
+    public function update({{modelName}}Request $request,{{modelName}} ${{modelCamelCaseName}})
+    {
+        // $this->authorize("update", {{modelName}}::class);
+        //
+    }
+
+    public function destroy({{modelName}} ${{modelCamelCaseName}})
+    {
+        // $this->authorize("delete", {{modelName}}::class);
+        //
+    }
+
+    public function restore($id)
+    {
+        // only super admin can access, and check with middleware at the __construct function
+        //
+    }
+
+    public function forceDestroy($id)
+    {
+        // only super admin can access, and check with middleware at the __construct function
+        //
+    }
+}
