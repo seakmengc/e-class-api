@@ -1,0 +1,45 @@
+type ScheduleSession {
+    id: ID!
+    start_time: String
+    end_time: String
+    schedule: Schedule @belongsTo
+}
+
+input CreateScheduleSessionInput {
+    schedule: CreateScheduleSessionBelongsTo
+    start_time: String
+    end_time: String
+}
+
+input CreateScheduleSessionBelongsTo {
+    connect: ID
+    create: CreateScheduleInput
+    upsert: UpsertScheduleSessionInput
+    disconnect: ID
+}
+
+input UpsertScheduleSessionInput {
+    id: ID
+    day: Day
+    class: CreateClassBelongsTo
+}
+
+input UpdateScheduleSessionInput {
+    id: ID!
+    start_time: String
+    end_time: String
+}
+
+extend type Mutation {
+    createScheduleSession(
+        input: CreateScheduleSessionInput! @spread
+    ): ScheduleSession! @create
+    updateScheduleSession(
+        input: UpdateScheduleSessionInput! @spread
+    ): ScheduleSession! @update
+    deleteScheduleSession(id: ID! @eq): ScheduleSession! @delete
+}
+
+extend type Query {
+    ScheduleSession(id: ID! @eq): ScheduleSession! @find
+}

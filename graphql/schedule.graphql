@@ -1,0 +1,39 @@
+enum Day {
+    MONDAY @enum(value: "monday")
+    TUESDAY @enum(value: "tuesday")
+    WEDDAY @enum(value: "wedday")
+    THURSDAY @enum(value: "thursday")
+    FRIDAY @enum(value: "friday")
+    SATURDAY @enum(value: "saturday")
+    SUNDAY @enum(value: "sunday")
+}
+
+type Schedule {
+    id: ID!
+    class: Classes @belongsTo
+    day: Day
+}
+
+input CreateScheduleInput {
+    day: Day
+    class: CreateClassBelongsTo
+}
+
+input CreateClassBelongsTo {
+    connect: ID
+}
+
+input UpdateScheduleInput {
+    id: ID!
+    day: Day
+}
+
+extend type Mutation {
+    createSchedule(input: CreateScheduleInput! @spread): Schedule! @create
+    updateSchedule(input: UpdateScheduleInput! @spread): Schedule! @update
+    deleteSchedule(id: ID! @eq): Schedule! @delete
+}
+
+extend type Query {
+    Schedule(id: ID! @eq): Schedule! @find
+}
