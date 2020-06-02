@@ -8,6 +8,10 @@ type ClassContent {
     description: String!
     file_url: String
 }
+extend type Query @guard {
+    ClassContents: [ClassContent!]! @paginate(defaultCount: 10)
+    ClassContent(id: ID @eq): ClassContent @find
+}
 
 extend type Mutation {
     createClassContent(input: createClassContentInput @spread): ClassContent!

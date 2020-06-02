@@ -1,0 +1,13 @@
+<?php
+
+namespace {{modelNamespace}}\{{modelDir}};
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class {{modelName}}Resource extends JsonResource
+{
+    public function toArray($request)
+    {
+        return [{{columns}}];
+    }
+}

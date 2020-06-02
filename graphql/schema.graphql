@@ -20,3 +20,4 @@ scalar Upload
 #import forum.graphql
 #import schedule.graphql
 #import schedule_sessions.graphql
+#import exam.graphql

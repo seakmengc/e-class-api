@@ -5,6 +5,9 @@ namespace App\GraphQL\Mutations\ClassContent;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use App\Models\ClassContent;
+use App\Models\Classes;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateClassContent
 {
@@ -19,22 +22,37 @@ class UpdateClassContent
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-      $classContent = ClassContent::findOrFail($args['id']);
-      $classContent->update([
-        'name' => $args['name'],
-        'description' => $args['description'],
-        'class_id' => $args['class_id']
-      ]);
-      //delete previous media
-      $classContent->clearMediaCollection('class-content');
+      $class_id = $args['class_id'];
+      $teacher_id = Classes::findOrFail($class_id)->teacher_id;
+      $user_id = User::findOrFail($teacher_id)->id;
 
-      $Media = $classContent->addMedia($args['file_url'])->toMediaCollection('class-content');
-      $fullPathOnDisk = $classContent->getMedia('class-content')->first()->file_name;
+      if(Auth::id() !== $user_id){
+        throw new ClassContentException(
+          'Unantorize to update since you are not owner of this class content',
+          'Unanthorize to update.'
+           );
+      }
+      else {
+        $classContent = ClassContent::findOrFail($args['id']);
+        $classContent->update([
+          'name' => $args['name'],
+          'description' => $args['description'],
+          'class_id' => $args['class_id']
+        ]);
+        //delete previous media
+        $classContent->clearMediaCollection('class-content');
 
-      $classContent->update([
-        'file_url' => $fullPathOnDisk
-      ]);
+        $Media = $classContent->addMedia($args['file_url'])->toMediaCollection('class-content');
+        $fullPathOnDisk = $classContent->getMedia('class-content')->first()->file_name;
 
-       return $classContent;
+        $classContent->update([
+          'file_url' => $fullPathOnDisk
+        ]);
+
+         return $classContent;
+      }
+
+
+
     }
 }
