@@ -4,7 +4,7 @@ namespace App\GraphQL\Directives\Exams;
 
 use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
-class CreateExamValidationDirectiveDirective extends ValidationDirective
+class CreateExamValidationDirective extends ValidationDirective
 {
     public function rules(): array
     {

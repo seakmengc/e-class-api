@@ -21,7 +21,7 @@ type Exam {
     qa: [Question!]
     attempt: Int!
     due_at: DateTimeTz
-    publishes_at: DateTimeTz
+    publishes_at: DateTimeTz 
     created_at: DateTimeTz
     updated_at: DateTimeTz
 }

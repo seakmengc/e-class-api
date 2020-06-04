@@ -9,7 +9,8 @@ type Comment {
     id: ID!
     comment: String!
     author: User! @belongsTo
-    commentable: Commentable! @morphOne
+    commentable: Commentable @morphTo
+    commentable_type: String
     created_at: DateTimeTz
     updated_at: DateTimeTz
 }
@@ -22,7 +23,6 @@ input CreateCommentBelongsTo {
 input UpdateCommentBelongsTo {
     connect: ID
     disconnect: Boolean
-    delete: Boolean
 }
 
 input CreateCommentableOperations {
@@ -31,8 +31,12 @@ input CreateCommentableOperations {
 
 input CreateCommentInput {
     comment: String!
-    author: CreateUserBelongsTo
     commentable: CreateCommentableOperations
+}
+
+input UpdateCommentInput {
+    id: ID!
+    comment: String!
 }
 
 input ConnectCommentableInput {
@@ -40,6 +44,9 @@ input ConnectCommentableInput {
     id: ID!
 }
 
-extend type Mutation {
-    createComment(input: CreateCommentInput! @spread): Comment! @create
+extend type Mutation @guard {
+    createComment(input: CreateCommentInput! @spread): Forum!
+    updateComment(input: UpdateCommentInput! @spread): Forum!
+    deleteComment(id: ID! @eq): Forum!
 }
+
