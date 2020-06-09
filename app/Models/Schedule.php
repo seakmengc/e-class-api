@@ -11,7 +11,7 @@ class Schedule extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['day'];
+    protected $fillable = ['day', 'class_id'];
 
     public function class(): BelongsTo
     {

@@ -1,0 +1,35 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar Date
+  @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+type ClassAttendance{
+  id: ID!
+  schedule_sessions_id: Int!
+  date: Date!
+}
+
+extend type Query{
+  ClassAttendances: [ClassAttendance!] @paginate(defaultCount: 10)
+  ClassAttendance(id: ID! @eq): ClassAttendance! @find
+}
+
+extend type Mutation{
+  createClassAttendance(input: createClassAttendanceInput! @spread): ClassAttendance!
+   @create
+   @createClassAttendanceValidation
+  updateClassAttendance(input: updateClassAttendanceInput! @spread): ClassAttendance!
+  @update
+  @createClassAttendanceValidation
+  deleteClassAttendance(id: ID! @eq): ClassAttendance! @delete
+}
+
+input createClassAttendanceInput{
+  schedule_sessions_id: Int!
+  date: Date!
+}
+
+input updateClassAttendanceInput{
+  id: ID!
+  schedule_sessions_id: Int!
+  date: Date!
+}
