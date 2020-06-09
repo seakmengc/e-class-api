@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasAuthIdFields;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -9,9 +10,13 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Forum extends Model
 {
+    use HasAuthIdFields;
+
     protected $fillable = [
         'class_content_id', 'title', 'description', 'author'
     ];
+
+    protected $authIdFields = ['author_id'];
 
     public function comments(): MorphMany
     {
@@ -31,5 +36,12 @@ class Forum extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleted(function (Forum $forum) {
+            $forum->comments()->delete();
+        });
     }
 }

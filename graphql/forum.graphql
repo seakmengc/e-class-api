@@ -22,7 +22,6 @@ input CreateForumInput {
     title: String @rules(apply: ["required", "max:255", "string"])
     description: String @rules(apply: ["required", "max:60000"])
     classContent: CreateClassContentBelongsTo
-    author: CreateUserBelongsTo
 }
 
 input UpdateForumInput {
@@ -32,13 +31,13 @@ input UpdateForumInput {
     answer: UpdateCommentBelongsTo
 }
 
-extend type Mutation {
-    createForum(input: CreateForumInput! @spread): Forum! @create
+extend type Mutation @guard {
+    createForum(input: CreateForumInput! @spread): Forum! @create 
     updateForum(input: UpdateForumInput! @spread): Forum! @update
     deleteForum(id: ID! @eq): Forum! @delete
 }
 
-extend type Query {
+extend type Query @guard {
     forum(id: ID! @eq): Forum! @find
     forumsInClass(class_id: ID! @eq): Forum! @find
 }

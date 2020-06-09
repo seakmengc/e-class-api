@@ -1,0 +1,10 @@
+<?php
+
+namespace {{modelNamespace}}\{{modelDir}};
+
+use Illuminate\Database\Eloquent\Model;
+
+class {{modelName}} extends Model
+{
+    protected $fillable = [{{fillables}}];
+}
