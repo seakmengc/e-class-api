@@ -8,7 +8,7 @@ type ClassContent {
     description: String!
     file_url: String
 }
-extend type Query @guard {
+extend type Query{
     ClassContents: [ClassContent!]! @paginate(defaultCount: 10)
     ClassContent(id: ID @eq): ClassContent @find
 }

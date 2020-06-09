@@ -22,16 +22,16 @@ class CreateClasses
    */
   public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
   {
-    $class = Classes::create($args);
+    // $class = Classes::create($args);
+    // //
+    // //
+    // $user = $class->teacher()->create($args['teacher']['create']);
     //
+    // $class = Classes::create([
+    //   'teacher_id' => $user['id']
+    // ]);
     //
-    $user = $class->teacher()->create($args['teacher']['create']);
-
-    $class = Classes::create([
-      'teacher_id' => $user['id']
-    ]);
-
-    //
-    return $class;
+    // //
+    // return $class;
   }
 }
