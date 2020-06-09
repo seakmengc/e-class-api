@@ -19,3 +19,4 @@ scalar Upload
 #import comment.graphql
 #import forum.graphql
 #import class_categories.graphql
+#import schedual_days.graphql

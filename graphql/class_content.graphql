@@ -13,7 +13,7 @@ extend type Query{
     ClassContent(id: ID @eq): ClassContent @find
 }
 
-extend type Mutation {
+extend type Mutation @guard{
     createClassContent(input: createClassContentInput @spread): ClassContent!
         @createClassContentValidation
     updateClassContent(input: updateClassContentInput @spread): ClassContent!

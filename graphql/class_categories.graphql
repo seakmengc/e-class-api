@@ -7,10 +7,10 @@ type ClassCategories{
 
 extend type Query {
   ClassCategories: [ClassCategories!] @paginate(defaultCount: 10)
-  ClassCategories(id: ID @eq): ClassCategories @find
+  ClassCategory(id: ID @eq): ClassCategories @find
 }
 
-extend type Mutation {
+extend type Mutation @guard{
   createClassCategories(input: createClassCategoriesInput @spread): ClassCategories!
   @createClassCategoriesValidation
   updateClassCategories(input: updateClassCategoriesInput @spread): ClassCategories!
