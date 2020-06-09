@@ -23,3 +23,4 @@ scalar Upload
 #import schedule_sessions.graphql
 #import exam.graphql
 #import class_attendance.graphql
+#import student_absence.graphql

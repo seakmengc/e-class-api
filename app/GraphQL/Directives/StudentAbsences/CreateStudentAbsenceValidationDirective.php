@@ -2,9 +2,17 @@
 
 namespace App\GraphQL\Directives\StudentAbsences;
 
-use Nuwave\Lighthouse\Schema\Directives\BaseDirective;
+use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
-class CreateStudentAbsenceValidationDirective extends BaseDirective
+class CreateStudentAbsenceValidationDirective extends ValidationDirective
 {
-    // TODO implement the directive https://lighthouse-php.com/master/custom-directives/getting-started.html
+    public function rules(): array
+    {
+      return [
+        'student_id' => 'required',
+        'has_permission' => 'required',
+        'reason' => 'required|min:4',
+        'class_attendance_id' => 'required'
+      ];
+    }
 }
