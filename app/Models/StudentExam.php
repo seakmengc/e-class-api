@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
+use App\Traits\HasAuthIdFields;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentExam extends Model
 {
-    protected $fillable = ['student_id', 'exam_id', 'answer', 'point'];
+    use HasAuthIdFields;
+
+    protected $fillable = ['exam_id', 'answer', 'points'];
 
     protected $casts = [
-        'answer' => 'object',
+        'answer' => 'collection',
     ];
+
+    protected $authIdFields = ['student_id'];
 
     public function exam()
     {

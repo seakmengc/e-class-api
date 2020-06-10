@@ -1,0 +1,16 @@
+type StudentExam {
+    id: ID!
+    student: User! @belongsTo
+    exam: Exam! @belongsTo
+    attempts: Int! #auto increment on saving
+    answer: [ExamAnswer]!
+    points: Float #auto calculate when grading
+    created_at: DateTimeTz
+    updated_at: DateTimeTz
+}
+
+type ExamAnswer {
+    id: ID!
+    answers: [String!]
+    points: Float
+}

@@ -1,0 +1,39 @@
+type ClassCategory {
+    id: ID!
+    name: String!
+    weight: Float!
+    class: Classes! @belongsTo
+    exams: [Exam!] @hasMany
+}
+
+extend type Query {
+    ClassCategory: [ClassCategory!] @paginate(defaultCount: 10)
+    ClassCategory(id: ID @eq): ClassCategory @find
+}
+
+extend type Mutation @guard {
+    createClassCategory(
+        input: createClassCategoryInput @spread
+    ): ClassCategory! @createClassCategoryValidation
+    updateClassCategory(
+        input: updateClassCategoryInput @spread
+    ): ClassCategory! @update @createClassCategoryValidation
+    deleteClassCategory(id: ID! @eq): ClassCategory! @delete
+}
+
+input createClassCategoryInput {
+    name: String!
+    weight: Float!
+    class_id: Int!
+}
+
+input updateClassCategoryInput {
+    id: Int!
+    name: String!
+    weight: Float!
+    class_id: Int!
+}
+
+input CreateClassCategoryBelongsTo {
+    connect: ID!
+}

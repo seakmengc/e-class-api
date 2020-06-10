@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\Class;
-use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
+use App\Models\Classes;
 
 class ClassPolicy
 {
@@ -28,7 +28,7 @@ class ClassPolicy
      * @param  \App\Class  $class
      * @return mixed
      */
-    public function view(User $user, Class $class)
+    public function view(User $user, Classes $class)
     {
         //
     }
@@ -51,7 +51,7 @@ class ClassPolicy
      * @param  \App\Class  $class
      * @return mixed
      */
-    public function update(User $user, Class $class)
+    public function update(User $user, Classes $class)
     {
         //
     }
@@ -63,7 +63,7 @@ class ClassPolicy
      * @param  \App\Class  $class
      * @return mixed
      */
-    public function delete(User $user, Class $class)
+    public function delete(User $user, Classes $class)
     {
         //
     }
@@ -75,7 +75,7 @@ class ClassPolicy
      * @param  \App\Class  $class
      * @return mixed
      */
-    public function restore(User $user, Class $class)
+    public function restore(User $user, Classes $class)
     {
         //
     }
@@ -87,7 +87,7 @@ class ClassPolicy
      * @param  \App\Class  $class
      * @return mixed
      */
-    public function forceDelete(User $user, Class $class)
+    public function forceDelete(User $user, Classes $class)
     {
         //
     }

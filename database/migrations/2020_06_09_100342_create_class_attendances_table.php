@@ -15,10 +15,16 @@ class CreateClassAttendancesTable extends Migration
     {
         Schema::create('class_attendances', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('schedule_sessions_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->date('date');
+
+            $table->foreignId('class_id')
+                ->constrained()
+                ->onDelete('cascade');
+
+            $table->timestamp('date');
             $table->timestamps();
         });
     }

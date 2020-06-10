@@ -10,6 +10,8 @@ class UserObserver
     {
         $user->username = strtolower($user->username);
         $user->email = strtolower($user->email);
-        $user->password = bcrypt($user->password);
+
+        if ($user->isDirty('password'))
+            $user->password = bcrypt($user->password);
     }
 }

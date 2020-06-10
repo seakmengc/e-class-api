@@ -1,13 +1,13 @@
 <?php
 
-namespace App\GraphQL\Mutations\ClassCategories;
+namespace App\GraphQL\Mutations\Exam;
 
+use App\Models\Exam;
 use GraphQL\Type\Definition\ResolveInfo;
+use Illuminate\Support\Arr;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
-use App\Models\ClassCategories;
 
-
-class CreateClassCategories
+class CreateExam
 {
     /**
      * Return a value for the field.
@@ -20,8 +20,14 @@ class CreateClassCategories
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-       $classCategories = ClassCategories::create($args);
+        array_walk($args['qa'], function (&$qa, $ind) {
+            $qa['id'] = $ind + 1;
+        });
 
-       return $classCategories;
+        $args['class_category_id'] = Arr::get($args, 'classCategory.connect');
+
+        $exam = Exam::create($args);
+
+        return $exam;
     }
 }

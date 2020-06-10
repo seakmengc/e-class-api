@@ -2,8 +2,6 @@
 
 namespace App\GraphQL\Directives\ScheduleSession;
 
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
 class CreateScheduleSessionValidationDirective extends ValidationDirective

@@ -24,7 +24,7 @@ extend type Mutation @guard{
 input createClassContentInput {
     name: String!
     description: String!
-    class_id: Int
+    class_id: Int!
     file_url: Upload
 }
 

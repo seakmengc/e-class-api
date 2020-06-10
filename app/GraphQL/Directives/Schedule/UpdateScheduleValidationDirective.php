@@ -2,11 +2,9 @@
 
 namespace App\GraphQL\Directives\Schedule;
 
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
-class CreateScheduleValidationDirective extends ValidationDirective
+class UpdateScheduleValidationDirective extends ValidationDirective
 {
 
   public function rules(): array

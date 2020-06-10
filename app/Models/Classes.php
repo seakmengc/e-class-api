@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
 class Classes extends Model
 {
@@ -24,8 +25,8 @@ class Classes extends Model
     return $this->belongsToMany(User::class, 'student_has_classes', 'class_id', 'student_id');
   }
 
-  public function class_categories(): HasMany
+  public function classCategories(): HasMany
   {
-    return $this->HasMany(ClassCategories::class);
+    return $this->hasMany(ClassCategory::class);
   }
 }

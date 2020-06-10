@@ -19,19 +19,22 @@ type Exam {
     possible: Float!
     description: String
     qa: [Question!]
-    attempt: Int!
+    attempts: Int!
     due_at: DateTimeTz
-    publishes_at: DateTimeTz 
+    publishes_at: DateTimeTz
+    classCategory: ClassCategory! @belongsTo
+    submittings: [StudentExam] @hasMany
     created_at: DateTimeTz
     updated_at: DateTimeTz
 }
 
 input CreateExamInput {
+    classCategory: CreateClassCategoryBelongsTo
     name: String!
     possible: Float!
     description: String
     qa: [CreateQuestionInput]
-    attempt: Int!
+    attempts: Int!
     due_at: DateTimeTz
     publishes_at: DateTimeTz
 }
@@ -44,22 +47,30 @@ input CreateQuestionInput {
     points: Float!
 }
 
+input UpdateQuestionInput {
+    id: ID!
+    question: String
+    type: QuestionTypes
+    answers: [String!]
+    possibles: [String!]
+    points: Float
+}
+
 input UpdateExamInput {
     id: ID!
-    name: String!
-    possible: Float!
+    name: String
+    possible: Float
     description: String
-    qa: [CreateQuestionInput]
-    attempt: Int!
+    qa: [UpdateQuestionInput]
+    attempts: Int
     due_at: DateTimeTz
     publishes_at: DateTimeTz
 }
 
 extend type Mutation {
     createExam(input: CreateExamInput! @spread): Exam!
-        @create
         @createExamValidation
-    updateExam(input: UpdateExamInput! @spread): Exam! @update
+    updateExam(input: UpdateExamInput! @spread): Exam!
     deleteExam(id: ID! @eq): Exam! @delete
 }
 
