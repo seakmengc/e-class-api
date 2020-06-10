@@ -1,13 +1,15 @@
 <?php
 
-namespace App\GraphQL\Mutations\Exam;
+namespace App\GraphQL\Mutations\StudentExam;
 
 use App\Models\Exam;
+use App\Models\StudentExam;
+use Arr;
 use GraphQL\Type\Definition\ResolveInfo;
-use Illuminate\Support\Arr;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
-class CreateExam
+class UpdateStudentExam
 {
     /**
      * Return a value for the field.
@@ -20,12 +22,20 @@ class CreateExam
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        array_walk($args['qa'], function (&$qa, $ind) {
-            $qa['id'] = $ind + 1;
-        });
+        $exam = Exam::find(Arr::get($args, 'exam.connect'));
 
-        $args['class_category_id'] = Arr::get($args, 'classCategory.connect');
+        $exam->isNotDue();
 
-        return Exam::create($args);
+        $studentExam = $exam->submittings()->whereStudentId(auth()->id())->first();
+
+        if ($studentExam->attempts === $exam->attempts)
+            throw new NotAcceptableHttpException('Too many attempts.');
+
+        if (isset($args['answer']))
+            $args['answer'] = StudentExam::updateAnswersById($studentExam->answer, $args['answer']);
+
+        $studentExam->update($args);
+
+        return $studentExam;
     }
 }

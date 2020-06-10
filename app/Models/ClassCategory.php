@@ -12,7 +12,7 @@ class ClassCategory extends Model
 
   public function class(): BelongsTo
   {
-    return $this->belongsTo(Classes::class);
+    return $this->belongsTo(Classes::class, 'class_id');
   }
 
   public function exams(): HasMany

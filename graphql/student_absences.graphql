@@ -1,0 +1,37 @@
+type StudentAbsence {
+    id: ID!
+    student_id: Int!
+    has_permission: Boolean!
+    reason: String!
+    class_attendance_id: Int!
+}
+
+extend type Query {
+    StudentAbsences: [StudentAbsence!] @paginate(defaultCount: 10)
+    StudentAbsence(id: ID! @eq): StudentAbsence! @find
+}
+
+extend type Mutation {
+    createStudentAbsence(
+        input: createStudentAbsenceInput! @spread
+    ): StudentAbsence! @create @createStudentAbsenceValidation
+    updateStudentAbsence(
+        input: updateStudentAbsenceInput! @spread
+    ): StudentAbsence! @update @createStudentAbsenceValidation
+    deleteStudentAbsence(id: ID! @eq): StudentAbsence! @delete
+}
+
+input createStudentAbsenceInput {
+    student_id: Int!
+    has_permission: Boolean!
+    reason: String!
+    class_attendance_id: Int!
+}
+
+input updateStudentAbsenceInput {
+    id: ID!
+    student_id: Int!
+    has_permission: Boolean!
+    reason: String!
+    class_attendance_id: Int!
+}

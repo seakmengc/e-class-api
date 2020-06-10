@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStudentsAbsencesTable extends Migration
+class CreateStudentAbsencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -37,6 +37,6 @@ class CreateStudentsAbsencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students_absences');
+        Schema::dropIfExists('student_absences');
     }
 }

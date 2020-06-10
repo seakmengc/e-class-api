@@ -4,12 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Traits\HasAuthIdFields;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class StudentsAbsences extends Model
+class StudentAbsence extends Model
 {
-  protected $fillable = ['student_id', 'has_permission', 'class_attendance_id', 'reason'];
+  use HasAuthIdFields;
+
+  protected $fillable = ['has_permission', 'class_attendance_id', 'reason'];
+
+  protected $authIdFields = ['student_id'];
 
   public function user(): BelongsTo
   {

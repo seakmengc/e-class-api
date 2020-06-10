@@ -4,7 +4,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Models\StudentsAbsences::class, function (Faker $faker) {
+$factory->define(App\Models\StudentAbsences::class, function (Faker $faker) {
     return [
         'student_id' => factory(App\Models\User::class),
     ];

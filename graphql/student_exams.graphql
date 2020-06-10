@@ -1,16 +1,44 @@
 type StudentExam {
     id: ID!
     student: User! @belongsTo
-    exam: Exam! @belongsTo
     attempts: Int! #auto increment on saving
-    answer: [ExamAnswer]!
+    answer: [ExamAnswer!]
     points: Float #auto calculate when grading
     created_at: DateTimeTz
     updated_at: DateTimeTz
 }
 
 type ExamAnswer {
-    id: ID!
+    id: String!
     answers: [String!]
     points: Float
+}
+
+extend type Mutation @guard {
+    createStudentExam (input: StudentExamInput! @spread): StudentExam!
+        @create
+        @createStudentExamValidation
+    updateStudentExam (input: StudentExamInput! @spread): StudentExam!
+        @createStudentExamValidation
+    gradeStudentExam (input: gradeStudentExamInput! @spread): StudentExam!
+}
+
+input StudentExamInput {
+    exam: ConnectExamBelongsTo
+    answer: [CreateExamAnswerInput!]
+}
+
+input CreateExamAnswerInput {
+    id: ID!
+    answers: [String!]
+}
+
+input gradeStudentExamInput {
+    id: ID!
+    answer: [GradeExamAnswerInput!]
+}
+
+input GradeExamAnswerInput {
+    id: ID!
+    points: Float!
 }

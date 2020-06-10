@@ -1,13 +1,14 @@
 <?php
 
-namespace App\GraphQL\Mutations\Exam;
+namespace App\GraphQL\Mutations\StudentExam;
 
 use App\Models\Exam;
+use App\Models\StudentExam;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Arr;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class CreateExam
+class CreateStudentExam
 {
     /**
      * Return a value for the field.
@@ -20,12 +21,8 @@ class CreateExam
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        array_walk($args['qa'], function (&$qa, $ind) {
-            $qa['id'] = $ind + 1;
-        });
+        Exam::find(Arr::get($args, 'exam.connect'))->isNotDue();
 
-        $args['class_category_id'] = Arr::get($args, 'classCategory.connect');
-
-        return Exam::create($args);
+        return StudentExam::create($args);
     }
 }

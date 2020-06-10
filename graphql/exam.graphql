@@ -23,7 +23,7 @@ type Exam {
     due_at: DateTimeTz
     publishes_at: DateTimeTz
     classCategory: ClassCategory! @belongsTo
-    submittings: [StudentExam] @hasMany
+    submittings: [StudentExam!] @hasMany
     created_at: DateTimeTz
     updated_at: DateTimeTz
 }
@@ -67,6 +67,10 @@ input UpdateExamInput {
     publishes_at: DateTimeTz
 }
 
+input ConnectExamBelongsTo {
+    connect: ID!
+}
+
 extend type Mutation {
     createExam(input: CreateExamInput! @spread): Exam!
         @createExamValidation
@@ -75,5 +79,6 @@ extend type Mutation {
 }
 
 extend type Query {
-    exam(id: ID! @eq): Exam! @find
+    exam(id: ID! @eq): Exam! @field(resolver: "Exam\\FindExamFor")
+    studentExamIds(id: ID! @eq): [ID!]! @field(resolver: "Exam\\GetStudentExamIds")
 }

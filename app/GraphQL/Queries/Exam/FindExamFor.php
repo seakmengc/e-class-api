@@ -1,13 +1,12 @@
 <?php
 
-namespace App\GraphQL\Mutations\Exam;
+namespace App\GraphQL\Queries\Exam;
 
-use App\Models\Exam;
-use GraphQL\Type\Definition\ResolveInfo;
-use Illuminate\Support\Arr;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use GraphQL\Type\Definition\ResolveInfo;
+use App\Models\Exam;
 
-class CreateExam
+class FindExamFor
 {
     /**
      * Return a value for the field.
@@ -20,12 +19,6 @@ class CreateExam
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        array_walk($args['qa'], function (&$qa, $ind) {
-            $qa['id'] = $ind + 1;
-        });
-
-        $args['class_category_id'] = Arr::get($args, 'classCategory.connect');
-
-        return Exam::create($args);
+        return Exam::whereId($args['id'])->first()->hiddenBasedRole();
     }
 }

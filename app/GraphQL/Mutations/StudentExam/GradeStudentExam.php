@@ -1,13 +1,12 @@
 <?php
 
-namespace App\GraphQL\Mutations\Exam;
+namespace App\GraphQL\Mutations\StudentExam;
 
-use App\Models\Exam;
+use App\Models\StudentExam;
 use GraphQL\Type\Definition\ResolveInfo;
-use Illuminate\Support\Arr;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class CreateExam
+class GradeStudentExam
 {
     /**
      * Return a value for the field.
@@ -20,12 +19,19 @@ class CreateExam
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        array_walk($args['qa'], function (&$qa, $ind) {
-            $qa['id'] = $ind + 1;
-        });
+        $studentExam = StudentExam::findOrFail($args['id']);
 
-        $args['class_category_id'] = Arr::get($args, 'classCategory.connect');
+        $args['answer'] = StudentExam::updateAnswersById($studentExam->answer, $args['answer']);
 
-        return Exam::create($args);
+        $studentExam->points = $this->calculatePoints($args['answer']);
+
+        $studentExam->update($args);
+
+        return $studentExam;
+    }
+
+    private function calculatePoints($answers)
+    {
+        return collect($answers)->sum('points');
     }
 }

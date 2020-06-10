@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class Exam extends Model
 {
@@ -16,9 +19,33 @@ class Exam extends Model
         'publishes_at' => 'datetime',
     ];
 
+    public function hiddenBasedRole()
+    {
+        if (auth()->id() === $this->class->teacher_id)
+            return $this;
+
+        return collect($this)->except(['qa']);
+    }
+
+    public function isNotDue()
+    {
+        if (optional($this->due_at)->isPast())
+            throw new NotAcceptableHttpException('Exam is already due.');
+    }
+
+    public function class()
+    {
+        return $this->hasOneThrough(Classes::class, ClassCategory::class, 'id', 'id', 'class_category_id', 'class_id');
+    }
+
     public function classCategory(): BelongsTo
     {
-        return $this->belongsTo(ClassCategory::class);
+        return $this->belongsTo(ClassCategory::class, 'class_category_id');
+    }
+
+    public function submittings(): HasMany
+    {
+        return $this->hasMany(StudentExam::class, 'exam_id');
     }
 
     public static function updateQuestionsById($original, $inputQuestions): Collection
@@ -35,6 +62,6 @@ class Exam extends Model
                 return $question;
             });
 
-        return $modified->union($original);
+        return $modified->union($original)->values();
     }
 }
