@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Classes;
 use App\Models\Exam;
 use App\Models\StudentExam;
 use App\Models\User;
@@ -10,6 +11,16 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class StudentExamPolicy
 {
     use HandlesAuthorization;
+
+    public function viewAny(User $user, $injected)
+    {
+        $classId = Classes::findOrFail($injected['class_id'])->pluck('id')->first();
+
+        if ($user->isATeacherOf($classId))
+            return true;
+
+        return $user->isAStudentIn($classId);
+    }
 
     /**
      * Determine whether the user can view the model.

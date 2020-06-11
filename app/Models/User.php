@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Cmgmyr\Messenger\Traits\Messagable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,12 +24,12 @@ class User extends Authenticatable
         return $this->hasOne(Identity::class);
     }
 
-    public function learnings()
+    public function learnings(): BelongsToMany
     {
         return $this->belongsToMany(Classes::class, 'student_has_classes', 'student_id', 'class_id');
     }
 
-    public function teachings()
+    public function teachings(): HasMany
     {
         return $this->hasMany(Classes::class, 'teacher_id');
     }

@@ -29,4 +29,9 @@ class Classes extends Model
   {
     return $this->hasMany(ClassCategory::class);
   }
+
+  public function exams(): HasMany
+  {
+    return $this->hasMany(Exam::class, 'class_id');
+  }
 }

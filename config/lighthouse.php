@@ -8,6 +8,10 @@ $customDirectives = array_map(function ($each) {
     return 'App\GraphQL\Directives\\' . $each;
 }, array_diff(scandir(app_path('/GraphQL/Directives')), ['..', '.']));
 
+$customQueries = array_map(function ($each) {
+    return 'App\GraphQL\Queries\\' . $each;
+}, array_diff(scandir(app_path('/GraphQL/Queries')), ['..', '.']));
+
 return [
 
     /*
@@ -97,7 +101,7 @@ return [
 
     'namespaces' => [
         'models' => ['App', 'App\\Models'],
-        'queries' => 'App\\GraphQL\\Queries',
+        'queries' => ['App\\GraphQL\\Queries', ...$customQueries],
         'mutations' => ['App\\GraphQL\\Mutations', ...$customMutations],
         'subscriptions' => 'App\\GraphQL\\Subscriptions',
         'interfaces' => 'App\\GraphQL\\Interfaces',

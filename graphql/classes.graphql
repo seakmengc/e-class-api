@@ -4,6 +4,7 @@ type Classes {
     code: String!
     teacher: User @belongsTo
     students: [User!] @belongsToMany
+    exams: [Exam!] @hasMany
 }
 
 extend type Query {
