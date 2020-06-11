@@ -16,8 +16,6 @@ class StudentExamPolicy
     {
         $classId = Classes::findOrFail($injected['class_id'])->pluck('id')->first();
 
-        if ($user->isATeacherOf($classId))
-            return true;
 
         return $user->isAStudentIn($classId);
     }
@@ -32,6 +30,9 @@ class StudentExamPolicy
     public function view(User $user, StudentExam $studentExam)
     {
         $exam = $studentExam->exam;
+
+        if ($user->isATeacherOf($exam->class_id))
+            return true;
 
         return $user->isAStudentIn($exam->class_id)
             and $user->id === $studentExam->student_id;

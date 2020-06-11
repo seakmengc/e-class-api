@@ -27,7 +27,6 @@ extend type Query @guard {
     myExams(class_id: ID! @eq): [StudentExam!] @can(ability: "viewAny", injectArgs: "true")
     #intended for teachers in grading exam part
     studentExam(id: ID! @eq): StudentExam! @find @can(ability: "view", find: "id")
-    studentExamIds(id: ID! @eq): [ID!]! @field(resolver: "Exam\\GetStudentExamIds") 
 }
 
 input StudentExamInput {
