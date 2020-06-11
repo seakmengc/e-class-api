@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return false;
     }
 
     /**
@@ -29,7 +29,10 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        dd(1);
+        if ($user->id === $model->id)
+            return true;
+
+        return $user->isTeachingThis($model);
     }
 
     /**
@@ -40,7 +43,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can('Register Any User');
+        return false;
     }
 
     /**
@@ -52,7 +55,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return $user->id === $model->id;
     }
 
     /**
@@ -64,30 +67,6 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return mixed
-     */
-    public function restore(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return mixed
-     */
-    public function forceDelete(User $user, User $model)
-    {
-        //
+        return false;
     }
 }

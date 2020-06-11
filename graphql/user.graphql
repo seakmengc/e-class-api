@@ -82,7 +82,8 @@ type Mutation {
 
 type Query {
     me: User @auth
-    users: [User!]! @paginate(defaultCount: 10)
-    user(id: ID @eq): User @find
+    users: [User!] @paginate @can(ability: "viewAny")
+    user(id: ID! @eq): User @find @can(ability: "view", find: "id")
     userFindByUsername(username: String! @eq): User @find
+    userFindByUuid(uuid: String! @eq): User @find @can(ability: "view", find: "uuid")
 }

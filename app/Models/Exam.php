@@ -33,9 +33,9 @@ class Exam extends Model
             throw new NotAcceptableHttpException('Exam is already due.');
     }
 
-    public function class()
+    public function class(): BelongsTo
     {
-        return $this->hasOneThrough(Classes::class, ClassCategory::class, 'id', 'id', 'class_category_id', 'class_id');
+        return $this->belongsTo(Classes::class);
     }
 
     public function classCategory(): BelongsTo

@@ -32,6 +32,21 @@ class User extends Authenticatable
         return $this->hasMany(Classes::class, 'teacher_id');
     }
 
+    public function isAStudentIn($classId)
+    {
+        return $this->learnings()->whereId($classId)->exists();
+    }
+
+    public function isATeacherOf(int $classId)
+    {
+        return $this->teachings()->whereId($classId)->exists();
+    }
+
+    public function isTeachingThis(User $student)
+    {
+        return $this->teachings()->whereIn('id', $student->learnings()->pluck('id'))->exists();
+    }
+
     public function findForPassport($username)
     {
         return $this->where(self::usernameOrEmail($username), $username)->first();

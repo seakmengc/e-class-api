@@ -18,6 +18,9 @@ class CreateExamsTable extends Migration
             $table->foreignId('class_category_id')
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->foreignId('class_id')
+                ->constrained()
+                ->cascadeOnDelete();
 
             $table->string('name');
             $table->float('possible');

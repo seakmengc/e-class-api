@@ -74,7 +74,7 @@ extend type Mutation {
             resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve"
         )
     forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse!
-    resetPassword(input: NewPasswordWithOtpInput @spread): ResetPasswordResponse
+    resetPassword(input: NewPasswordWithOtpInput @spread): ResetPasswordResponse!
     updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse!
         @field(
             resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve"

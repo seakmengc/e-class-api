@@ -15,41 +15,13 @@ class RolesPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        $defaultRoles = ['Admin', 'Teacher', 'Student'];
-
-        $ownActions = [
-            'View Own',
-            'Create Own',
-            'Update Own',
-            'Delete Own'
-        ];
-        $anyActions = [
-            'View Any',
-            'Create Any',
-            'Update Any',
-            'Delete Any'
-        ];
-
-        $defaultPG = [
-            'User' => [...$anyActions, ...$ownActions],
-        ];
+        $defaultRoles = ['admin', 'teacher', 'student', 'user'];
 
         DB::beginTransaction();
 
         array_walk($defaultRoles, fn ($role) => Role::create([
             'name' => $role
         ]));
-
-        foreach ($defaultPG as $pgName => $actions) {
-            $pg = PermissionGroup::create([
-                'name' => $pgName,
-                'guard_name' => 'api'
-            ]);
-
-            array_walk($actions, fn ($permName) => $pg->permissions()->create([
-                'name' => $permName,
-            ]));
-        }
 
         DB::commit();
     }

@@ -16,9 +16,9 @@ class CommentPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user, array $injected)
     {
-        //
+        dd($injected);
     }
 
     /**
@@ -39,9 +39,9 @@ class CommentPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, array $injected)
     {
-        dd($user);
+        dd($user, $injected);
     }
 
     /**
@@ -64,30 +64,6 @@ class CommentPolicy
      * @return mixed
      */
     public function delete(User $user, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
-     * @return mixed
-     */
-    public function restore(User $user, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
-     * @return mixed
-     */
-    public function forceDelete(User $user, Comment $comment)
     {
         //
     }

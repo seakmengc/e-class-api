@@ -23,6 +23,7 @@ type Exam {
     due_at: DateTimeTz
     publishes_at: DateTimeTz
     classCategory: ClassCategory! @belongsTo
+    class: Classes! @belongsTo
     submittings: [StudentExam!] @hasMany
     created_at: DateTimeTz
     updated_at: DateTimeTz
@@ -30,6 +31,7 @@ type Exam {
 
 input CreateExamInput {
     classCategory: CreateClassCategoryBelongsTo
+    class_id: ID! @rules(apply: ["required", "integer", "exists:classes,id"])
     name: String!
     possible: Float!
     description: String
@@ -73,12 +75,15 @@ input ConnectExamBelongsTo {
 
 extend type Mutation {
     createExam(input: CreateExamInput! @spread): Exam!
-        @createExamValidation
-    updateExam(input: UpdateExamInput! @spread): Exam!
-    deleteExam(id: ID! @eq): Exam! @delete
+        @createExamValidation @can(ability: "create", injectArgs: "true")
+    updateExam(input: UpdateExamInput! @spread): Exam! @can(ability: "create", find: "UpdateExamInput.id")
+    deleteExam(id: ID! @eq): Exam! @delete @can(ability: "delete", find: "id")
 }
 
 extend type Query {
-    exam(id: ID! @eq): Exam! @field(resolver: "Exam\\FindExamFor")
-    studentExamIds(id: ID! @eq): [ID!]! @field(resolver: "Exam\\GetStudentExamIds")
+    #students and teacher access to the same query
+    exam(id: ID! @eq): Exam! @field(resolver: "Exam\\FindExamFor") @can(ability: "view", injectArgs: "true")
+    #students and teacher access to the same query
+    exams(class_id: ID! @eq): [Exam!] @paginate @can(ability: "viewAny", injectArgs: "true")
+    studentExamIds(id: ID! @eq): [ID!]! @field(resolver: "Exam\\GetStudentExamIds") @can(ability: "viewAny", injectArgs: "true")
 }

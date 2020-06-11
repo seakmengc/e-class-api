@@ -19,17 +19,14 @@ class CreateForumsTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
+            $table->foreignId('class_id')
+                ->constrained()
+                ->onDelete('cascade');
+
             $table->string('title');
             $table->text('description');
-
-            $table->foreignId('author_id')
-                ->constrained('users', 'id')
-                ->cascadeOnDelete();
-
-            $table->foreignId('answer_id')
-                ->nullable()
-                ->constrained('comments', 'id')
-                ->cascadeOnDelete();
+            $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('answer_id')->nullable();
 
             $table->timestamps();
         });

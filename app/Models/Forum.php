@@ -13,7 +13,7 @@ class Forum extends Model
     use HasAuthIdFields;
 
     protected $fillable = [
-        'class_content_id', 'title', 'description', 'author'
+        'class_content_id', 'class_id', 'title', 'description', 'author'
     ];
 
     protected $authIdFields = ['author_id'];
@@ -26,6 +26,11 @@ class Forum extends Model
     public function answer(): BelongsTo
     {
         return $this->belongsTo(Comment::class);
+    }
+
+    public function class(): BelongsTo
+    {
+        return $this->belongsTo(Classes::class);
     }
 
     public function classContent(): BelongsTo

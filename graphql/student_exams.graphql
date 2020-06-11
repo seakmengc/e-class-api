@@ -16,15 +16,14 @@ type ExamAnswer {
 
 extend type Mutation @guard {
     createStudentExam (input: StudentExamInput! @spread): StudentExam!
-        @create
-        @createStudentExamValidation
+        @createStudentExamValidation @can(ability: "create", injectArgs: "true")
     updateStudentExam (input: StudentExamInput! @spread): StudentExam!
-        @createStudentExamValidation
-    gradeStudentExam (input: gradeStudentExamInput! @spread): StudentExam!
+        @createStudentExamValidation @can(ability: "create", injectArgs: "true")
+    gradeStudentExam (input: gradeStudentExamInput! @spread): StudentExam! @can(ability: "grade", find: "id")
 }
 
 input StudentExamInput {
-    exam: ConnectExamBelongsTo
+    exam_id: ID!
     answer: [CreateExamAnswerInput!]
 }
 

@@ -22,7 +22,7 @@ class UpdateStudentExam
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $exam = Exam::find(Arr::get($args, 'exam.connect'));
+        $exam = Exam::findOrFail($args['exam_id']);
 
         $exam->isNotDue();
 
