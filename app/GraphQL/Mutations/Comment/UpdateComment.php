@@ -23,6 +23,6 @@ class UpdateComment
 
         $comment->update($args);
 
-        return $comment->commentable;
+        return $comment;
     }
 }

@@ -20,9 +20,9 @@ class DeleteComment
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
         $comment = Comment::findOrFail($args['id']);
-        
+
         $comment->delete();
 
-        return $comment->commentable;
+        return $comment;
     }
 }

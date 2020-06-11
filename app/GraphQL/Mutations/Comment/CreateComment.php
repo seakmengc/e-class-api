@@ -21,11 +21,9 @@ class CreateComment
     {
         $commentableType = Arr::get($args, 'commentable.connect.type');
         $commentableId = (int) Arr::get($args, 'commentable.connect.id');
-        
+
         $commentable = $commentableType::FindOrFail($commentableId);
 
-        $commentable->comments()->create($args);
-        
-        return $commentable;
+        return $commentable->comments()->create($args);
     }
 }

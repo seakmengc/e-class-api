@@ -45,8 +45,8 @@ input ConnectCommentableInput {
 }
 
 extend type Mutation @guard {
-    createComment(input: CreateCommentInput! @spread): Forum!
-    updateComment(input: UpdateCommentInput! @spread): Forum!
-    deleteComment(id: ID! @eq): Forum!
+    createComment(input: CreateCommentInput! @spread): Comment! @can(ability: "create")
+    updateComment(input: UpdateCommentInput! @spread): Comment!
+    deleteComment(id: ID! @eq): Comment!
 }
 
