@@ -12,7 +12,7 @@ class CustomException extends Exception implements RendersErrorsExtensions
     {
         parent::__construct($message, 200);
 
-        $this->reason = $reason;;
+        $this->reason = $reason;
     }
 
     /**

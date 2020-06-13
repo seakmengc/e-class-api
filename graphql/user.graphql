@@ -103,6 +103,6 @@ type Query @guard{
     me: User @auth
     users: [User!] @paginate @can(ability: "viewAny") @canAccess(requiredRole: "admin")
     user(id: ID! @eq): User @first 
-    userFindByUsername(username: String! @eq): User @first @canAccess(requiredRole: "admin")
+    userFindByUsername(username: String! @eq): User! @first @canAccess(requiredRole: "admin")
     userFindByUuid(uuid: String! @eq): User @canAccess(requiredRole: "admin")
 }

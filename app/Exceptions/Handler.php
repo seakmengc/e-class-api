@@ -79,9 +79,30 @@ class Handler extends ExceptionHandler implements ErrorHandler
 
     public static function handle(Error $error, Closure $next): array
     {
-        $error = new Error(
-            $error->message
-        );
+        if (method_exists($error->getPrevious(), 'extensionsContent')) {
+            $error = new Error(
+                $error->message,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $error->getPrevious()->extensionsContent()
+            );
+        } else {
+            $error = new Error(
+                $error->message,
+                null,
+                null,
+                null,
+                null,
+                null,
+                [
+                    'reason' => $error->message,
+                    'success' => false,
+                ]
+            );
+        }
 
         return $next($error);
     }
