@@ -4,28 +4,37 @@ enum Gender {
     OTHERS @enum(value: "others")
 }
 
+type Role {
+    id: ID!
+    name: String!
+    guard_name: String!
+    created_at: DateTimeTz!
+    updated_at: DateTimeTz!
+}
+
 type User {
     id: ID!
     uuid: String
     username: String!
     email: String!
-    created_at: DateTimeTz!
-    updated_at: DateTimeTz!
     identity: Identity @hasOne
+    roles: [Role!] @hasMany
     learnings: [Classes!] @belongsToMany
     teachings: [Classes!] @hasMany
+    created_at: DateTimeTz!
+    updated_at: DateTimeTz!
 }
 
 type Identity {
     id: ID!
     first_name: String!
     last_name: String!
-    gender: Gender
+    gender: Gender!
     photo_url: String
     contact_number: String
     user: User! @belongsTo
-    created_at: DateTimeTz
-    updated_at: DateTimeTz
+    created_at: DateTimeTz!
+    updated_at: DateTimeTz!
 }
 
 input CreateIdentityBelongsTo {
@@ -34,16 +43,16 @@ input CreateIdentityBelongsTo {
 }
 
 input CreateIdentityInput {
-    first_name: String
-    last_name: String
-    gender: Gender
+    first_name: String!
+    last_name: String!
+    gender: Gender!
     contact_number: String
     photo: Upload
     user: CreateUserBelongsTo
 }
 
 input UpdateIdentityInput {
-    user_id: ID
+    user_id: ID! @rules(apply: ["exists:users,id"])
     first_name: String
     last_name: String
     gender: Gender
@@ -52,6 +61,7 @@ input UpdateIdentityInput {
 }
 
 input CreateUserInput {
+    uuid: String!
     username: String!
     email: String!
     password: String!
@@ -66,24 +76,33 @@ input UpdateUserInput {
     password: String
 }
 
-type Mutation {
-    me: User! @auth(guard: "api")
+input SyncRolesInput {
+    user_id: ID!
+    role_ids: [ID!]
+}
+
+type Mutation @guard{
+    me: User! @auth
     createUser(input: CreateUserInput! @spread): User!
         @create
         @createUserValidation
+        @canAccess(requiredRole: "admin")
     updateUser(input: UpdateUserInput! @spread): User!
         @update
         @updateUserValidation
     deleteUser(id: ID! @eq): User! @delete
+        @canAccess(requiredRole: "admin")
 
     updateIdentity(input: UpdateIdentityInput @spread): User!
         @updateIdentityValidation
+
+    syncRoles(input: SyncRolesInput @spread): User! @canAccess(requiredRole: "admin")
 }
 
-type Query {
+type Query @guard{
     me: User @auth
-    users: [User!] @paginate @can(ability: "viewAny")
-    user(id: ID! @eq): User @find @can(ability: "view", find: "id")
-    userFindByUsername(username: String! @eq): User @find
-    userFindByUuid(uuid: String! @eq): User @find @can(ability: "view", find: "uuid")
+    users: [User!] @paginate @can(ability: "viewAny") @canAccess(requiredRole: "admin")
+    user(id: ID! @eq): User @first 
+    userFindByUsername(username: String! @eq): User @first @canAccess(requiredRole: "admin")
+    userFindByUuid(uuid: String! @eq): User @canAccess(requiredRole: "admin")
 }

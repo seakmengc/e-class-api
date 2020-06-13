@@ -6,18 +6,11 @@ use Exception;
 use Nuwave\Lighthouse\Exceptions\RendersErrorsExtensions;
 use Throwable;
 
-class ClassException extends Exception implements RendersErrorsExtensions
+class CustomException extends Exception implements RendersErrorsExtensions
 {
-    /**
-     * @var @string
-     */
-    private $reason;
-
-    public function __construct(string $message, string $reason)
+    public function __construct(string $message)
     {
         parent::__construct($message, 200);
-
-        $this->reason = $reason;
     }
 
     /**
@@ -41,7 +34,7 @@ class ClassException extends Exception implements RendersErrorsExtensions
      */
     public function getCategory(): string
     {
-        return 'classroom';
+        return 'Business Logic';
     }
 
     /**
@@ -53,8 +46,7 @@ class ClassException extends Exception implements RendersErrorsExtensions
     public function extensionsContent(): array
     {
         return [
-            'some' => 'your are not owner of this table',
-            'reason' => $this->reason,
+            'success' => false
         ];
     }
 }

@@ -10,7 +10,6 @@ $factory->define(App\Models\Identity::class, function (Faker $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'gender' => $faker->randomElement(['male', 'female', 'others']),
-        'photo_url' => null,
         'contact_number' => $faker->numerify("0########"),
     ];
 });

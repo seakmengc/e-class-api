@@ -1,5 +1,8 @@
 <?php
 
+use App\Exceptions\ClassException;
+use App\Exceptions\Handler;
+
 $customMutations = array_map(function ($each) {
     return 'App\GraphQL\Mutations\\' . $each;
 }, array_diff(scandir(app_path('/GraphQL/Mutations')), ['..', '.']));
@@ -193,6 +196,7 @@ return [
     'error_handlers' => [
         \Nuwave\Lighthouse\Execution\ExtensionErrorHandler::class,
         \Nuwave\Lighthouse\Execution\ReportingErrorHandler::class,
+        Handler::class,
     ],
 
     /*

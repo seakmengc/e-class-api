@@ -2,10 +2,15 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Nuwave\Lighthouse\Execution\ErrorHandler;
+use Nuwave\Lighthouse\Exceptions\RendersErrorsExtensions;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use GraphQL\Error\Error;
+use Exception;
+use Closure;
 
-class Handler extends ExceptionHandler
+class Handler extends ExceptionHandler implements ErrorHandler
 {
     /**
      * A list of the exception types that are not reported.
@@ -50,6 +55,41 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($request->expectsJson()) {
+            switch (get_class($exception)) {
+                case Exception::class:
+                    return response()->json([
+                        'message' => $exception->getMessage(),
+                        'success' => false,
+                    ]);
+                case 'Error':
+                    return response()->json([
+                        'message' => 'Internal server error',
+                        'success' => false,
+                    ]);
+            }
+        }
+
         return parent::render($request, $exception);
+    }
+
+    public static function handle(Error $error, Closure $next): array
+    {
+        $underlyingException = $error->getPrevious();
+
+        if ($underlyingException instanceof RendersErrorsExtensions) {
+            // Reconstruct the error, passing in the extensions of the underlying exception
+            $error = new Error( // @phpstan-ignore-line TODO remove after graphql-php upgrade
+                $error->message,
+                null,
+                null,
+                null,
+                null,
+                null,
+                $underlyingException->extensionsContent()
+            );
+        }
+
+        return $next($error);
     }
 }
