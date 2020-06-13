@@ -23,7 +23,6 @@ class CreateIdentitiesTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->enum('gender', ['male', 'female', 'others']);
-            $table->string('photo_url')->nullable();
             $table->string('contact_number')->nullable();
 
             $table->timestamps();

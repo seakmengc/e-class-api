@@ -25,11 +25,11 @@ class CreateClassContent
       'class_id' => $args['class_id']
     ]);
 
-    // $Media = $classContent->addMedia($args['file_url'])->toMediaCollection('class-content');
-    // $fullPathOnDisk = $classContent->getMedia('class-content')->first()->file_name;
-    // $classContent->update([
-    //   'file_url' => $fullPathOnDisk
-    // ]);
+    $Media = $classContent->addMedia($args['file_url'])->toMediaCollection('class-content');
+    $fullPathOnDisk = $classContent->getMedia('class-content')->first()->file_name;
+    $classContent->update([
+      'file_url' => $fullPathOnDisk
+    ]);
 
     return $classContent;
   }

@@ -2,9 +2,12 @@
 
 namespace App\GraphQL\Mutations\User;
 
-use App\Models\User;
-use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use LasseRafn\InitialAvatarGenerator\InitialAvatar;
+use Image;
+use GraphQL\Type\Definition\ResolveInfo;
+use App\Models\User;
+use App\Models\Identity;
 
 class UpdateIdentity
 {
@@ -21,6 +24,11 @@ class UpdateIdentity
     {
         $userId = (int) ($args['user_id'] ?? request()->user()->id);
         $user = User::findOrFail($userId);
+
+        if (isset($args['photo'])) {
+            $user->identity->addMedia($args['photo'])->toMediaCollection();
+            unset($args['photo']);
+        }
 
         $user->identity->update($args);
 

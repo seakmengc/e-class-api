@@ -21,6 +21,7 @@
         "laravel/scout": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "lasserafn/php-initial-avatar-generator": "^4.1",
         "mll-lab/graphql-php-scalars": "^3.0",
         "mll-lab/laravel-graphql-playground": "^2.1",
         "nuwave/lighthouse": "^4.12",
