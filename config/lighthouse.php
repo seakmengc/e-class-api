@@ -180,7 +180,8 @@ return [
     |
     */
 
-    'debug' => \GraphQL\Error\Debug::INCLUDE_DEBUG_MESSAGE | \GraphQL\Error\Debug::INCLUDE_TRACE,
+    // 'debug' => \GraphQL\Error\Debug::INCLUDE_DEBUG_MESSAGE | \GraphQL\Error\Debug::INCLUDE_TRACE,
+    'debug' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -194,8 +195,8 @@ return [
     */
 
     'error_handlers' => [
-        \Nuwave\Lighthouse\Execution\ExtensionErrorHandler::class,
-        \Nuwave\Lighthouse\Execution\ReportingErrorHandler::class,
+        // \Nuwave\Lighthouse\Execution\ExtensionErrorHandler::class,
+        // \Nuwave\Lighthouse\Execution\ReportingErrorHandler::class,
         Handler::class,
     ],
 

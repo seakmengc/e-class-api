@@ -8,9 +8,11 @@ use Throwable;
 
 class CustomException extends Exception implements RendersErrorsExtensions
 {
-    public function __construct(string $message)
+    public function __construct(string $message, $reason = 'Error')
     {
         parent::__construct($message, 200);
+
+        $this->reason = $reason;;
     }
 
     /**
@@ -46,6 +48,7 @@ class CustomException extends Exception implements RendersErrorsExtensions
     public function extensionsContent(): array
     {
         return [
+            'reason' => $this->reason,
             'success' => false
         ];
     }

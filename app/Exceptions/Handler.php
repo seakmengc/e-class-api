@@ -59,13 +59,17 @@ class Handler extends ExceptionHandler implements ErrorHandler
             switch (get_class($exception)) {
                 case Exception::class:
                     return response()->json([
-                        'message' => $exception->getMessage(),
-                        'success' => false,
+                        'errors' => [
+                            'message' => $exception->getMessage(),
+                            'success' => false,
+                        ]
                     ]);
                 case 'Error':
                     return response()->json([
-                        'message' => 'Internal server error',
-                        'success' => false,
+                        'errors' => [
+                            'message' => 'Internal server error',
+                            'success' => false,
+                        ]
                     ]);
             }
         }
@@ -75,20 +79,9 @@ class Handler extends ExceptionHandler implements ErrorHandler
 
     public static function handle(Error $error, Closure $next): array
     {
-        $underlyingException = $error->getPrevious();
-
-        if ($underlyingException instanceof RendersErrorsExtensions) {
-            // Reconstruct the error, passing in the extensions of the underlying exception
-            $error = new Error( // @phpstan-ignore-line TODO remove after graphql-php upgrade
-                $error->message,
-                null,
-                null,
-                null,
-                null,
-                null,
-                $underlyingException->extensionsContent()
-            );
-        }
+        $error = new Error(
+            $error->message
+        );
 
         return $next($error);
     }

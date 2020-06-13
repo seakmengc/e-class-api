@@ -96,7 +96,7 @@ type Mutation @guard{
     updateIdentity(input: UpdateIdentityInput @spread): User!
         @updateIdentityValidation
 
-    syncRoles(input: SyncRolesInput @spread): User! @canAccess(requiredRole: "admin")
+    syncRoles(input: SyncRolesInput @spread): User! @canAccess(requiredRole: "admin1")
 }
 
 type Query @guard{
