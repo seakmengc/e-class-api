@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\ClassCategory;
 use App\Models\Exam;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -43,7 +44,7 @@ class ExamPolicy
      */
     public function create(User $user, $injected)
     {
-        $classId = $injected['class_id'];
+        $classId = ClassCategory::findOrFail($injected['class_category']['connect'])->pluck('class_id')->first();
 
         return $user->isATeacherOf($classId);
     }

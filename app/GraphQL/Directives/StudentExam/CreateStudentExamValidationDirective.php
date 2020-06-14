@@ -10,9 +10,10 @@ class CreateStudentExamValidationDirective extends ValidationDirective
     public function rules(): array
     {
         return [
-            'exam.connect' => ['bail', 'required', 'integer', 'exists:exams,id'],
+            'exam_id' => ['bail', 'required', 'integer', 'exists:exams,id'],
             'answers.*.id' => ['required', 'distinct'],
             'answers.*.answers' => ['array'],
+            'answers.*.file' => ['file'],
         ];
     }
 }

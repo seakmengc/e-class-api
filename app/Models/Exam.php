@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class Exam extends Model
 {
-    protected $fillable = ['class_category_id', 'name', 'possible', 'description', 'qa', 'attempts', 'due_at', 'publishes_at'];
+    protected $fillable = ['class_category_id', 'class_id', 'name', 'possible', 'description', 'qa', 'attempts', 'due_at', 'publishes_at'];
 
     protected $casts = [
         'qa' => 'collection',

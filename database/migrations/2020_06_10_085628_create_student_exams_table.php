@@ -24,7 +24,7 @@ class CreateStudentExamsTable extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->unsignedInteger('attempts')->default(1);
+            $table->unsignedTinyInteger('attempts')->default(1);
             $table->json('answer');
             $table->float('points')->nullable();
 

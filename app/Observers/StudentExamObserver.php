@@ -9,9 +9,10 @@ class StudentExamObserver
     public function creating(StudentExam $studentExam)
     {
         $studentExam->student_id = auth()->id();
+        $studentExam->attempts = 1;
     }
 
-    public function saving(StudentExam $studentExam)
+    public function updating(StudentExam $studentExam)
     {
         $studentExam->increment('attempts');
     }

@@ -31,7 +31,6 @@ type Exam {
 
 input CreateExamInput {
     class_category: CreateClassCategoryBelongsTo
-    class_id: ID! @rules(apply: ["required", "integer", "exists:classes,id"])
     name: String!
     possible: Float!
     description: String
@@ -73,16 +72,16 @@ input ConnectExamBelongsTo {
     connect: ID!
 }
 
-extend type Mutation {
+extend type Mutation @guard {
     createExam(input: CreateExamInput! @spread): Exam!
         @createExamValidation
         @can(ability: "create", injectArgs: "true")
     updateExam(input: UpdateExamInput! @spread): Exam!
-        @can(ability: "create", find: "UpdateExamInput.id")
+        @can(ability: "update", find: "UpdateExamInput.id")
     deleteExam(id: ID! @eq): Exam! @delete @can(ability: "delete", find: "id")
 }
 
-extend type Query {
+extend type Query @guard {
     #students and teacher access to the same query
     exam(id: ID! @eq): Exam!
         @field(resolver: "Exam\\FindExamFor")
