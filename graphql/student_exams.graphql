@@ -14,21 +14,6 @@ type ExamAnswer {
     points: Float
 }
 
-extend type Mutation @guard {
-    createStudentExam (input: StudentExamInput! @spread): StudentExam!
-        @createStudentExamValidation @can(ability: "create", injectArgs: "true")
-    updateStudentExam (input: StudentExamInput! @spread): StudentExam!
-        @createStudentExamValidation @can(ability: "create", injectArgs: "true")
-    gradeStudentExam (input: gradeStudentExamInput! @spread): StudentExam! @can(ability: "grade", find: "id")
-}
-
-extend type Query @guard {
-    #intended for students
-    myExams(class_id: ID! @eq): [StudentExam!] @can(ability: "viewAny", injectArgs: "true")
-    #intended for teachers in grading exam part
-    studentExam(id: ID! @eq): StudentExam! @find @can(ability: "view", find: "id")
-}
-
 input StudentExamInput {
     exam_id: ID!
     answer: [CreateExamAnswerInput!]
@@ -37,6 +22,7 @@ input StudentExamInput {
 input CreateExamAnswerInput {
     id: ID!
     answers: [String!]
+    file: Upload
 }
 
 input gradeStudentExamInput {
@@ -47,4 +33,25 @@ input gradeStudentExamInput {
 input GradeExamAnswerInput {
     id: ID!
     points: Float!
+}
+
+extend type Mutation @guard {
+    createStudentExam(input: StudentExamInput! @spread): StudentExam!
+        @createStudentExamValidation
+        @can(ability: "create", injectArgs: "true")
+    updateStudentExam(input: StudentExamInput! @spread): StudentExam!
+        @createStudentExamValidation
+        @can(ability: "create", injectArgs: "true")
+    gradeStudentExam(input: gradeStudentExamInput! @spread): StudentExam!
+        @can(ability: "grade", find: "gradeStudentExamInput.id")
+}
+
+extend type Query @guard {
+    #intended for students
+    myExams(class_id: ID! @eq): [StudentExam!]
+        @can(ability: "viewAny", injectArgs: "true")
+    #intended for teachers in grading exam part
+    studentExam(id: ID! @eq): StudentExam!
+        @find
+        @can(ability: "view", find: "StudentExam.id")
 }

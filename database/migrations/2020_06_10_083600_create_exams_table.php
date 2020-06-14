@@ -18,15 +18,13 @@ class CreateExamsTable extends Migration
             $table->foreignId('class_category_id')
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->foreignId('class_id')
-                ->constrained()
-                ->cascadeOnDelete();
+            $table->foreignId('class_id')->index();
 
             $table->string('name');
             $table->float('possible');
             $table->longText('description')->nullable();
             $table->json('qa');
-            $table->unsignedInteger('attempts')->default(0); // 0 means unlimited
+            $table->unsignedTinyInteger('attempts')->default(0); // 0 means unlimited
 
             $table->timestamp('publishes_at')->nullable();
             $table->timestamp('due_at')->nullable();

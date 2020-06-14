@@ -56,8 +56,7 @@ input NewPasswordWithOtpInput {
 
 input UpdatePassword {
     old_password: String!
-    password: String! @rules(apply: ["required", "confirmed", "min:8"])
-    password_confirmation: String!
+    password: String! @rules(apply: ["required", "min:8"])
 }
 
 extend type Mutation {
@@ -74,10 +73,16 @@ extend type Mutation {
             resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve"
         )
     forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse!
-    resetPassword(input: NewPasswordWithOtpInput @spread): ResetPasswordResponse!
+    resetPassword(
+        input: NewPasswordWithOtpInput @spread
+    ): ResetPasswordResponse!
     updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse!
         @field(
             resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve"
         )
+        @guard(with: ["api"])
+    updateEmail(email: String! @rules(apply: ["email"])): User!
+        @update
+        @inject(context: "user.id", name: "id")
         @guard(with: ["api"])
 }

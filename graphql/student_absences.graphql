@@ -11,14 +11,22 @@ extend type Query {
     StudentAbsence(id: ID! @eq): StudentAbsence! @find
 }
 
-extend type Mutation {
+extend type Mutation @guard {
     createStudentAbsence(
         input: createStudentAbsenceInput! @spread
-    ): StudentAbsence! @create @createStudentAbsenceValidation
+    ): StudentAbsence!
+        @create
+        @createStudentAbsenceValidation
+        @can(ability: "create", injectArgs: "true")
     updateStudentAbsence(
         input: updateStudentAbsenceInput! @spread
-    ): StudentAbsence! @update @createStudentAbsenceValidation
-    deleteStudentAbsence(id: ID! @eq): StudentAbsence! @delete
+    ): StudentAbsence!
+        @update
+        @createStudentAbsenceValidation
+        @can(ability: "update", find: "updateStudentAbsenceInput.id")
+    deleteStudentAbsence(id: ID! @eq): StudentAbsence!
+        @delete
+        @can(ability: "delete", find: "id")
 }
 
 input createStudentAbsenceInput {

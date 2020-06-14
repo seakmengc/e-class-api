@@ -22,7 +22,7 @@ type Exam {
     attempts: Int!
     due_at: DateTimeTz
     publishes_at: DateTimeTz
-    classCategory: ClassCategory! @belongsTo
+    class_category: ClassCategory! @belongsTo(relation: "classCategory")
     class: Classes! @belongsTo
     submittings: [StudentExam!] @hasMany
     created_at: DateTimeTz
@@ -30,8 +30,7 @@ type Exam {
 }
 
 input CreateExamInput {
-    classCategory: CreateClassCategoryBelongsTo
-    class_id: ID! @rules(apply: ["required", "integer", "exists:classes,id"])
+    class_category: CreateClassCategoryBelongsTo
     name: String!
     possible: Float!
     description: String
@@ -73,17 +72,25 @@ input ConnectExamBelongsTo {
     connect: ID!
 }
 
-extend type Mutation {
+extend type Mutation @guard {
     createExam(input: CreateExamInput! @spread): Exam!
-        @createExamValidation @can(ability: "create", injectArgs: "true")
-    updateExam(input: UpdateExamInput! @spread): Exam! @can(ability: "create", find: "UpdateExamInput.id")
+        @createExamValidation
+        @can(ability: "create", injectArgs: "true")
+    updateExam(input: UpdateExamInput! @spread): Exam!
+        @can(ability: "update", find: "UpdateExamInput.id")
     deleteExam(id: ID! @eq): Exam! @delete @can(ability: "delete", find: "id")
 }
 
-extend type Query {
+extend type Query @guard {
     #students and teacher access to the same query
-    exam(id: ID! @eq): Exam! @field(resolver: "Exam\\FindExamFor") @can(ability: "view", injectArgs: "true")
+    exam(id: ID! @eq): Exam!
+        @field(resolver: "Exam\\FindExamFor")
+        @can(ability: "view", injectArgs: "true")
     #students and teacher access to the same query
-    exams(class_id: ID! @eq): [Exam!] @paginate @can(ability: "viewAny", injectArgs: "true")
-    studentExamIds(id: ID! @eq): [ID!]! @field(resolver: "Exam\\GetStudentExamIds") @can(ability: "viewAny", injectArgs: "true")
+    exams(class_id: ID! @eq): [Exam!]
+        @paginate
+        @can(ability: "viewAny", injectArgs: "true")
+    studentExamIds(id: ID! @eq): [ID!]!
+        @field(resolver: "Exam\\GetStudentExamIds")
+        @can(ability: "viewAny", injectArgs: "true")
 }

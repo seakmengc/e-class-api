@@ -19,6 +19,7 @@ class UserFindByUuid
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        return User::whereUuid($args['uuid'])->firstOrFail();
+        // dd(User::where('uuid', 'like', $args['uuid'])->toSql());
+        return User::where('uuid', 'like', "%{$args['uuid']}%")->limit(5)->get();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Cmgmyr\Messenger\Traits\Messagable;
+use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -60,5 +60,10 @@ class User extends Authenticatable
             return 'email';
 
         return 'username';
+    }
+
+    public static function bootted()
+    {
+        static::observe(UserObserver::class);
     }
 }

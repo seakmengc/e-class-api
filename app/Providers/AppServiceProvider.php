@@ -10,6 +10,7 @@ use App\Observers\IdentityObserver;
 use Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,7 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        User::observe(UserObserver::class);
         Identity::observe(IdentityObserver::class);
     }
 }

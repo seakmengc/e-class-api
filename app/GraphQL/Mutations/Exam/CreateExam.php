@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutations\Exam;
 
+use App\Models\ClassCategory;
 use App\Models\Exam;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Arr;
@@ -24,7 +25,8 @@ class CreateExam
             $qa['id'] = $ind + 1;
         });
 
-        $args['class_category_id'] = Arr::get($args, 'classCategory.connect');
+        $args['class_category_id'] = Arr::get($args, 'class_category.connect');
+        $args['class_id'] = ClassCategory::findOrFail(Arr::get($args, 'class_category.connect'))->pluck('class_id')->first();
 
         return Exam::create($args);
     }

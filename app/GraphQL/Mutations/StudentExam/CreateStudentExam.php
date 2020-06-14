@@ -21,8 +21,14 @@ class CreateStudentExam
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        Exam::find(Arr::get($args, 'exam.connect'))->isNotDue();
+        //throw exception if due
+        Exam::find(Arr::get($args, 'exam_id'))->isNotDue();
 
-        return StudentExam::create($args);
+        $studentExam = StudentExam::make($args);
+        $studentExam->resolveUploadedFileInAnswer();
+
+        return StudentExam::updateOrCreate([
+            'exam_id' => $args['exam_id']
+        ], $args);
     }
 }
