@@ -34,6 +34,11 @@ class User extends Authenticatable
         return $this->hasMany(Classes::class, 'teacher_id');
     }
 
+    public function myExams()
+    {
+        return $this->belongsToMany(StudentExam::class, 'student_exams', 'student_id', 'exam_id');
+    }
+
     public function isAStudentIn($classId)
     {
         return $this->learnings()->whereId($classId)->exists();

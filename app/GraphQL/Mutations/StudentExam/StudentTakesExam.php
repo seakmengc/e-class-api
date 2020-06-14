@@ -2,13 +2,13 @@
 
 namespace App\GraphQL\Mutations\StudentExam;
 
-use App\Models\Exam;
-use App\Models\StudentExam;
-use GraphQL\Type\Definition\ResolveInfo;
-use Illuminate\Support\Arr;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use GraphQL\Type\Definition\ResolveInfo;
+use App\Models\StudentExam;
+use App\Models\Exam;
+use App\Exceptions\CustomException;
 
-class CreateStudentExam
+class StudentTakesExam
 {
     /**
      * Return a value for the field.
@@ -21,14 +21,14 @@ class CreateStudentExam
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        //throw exception if due
-        Exam::find(Arr::get($args, 'exam_id'))->isNotDue();
+        if (Exam::findOrFail($args['exam_id'])->isDue())
+            throw new CustomException('Exam is already due.');
 
-        $studentExam = StudentExam::make($args);
-        $studentExam->resolveUploadedFileInAnswer();
+        $studentExam = StudentExam::firstOrNew(collect($args)->only(['exam_id', 'student_id'])->toArray());
+        $studentExam->fill($args);
+        $studentExam->resolveUploadedFileInAnswer($args['answer']);
+        $studentExam->save();
 
-        return StudentExam::updateOrCreate([
-            'exam_id' => $args['exam_id']
-        ], $args);
+        return $studentExam;
     }
 }

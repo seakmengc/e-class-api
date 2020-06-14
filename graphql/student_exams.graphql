@@ -9,9 +9,15 @@ type StudentExam {
 }
 
 type ExamAnswer {
-    id: String!
+    id: ID!
     answers: [String!]
+    file: FileUpload
     points: Float
+}
+
+type FileUpload {
+    url: String
+    name: String
 }
 
 input StudentExamInput {
@@ -36,11 +42,9 @@ input GradeExamAnswerInput {
 }
 
 extend type Mutation @guard {
-    createStudentExam(input: StudentExamInput! @spread): StudentExam!
+    studentTakesExam(input: StudentExamInput! @spread): StudentExam!
         @createStudentExamValidation
-        @can(ability: "create", injectArgs: "true")
-    updateStudentExam(input: StudentExamInput! @spread): StudentExam!
-        @createStudentExamValidation
+        @inject(context: "user.id", name: "student_id")
         @can(ability: "create", injectArgs: "true")
     gradeStudentExam(input: gradeStudentExamInput! @spread): StudentExam!
         @can(ability: "grade", find: "gradeStudentExamInput.id")
@@ -48,8 +52,11 @@ extend type Mutation @guard {
 
 extend type Query @guard {
     #intended for students
-    myExams(class_id: ID! @eq): [StudentExam!]
+    myExamsInClass(class_id: ID! @eq): [StudentExam!]
         @can(ability: "viewAny", injectArgs: "true")
+    myExam(id: ID! @eq): StudentExam
+        @can(ability: "view", find: "id")
+        @first
     #intended for teachers in grading exam part
     studentExam(id: ID! @eq): StudentExam!
         @find
