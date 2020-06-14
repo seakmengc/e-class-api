@@ -27,11 +27,11 @@ input StudentExamInput {
 
 input CreateExamAnswerInput {
     id: ID!
-    answers: [String!]
-    file: Upload
+    answers: [String!] @rules(apply: ["array"])
+    file: Upload @rules(apply: ["file", "size:512"])
 }
 
-input gradeStudentExamInput {
+input GradeStudentExamInput {
     id: ID!
     answer: [GradeExamAnswerInput!]
 }
@@ -46,8 +46,8 @@ extend type Mutation @guard {
         @createStudentExamValidation
         @inject(context: "user.id", name: "student_id")
         @can(ability: "create", injectArgs: "true")
-    gradeStudentExam(input: gradeStudentExamInput! @spread): StudentExam!
-        @can(ability: "grade", find: "gradeStudentExamInput.id")
+    gradeStudentExam(input: GradeStudentExamInput! @spread): StudentExam!
+        @can(ability: "grade", find: "GradeStudentExamInput.id")
 }
 
 extend type Query @guard {

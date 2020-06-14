@@ -85,18 +85,34 @@ class Handler extends ExceptionHandler implements ErrorHandler
 
     public static function handle(Error $error, Closure $next): array
     {
-        if (method_exists($error->getPrevious(), 'extensionsContent')) {
+        $underlyingException = $error->getPrevious();
+
+        // dd($underlyingException);
+        if (method_exists($underlyingException, 'extensionsContent')) {
             $error = new Error(
                 $error->message,
                 null,
                 null,
                 null,
-                null,
-                null,
-                array_merge($error->getPrevious()->extensionsContent(), [
-                    'reason' => $error->message,
-                    'success' => false
+                $error->getPath(),
+                $underlyingException,
+                array_merge(collect($underlyingException->extensionsContent())->toArray(), [
+                    'reason' => $error->message ?? 'Internal server error',
+                    'success' => false,
                 ])
+            );
+        } elseif (method_exists($underlyingException, 'getExtensions')) {
+            $error = new Error(
+                $error->message,
+                null,
+                null,
+                null,
+                $error->getPath(),
+                $underlyingException,
+                array_merge(collect($underlyingException->getExtensions())->toArray(), [
+                    'reason' => $error->message ?? 'error',
+                    'success' => false,
+                ]),
             );
         } else {
             $error = new Error(
@@ -104,14 +120,15 @@ class Handler extends ExceptionHandler implements ErrorHandler
                 null,
                 null,
                 null,
-                null,
-                null,
+                $error->getPath(),
+                $underlyingException,
                 [
-                    'reason' => $error->message,
+                    'reason' => $error->message ?? 'error',
                     'success' => false,
                 ]
             );
         }
+        dd($error);
 
         return $next($error);
     }
