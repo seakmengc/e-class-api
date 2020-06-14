@@ -26,7 +26,7 @@ directive @isTeacherOf(
   """
   The class that user's teaching.
   """
-  classId: ID!
+  classId: String!
 ) on FIELD_DEFINITION
 GRAPHQL;
     }
@@ -38,11 +38,16 @@ GRAPHQL;
         return $next(
             $fieldValue->setResolver(
                 function ($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo) use ($originalResolver) {
+        dd($this, $args, $root, $context, $this->getModelClass(), $originalResolver);
+
                     $classId = $this->directiveArgValue('classId');
                     // Throw in case of an invalid schema definition to remind the developer
                     if ($classId === null) {
                         throw new DefinitionException("Missing argument 'classId' for directive '@isTeacherOf'.");
                     }
+
+                    $model = $this->getModelClass();
+                    dd($model::findOrFail())
 
                     $user = $context->user();
                     if (

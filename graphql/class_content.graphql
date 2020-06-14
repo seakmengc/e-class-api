@@ -8,17 +8,21 @@ type ClassContent {
     description: String!
     file_url: String
 }
-extend type Query{
+extend type Query {
     ClassContents: [ClassContent!]! @paginate(defaultCount: 10)
     ClassContent(id: ID @eq): ClassContent @find
 }
 
-extend type Mutation @guard{
+extend type Mutation @guard {
     createClassContent(input: createClassContentInput @spread): ClassContent!
         @createClassContentValidation
+        @can(ability: "create", injectArgs: "true")
     updateClassContent(input: updateClassContentInput @spread): ClassContent!
         @updateClassContentValidation
-    deleteClassContent(id: ID!): ClassContent! @deleteClassContentValidation
+        @can(ability: "update", find: "updateClassContentInput.id")
+    deleteClassContent(id: ID!): ClassContent!
+        @deleteClassContentValidation
+        @can(ability: "delete", find: "updateClassContentInput.id")
 }
 
 input createClassContentInput {

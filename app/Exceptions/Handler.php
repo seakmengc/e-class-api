@@ -90,10 +90,9 @@ class Handler extends ExceptionHandler implements ErrorHandler
                 array_merge($error->getPrevious()->extensionsContent(), [
                     'reason' => $error->message,
                     'success' => false
-                ])  
+                ])
             );
         } else {
-            dd(1);
             $error = new Error(
                 $error->message,
                 null,

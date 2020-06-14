@@ -14,11 +14,17 @@ extend type Query {
 extend type Mutation @guard {
     createClassCategory(
         input: createClassCategoryInput @spread
-    ): ClassCategory! @createClassCategoryValidation
+    ): ClassCategory!
+        @createClassCategoryValidation
+        @can(ability: "create", injectArgs: "true")
     updateClassCategory(
-        input: updateClassCategoryInput @spread
+        input: updateClassCategoryInput
+            @spread
+            @can(ability: "update", find: "updateClassCategoryInput.id")
     ): ClassCategory! @update @createClassCategoryValidation
-    deleteClassCategory(id: ID! @eq): ClassCategory! @delete
+    deleteClassCategory(id: ID! @eq): ClassCategory!
+        @delete
+        @can(ability: "delete", find: "id")
 }
 
 input createClassCategoryInput {

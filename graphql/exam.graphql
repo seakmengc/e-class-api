@@ -75,15 +75,23 @@ input ConnectExamBelongsTo {
 
 extend type Mutation {
     createExam(input: CreateExamInput! @spread): Exam!
-        @createExamValidation @can(ability: "create", injectArgs: "true")
-    updateExam(input: UpdateExamInput! @spread): Exam! @can(ability: "create", find: "UpdateExamInput.id")
+        @createExamValidation
+        @can(ability: "create", injectArgs: "true")
+    updateExam(input: UpdateExamInput! @spread): Exam!
+        @can(ability: "create", find: "UpdateExamInput.id")
     deleteExam(id: ID! @eq): Exam! @delete @can(ability: "delete", find: "id")
 }
 
 extend type Query {
     #students and teacher access to the same query
-    exam(id: ID! @eq): Exam! @field(resolver: "Exam\\FindExamFor") @can(ability: "view", injectArgs: "true")
+    exam(id: ID! @eq): Exam!
+        @field(resolver: "Exam\\FindExamFor")
+        @can(ability: "view", injectArgs: "true")
     #students and teacher access to the same query
-    exams(class_id: ID! @eq): [Exam!] @paginate @can(ability: "viewAny", injectArgs: "true")
-    studentExamIds(id: ID! @eq): [ID!]! @field(resolver: "Exam\\GetStudentExamIds") @can(ability: "viewAny", injectArgs: "true")
+    exams(class_id: ID! @eq): [Exam!]
+        @paginate
+        @can(ability: "viewAny", injectArgs: "true")
+    studentExamIds(id: ID! @eq): [ID!]!
+        @field(resolver: "Exam\\GetStudentExamIds")
+        @can(ability: "viewAny", injectArgs: "true")
 }

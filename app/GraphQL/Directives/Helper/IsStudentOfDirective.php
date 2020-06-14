@@ -26,7 +26,7 @@ directive @isStudentOf(
   """
   The class that user's being attend.
   """
-  classId: ID!
+  classId: String!
 ) on FIELD_DEFINITION
 GRAPHQL;
     }

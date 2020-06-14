@@ -16,11 +16,10 @@ class UpdateUserValidationDirective extends ValidationDirective
         $userId = (int) $this->args['id'];
 
         return [
-            'id' => 'required',
             'username' => new UsernameRule($userId),
-            'email' => new EmailRule($userId),
             'uuid' => new UuidRule($userId),
-            'password' => ['confirmed', new PasswordRule()],
+            'email' => new EmailRule($userId),
+            'password' => new PasswordRule(),
         ];
     }
 }

@@ -73,7 +73,7 @@ input UpdateUserInput {
     email: String
     username: String
     uuid: String
-    password: String
+    password: String @hash
 }
 
 input SyncRolesInput {
@@ -81,28 +81,42 @@ input SyncRolesInput {
     role_ids: [ID!]
 }
 
-type Mutation @guard{
+type Mutation @guard {
     me: User! @auth
+
     createUser(input: CreateUserInput! @spread): User!
         @create
         @createUserValidation
         @canAccess(requiredRole: "admin")
+
     updateUser(input: UpdateUserInput! @spread): User!
         @update
         @updateUserValidation
-    deleteUser(id: ID! @eq): User! @delete
         @canAccess(requiredRole: "admin")
+
+    deleteUser(id: ID! @eq): User! @delete @canAccess(requiredRole: "admin")
 
     updateIdentity(input: UpdateIdentityInput @spread): User!
         @updateIdentityValidation
 
-    syncRoles(input: SyncRolesInput @spread): User! @canAccess(requiredRole: "admin1")
+    syncRoles(input: SyncRolesInput @spread): User!
+        @canAccess(requiredRole: "admin")
 }
 
-type Query @guard{
+input OrderByInput {
+    orderBy: OrderByClause! @orderBy(columns: ["username"])
+}
+
+type Query @guard {
     me: User @auth
-    users: [User!] @paginate @can(ability: "viewAny") @canAccess(requiredRole: "admin")
-    user(id: ID! @eq): User @first 
-    userFindByUsername(username: String! @eq): User! @first @canAccess(requiredRole: "admin")
-    userFindByUuid(uuid: String! @eq): User @canAccess(requiredRole: "admin")
+    user(id: ID! @eq): User @first @can(ability: "view", find: "id")
+    users(orderBy: _ @orderBy(columns: ["username", "uuid", "email"])): [User!]
+        @paginate
+        @canAccess(requiredRole: "admin")
+    usersFindByUsername(username: String!): [User!]
+        @paginate
+        @canAccess(requiredRole: "admin")
+    usersFindByUuid(uuid: String!): [User!]
+        @paginate
+        @canAccess(requiredRole: "admin")
 }

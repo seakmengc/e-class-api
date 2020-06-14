@@ -34,12 +34,20 @@ input UpdateForumInput {
 }
 
 extend type Mutation @guard {
-    createForum(input: CreateForumInput! @spread): Forum! @create @can(ability: "create", injectArgs: "true")
-    updateForum(input: UpdateForumInput! @spread): Forum! @update @can(ability: "update", injectArgs: "true")
-    deleteForum(id: ID! @eq): Forum! @delete @can(ability: "delete", injectArgs: "true")
+    createForum(input: CreateForumInput! @spread): Forum!
+        @create
+        @can(ability: "create", injectArgs: "true")
+    updateForum(input: UpdateForumInput! @spread): Forum!
+        @update
+        @can(ability: "update", injectArgs: "true")
+    deleteForum(id: ID! @eq): Forum!
+        @delete
+        @can(ability: "delete", injectArgs: "true")
 }
 
 extend type Query @guard {
-    forumsInClass(class_id: ID! @eq): [Forum!] @paginate @can(ability: "viewAny", injectArgs: "true")
+    forumsInClass(class_id: ID! @eq): [Forum!]
+        @paginate
+        @can(ability: "viewAny", injectArgs: "true")
     forum(id: ID! @eq): Forum! @find @can(ability: "view", find: "id")
 }
