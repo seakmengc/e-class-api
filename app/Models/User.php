@@ -67,8 +67,10 @@ class User extends Authenticatable
         return 'username';
     }
 
-    public static function bootted()
+    public static function boot()
     {
+        parent::boot();
+
         static::observe(UserObserver::class);
     }
 }
