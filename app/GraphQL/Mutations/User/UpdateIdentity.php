@@ -25,11 +25,6 @@ class UpdateIdentity
         $userId = (int) ($args['user_id'] ?? request()->user()->id);
         $user = User::findOrFail($userId);
 
-        if (isset($args['photo'])) {
-            $user->identity->addMedia($args['photo'])->toMediaCollection();
-            unset($args['photo']);
-        }
-
         $user->identity->update($args);
 
         return $user;

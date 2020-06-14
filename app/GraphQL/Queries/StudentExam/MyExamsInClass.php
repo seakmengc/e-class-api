@@ -7,7 +7,7 @@ use App\Models\StudentExam;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class MyExams
+class MyExamsInClass
 {
     /**
      * Return a value for the field.

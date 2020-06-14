@@ -19,6 +19,7 @@ class IdentityObserver
         } elseif ($identity->getMedia()->count() === 0) {
             $avatar = new InitialAvatar();
             $image = $avatar->autoFont()->rounded()->smooth()->background('#21CCF7')->color('#FFFFFF')->size(128)->name($identity->full_name)->generate();
+
             $identity->addMediaFromBase64($image->encode('data-url', 100))->toMediaCollection();
         }
 

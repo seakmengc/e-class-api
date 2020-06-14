@@ -29,7 +29,7 @@ class Identity extends Model implements HasMedia
 
     public function getPhotoUrlAttribute()
     {
-        return config('app.url') . '/portraits/' . $this->user_id;
+        return route('api.files.portraits.show', $this->user_id);
     }
 
     public function registerMediaCollections(): void

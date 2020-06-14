@@ -2,12 +2,13 @@
 
 namespace App\GraphQL\Mutations\StudentExam;
 
-use App\Models\Exam;
-use App\Models\StudentExam;
-use Arr;
-use GraphQL\Type\Definition\ResolveInfo;
-use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
+use GraphQL\Type\Definition\ResolveInfo;
+use Arr;
+use App\Models\StudentExam;
+use App\Models\Exam;
+use App\Exceptions\CustomException;
 
 class UpdateStudentExam
 {
@@ -24,12 +25,13 @@ class UpdateStudentExam
     {
         $exam = Exam::findOrFail($args['exam_id']);
 
-        $exam->isNotDue();
+        if ($exam->isDue())
+            throw new CustomException('Exam is already due.');
 
         $studentExam = $exam->submittings()->whereStudentId(auth()->id())->first();
 
         if ($studentExam->attempts === $exam->attempts)
-            throw new NotAcceptableHttpException('Too many attempts.');
+            throw new NotAcceptableHttpException('Number of attempts has exceeded');
 
         if (isset($args['answer']))
             $args['answer'] = StudentExam::updateAnswersById($studentExam->answer, $args['answer']);
