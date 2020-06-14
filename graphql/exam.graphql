@@ -22,7 +22,7 @@ type Exam {
     attempts: Int!
     due_at: DateTimeTz
     publishes_at: DateTimeTz
-    classCategory: ClassCategory! @belongsTo
+    class_category: ClassCategory! @belongsTo(relation: "classCategory")
     class: Classes! @belongsTo
     submittings: [StudentExam!] @hasMany
     created_at: DateTimeTz
@@ -30,7 +30,7 @@ type Exam {
 }
 
 input CreateExamInput {
-    classCategory: CreateClassCategoryBelongsTo
+    class_category: CreateClassCategoryBelongsTo
     class_id: ID! @rules(apply: ["required", "integer", "exists:classes,id"])
     name: String!
     possible: Float!

@@ -9,7 +9,7 @@ class CreateExamValidationDirective extends ValidationDirective
     public function rules(): array
     {
         return [
-            'classCategory.connect' => ['bail', 'required', 'integer', 'exists:class_categories,id'],
+            'class_category.connect' => ['bail', 'required', 'integer', 'exists:class_categories,id'],
             'name' => ['bail', 'required', 'string', 'max:255'],
             'possible' => ['bail', 'required'],
             'description' => ['bail', 'string'],
