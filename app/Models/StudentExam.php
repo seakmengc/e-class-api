@@ -69,7 +69,7 @@ class StudentExam extends Model implements HasMedia
             }
 
             return $answer;
-        });
+        })->unique('id');
     }
 
     public function exam(): BelongsTo

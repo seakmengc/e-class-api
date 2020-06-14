@@ -57,18 +57,24 @@ class Handler extends ExceptionHandler implements ErrorHandler
     {
         if ($request->expectsJson()) {
             switch (get_class($exception)) {
-                case Exception::class:
+                case CustomException::class:
                     return response()->json([
                         'errors' => [
                             'message' => $exception->getMessage(),
-                            'success' => false,
+                            'extensions' => [
+                                'reason' => $exception->getMessage(),
+                                'success' => false,
+                            ]
                         ]
                     ]);
-                case 'Error':
+                default:
                     return response()->json([
                         'errors' => [
                             'message' => 'Internal server error',
-                            'success' => false,
+                            'extensions' => [
+                                'reason' => 'Internal server error',
+                                'success' => false,
+                            ]
                         ]
                     ]);
             }

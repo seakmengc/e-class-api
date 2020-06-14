@@ -21,10 +21,15 @@ class StudentTakesExam
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        if (Exam::findOrFail($args['exam_id'])->isDue())
+        $exam = Exam::findOrFail($args['exam_id']);
+        if ($exam->isDue())
             throw new CustomException('Exam is already due.');
 
         $studentExam = StudentExam::firstOrNew(collect($args)->only(['exam_id', 'student_id'])->toArray());
+
+        if ($studentExam->attempts >= $exam->attempts)
+            throw new CustomException('Number of attempts has exceeded');
+
         $studentExam->fill($args);
         $studentExam->resolveUploadedFileInAnswer($args['answer']);
         $studentExam->save();

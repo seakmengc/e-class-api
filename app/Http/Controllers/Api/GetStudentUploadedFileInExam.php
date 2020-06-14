@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\CustomException;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Exam;
@@ -15,6 +16,9 @@ class GetStudentUploadedFileInExam extends Controller
         $studentExam = $exam->submittings()->whereStudentId($user->id)->first();
 
         $media = $studentExam->getFirstMedia($exam->id . '.' . $questionId);
+
+        if (!$media)
+            throw new CustomException('File not found');
 
         return response()->download($media->getPath(), $media->file_name);
     }
