@@ -12,7 +12,7 @@ type AuthPayload {
     refresh_token: String
     expires_in: Int
     token_type: String
-    user: User!
+    user: User
 }
 
 type RefreshTokenPayload {

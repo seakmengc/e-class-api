@@ -67,16 +67,6 @@ class Handler extends ExceptionHandler implements ErrorHandler
                             ]
                         ]
                     ]);
-                default:
-                    return response()->json([
-                        'errors' => [
-                            'message' => 'Internal server error',
-                            'extensions' => [
-                                'reason' => 'Internal server error',
-                                'success' => false,
-                            ]
-                        ]
-                    ]);
             }
         }
 
@@ -87,7 +77,6 @@ class Handler extends ExceptionHandler implements ErrorHandler
     {
         $underlyingException = $error->getPrevious();
 
-        // dd($underlyingException);
         if (method_exists($underlyingException, 'extensionsContent')) {
             $error = new Error(
                 $error->message,
@@ -128,7 +117,6 @@ class Handler extends ExceptionHandler implements ErrorHandler
                 ]
             );
         }
-        dd($error);
 
         return $next($error);
     }
