@@ -25,3 +25,4 @@ scalar Upload
 #import student_absences.graphql
 #import exam.graphql
 #import student_exams.graphql
+#import notification.graphql

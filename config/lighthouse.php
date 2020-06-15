@@ -180,8 +180,8 @@ return [
     |
     */
 
-    // 'debug' => \GraphQL\Error\Debug::INCLUDE_DEBUG_MESSAGE | \GraphQL\Error\Debug::INCLUDE_TRACE,
-    'debug' => null,
+    'debug' => \GraphQL\Error\Debug::INCLUDE_DEBUG_MESSAGE | \GraphQL\Error\Debug::INCLUDE_TRACE,
+    // 'debug' => null,
 
     /*
     |--------------------------------------------------------------------------

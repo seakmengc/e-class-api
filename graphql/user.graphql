@@ -21,6 +21,7 @@ type User {
     roles: [Role!] @hasMany
     learnings: [Classes!] @belongsToMany
     teachings: [Classes!] @hasMany
+    unreadNotificationsCount: Int!
     created_at: DateTimeTz!
     updated_at: DateTimeTz!
 }

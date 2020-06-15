@@ -67,6 +67,11 @@ class User extends Authenticatable
         return 'username';
     }
 
+    public function getUnreadNotificationsCountAttribute()
+    {
+        return $this->unreadNotifications()->count();
+    }
+
     public static function boot()
     {
         parent::boot();

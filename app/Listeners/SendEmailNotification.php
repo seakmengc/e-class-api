@@ -5,22 +5,14 @@ namespace App\Listeners;
 use App\Events\ClassUpdated;
 use App\Mail\ClassUpdatedEmail;
 use App\Models\StudentExam;
+use App\Notifications\ClassUpdatedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
 
 class SendEmailNotification
 {
-
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
     /**
      * Handle the event.
      *
@@ -29,15 +21,20 @@ class SendEmailNotification
      */
     public function handle(ClassUpdated $event)
     {
-        Mail::to($this->userEmailsInClass($event->model))
-            ->sendNow(new ClassUpdatedEmail($event->model));
+        // Mail::to($this->userEmailsInClass($event->model))
+        //     ->sendNow(new ClassUpdatedEmail($event->model));
+        $model = $event->model;
+
+        $this->usersToNotify($model)->each(function ($user) use ($model) {
+            $user->notify(new ClassUpdatedNotification($model));
+        });
     }
 
-    private function userEmailsInClass($model)
+    private function usersToNotify($model): Collection
     {
         if (get_class($model) === StudentExam::class)
-            return $model->student()->pluck('email')->first();
+            return collect([$model->student]);
 
-        return $model->class->students()->pluck('email')->toArray();
+        return $model->class->students;
     }
 }

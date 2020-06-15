@@ -1,0 +1,24 @@
+union Notifiable = User
+
+type NotificationData {
+    action: String
+    url: String
+    message: String
+}
+
+type Notification {
+    id: String!
+    data: NotificationData!
+    is_read: Boolean! @method(name: "isRead")
+    read_at: DateTimeTz
+    created_at: DateTimeTz!
+}
+
+extend type Mutation @guard {
+    deleteNotification(id: ID! @eq): Notification! @delete
+}
+
+extend type Query @guard {
+    notifications: [Notification!]
+        @paginate(builder: "App\\Models\\Notification@paginate")
+}
