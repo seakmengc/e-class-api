@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\ClassUpdated;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,10 @@ class Exam extends Model
         'qa' => 'collection',
         'due_at' => 'datetime',
         'publishes_at' => 'datetime',
+    ];
+
+    protected $dispatchesEvents = [
+        'saved' => ClassUpdated::class,
     ];
 
     public function hiddenBasedRole()

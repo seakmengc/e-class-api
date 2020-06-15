@@ -21,7 +21,7 @@ extend type Mutation {
     ): ClassAttendance!
         @update
         @createClassAttendanceValidation
-        @can(ability: "update", find: "updateClassAttendanceInput.id")
+        @can(ability: "update", find: "id")
     deleteClassAttendance(id: ID! @eq): ClassAttendance!
         @delete
         @can(ability: "delete", find: "id")

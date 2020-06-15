@@ -36,9 +36,7 @@ extend type Mutation {
     ): ScheduleSession! @create @can(ability: "create", injectArgs: "true")
     updateScheduleSession(
         input: UpdateScheduleSessionInput! @spread
-    ): ScheduleSession!
-        @update
-        @can(ability: "update", find: "UpdateScheduleSessionInput.id")
+    ): ScheduleSession! @update @can(ability: "update", find: "id")
     deleteScheduleSession(id: ID! @eq): ScheduleSession!
         @delete
         @can(ability: "delete", find: "id")

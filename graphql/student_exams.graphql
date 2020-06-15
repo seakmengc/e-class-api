@@ -43,7 +43,7 @@ extend type Mutation @guard {
         @createStudentExamValidation
         @can(ability: "create", injectArgs: "true")
     gradeStudentExam(input: gradeStudentExamInput! @spread): StudentExam!
-        @can(ability: "grade", find: "gradeStudentExamInput.id")
+        @can(ability: "grade", find: "id")
 }
 
 extend type Query @guard {
@@ -53,5 +53,5 @@ extend type Query @guard {
     #intended for teachers in grading exam part
     studentExam(id: ID! @eq): StudentExam!
         @find
-        @can(ability: "view", find: "StudentExam.id")
+        @can(ability: "view", find: "id")
 }

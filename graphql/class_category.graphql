@@ -18,9 +18,9 @@ extend type Mutation @guard {
         @createClassCategoryValidation
         @can(ability: "create", injectArgs: "true")
     updateClassCategory(
-        input: updateClassCategoryInput
+        input: updateClassCategoryInput!
             @spread
-            @can(ability: "update", find: "updateClassCategoryInput.id")
+            @can(ability: "update", find: "id")
     ): ClassCategory! @update @createClassCategoryValidation
     deleteClassCategory(id: ID! @eq): ClassCategory!
         @delete

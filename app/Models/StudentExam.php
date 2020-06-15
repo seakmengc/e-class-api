@@ -6,11 +6,7 @@ use App\Exceptions\CustomException;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\HasAuthIdFields;
 use App\Observers\StudentExamObserver;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File as FacadesFile;
-use Intervention\Image\File;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -66,6 +62,11 @@ class StudentExam extends Model implements HasMedia
     public function student(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function class()
+    {
+        return $this->exam->class();
     }
 
     public static function booted()

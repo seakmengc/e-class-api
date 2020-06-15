@@ -19,7 +19,7 @@ extend type Mutation @guard {
         @can(ability: "create", injectArgs: "true")
     updateClass(input: UpdateClassInput! @spread): Classes!
         @update
-        @can(ability: "delete", find: "UpdateClassInput.id")
+        @can(ability: "update", find: "id")
     deleteClass(id: ID! @eq): Classes!
         @delete
         @can(ability: "delete", find: "id")

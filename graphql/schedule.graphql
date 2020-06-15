@@ -34,7 +34,7 @@ extend type Mutation {
         @can(ability: "create", injectArgs: "true")
     updateSchedule(input: UpdateScheduleInput! @spread): Schedule!
         @update
-        @can(ability: "update", find: "UpdateScheduleInput.id")
+        @can(ability: "update", find: "id")
     deleteSchedule(id: ID! @eq): Schedule!
         @delete
         @can(ability: "delete", find: "id")

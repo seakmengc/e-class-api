@@ -19,10 +19,10 @@ extend type Mutation @guard {
         @can(ability: "create", injectArgs: "true")
     updateClassContent(input: updateClassContentInput @spread): ClassContent!
         @updateClassContentValidation
-        @can(ability: "update", find: "updateClassContentInput.id")
+        @can(ability: "update", find: "id")
     deleteClassContent(id: ID!): ClassContent!
         @deleteClassContentValidation
-        @can(ability: "delete", find: "updateClassContentInput.id")
+        @can(ability: "delete", find: "id")
 }
 
 input createClassContentInput {

@@ -16,6 +16,10 @@ class ClassContent extends Model implements HasMedia
     'name', 'class_id', 'description', 'file_url',
   ];
 
+  protected $dispatchesEvents = [
+    'saved' => ClassUpdated::class,
+  ];
+
   public function class(): BelongsTo
   {
     return $this->belongsTo(Classes::class);

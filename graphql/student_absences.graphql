@@ -23,7 +23,7 @@ extend type Mutation @guard {
     ): StudentAbsence!
         @update
         @createStudentAbsenceValidation
-        @can(ability: "update", find: "updateStudentAbsenceInput.id")
+        @can(ability: "update", find: "id")
     deleteStudentAbsence(id: ID! @eq): StudentAbsence!
         @delete
         @can(ability: "delete", find: "id")

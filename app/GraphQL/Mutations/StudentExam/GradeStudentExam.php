@@ -2,6 +2,8 @@
 
 namespace App\GraphQL\Mutations\StudentExam;
 
+use App\Events\ClassUpdated;
+use App\Listeners\SendEmailNotification;
 use App\Models\StudentExam;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
@@ -26,6 +28,8 @@ class GradeStudentExam
         $studentExam->points = $this->calculatePoints($args['answer']);
 
         $studentExam->update($args);
+
+        event(new ClassUpdated($studentExam));
 
         return $studentExam;
     }

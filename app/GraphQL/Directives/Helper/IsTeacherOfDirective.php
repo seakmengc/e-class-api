@@ -24,9 +24,9 @@ Limit field access to teacher in class only.
 """
 directive @isTeacherOf(
   """
-  The class that user's teaching.
+  The arg of the class id that user's teaching.
   """
-  classId: String!
+  find: String!
 ) on FIELD_DEFINITION
 GRAPHQL;
     }
@@ -38,8 +38,6 @@ GRAPHQL;
         return $next(
             $fieldValue->setResolver(
                 function ($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo) use ($originalResolver) {
-        dd($this, $args, $root, $context, $this->getModelClass(), $originalResolver);
-
                     $classId = $this->directiveArgValue('classId');
                     // Throw in case of an invalid schema definition to remind the developer
                     if ($classId === null) {
@@ -47,7 +45,6 @@ GRAPHQL;
                     }
 
                     $model = $this->getModelClass();
-                    dd($model::findOrFail())
 
                     $user = $context->user();
                     if (

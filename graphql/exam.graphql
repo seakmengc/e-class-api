@@ -77,7 +77,7 @@ extend type Mutation @guard {
         @createExamValidation
         @can(ability: "create", injectArgs: "true")
     updateExam(input: UpdateExamInput! @spread): Exam!
-        @can(ability: "update", find: "UpdateExamInput.id")
+        @can(ability: "update", find: "id")
     deleteExam(id: ID! @eq): Exam! @delete @can(ability: "delete", find: "id")
 }
 

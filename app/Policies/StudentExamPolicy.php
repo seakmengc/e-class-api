@@ -16,7 +16,6 @@ class StudentExamPolicy
     {
         $classId = Classes::findOrFail($injected['class_id'])->pluck('id')->first();
 
-
         return $user->isAStudentIn($classId);
     }
 
@@ -68,7 +67,7 @@ class StudentExamPolicy
 
     public function grade(User $user, StudentExam $studentExam)
     {
-        $classId = $studentExam->exam()->pluck('class_id');
+        $classId = $studentExam->exam()->pluck('class_id')->first();
 
         return $user->isATeacherOf($classId);
     }
