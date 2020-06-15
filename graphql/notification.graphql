@@ -7,10 +7,9 @@ type NotificationData {
 }
 
 type Notification {
-    id: String!
+    id: ID!
     data: NotificationData!
     is_read: Boolean! @method(name: "isRead")
-    read_at: DateTimeTz
     created_at: DateTimeTz!
 }
 
@@ -21,4 +20,5 @@ extend type Mutation @guard {
 extend type Query @guard {
     notifications: [Notification!]
         @paginate(builder: "App\\Models\\Notification@paginate")
+    notification(id: ID! @eq): Notification @first
 }
