@@ -17,5 +17,7 @@ Route::group([
     // 'middleware' => ['auth:api'],
     'namespace' => 'Api'
 ], function () {
-    Route::get('{any}', 'FileHandlerController')->where('any', '.*')->name('api.files.show');
+    Route::get('users/{user}/exams/{exam}/{questionId}', 'GetStudentUploadedFileInExam')->name('api.files.exams.show');
+
+    Route::get('users/{user}/portrait', 'GetPortrait')->name('api.files.portraits.show');
 });

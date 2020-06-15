@@ -32,10 +32,9 @@ class Exam extends Model
         return collect($this)->except(['qa']);
     }
 
-    public function isNotDue()
+    public function isDue()
     {
-        if (optional($this->due_at)->isPast())
-            throw new NotAcceptableHttpException('Exam is already due.');
+        return optional($this->due_at)->isPast();
     }
 
     public function class(): BelongsTo

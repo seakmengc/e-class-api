@@ -37,21 +37,35 @@ class StudentExam extends Model implements HasMedia
         return $modified->union($original)->values();
     }
 
-    public function resolveUploadedFileInAnswer()
+    public function resolveUploadedFileInAnswer($inputAnswers)
     {
         $exam = $this->exam;
-        foreach ($this->answer as $value) {
-            $qa = $exam->qa->firstWhere('id', $value['id']);
+        $inputAnswers = collect($inputAnswers);
+        $this->answer = $this->answer->map(function ($answer) use ($inputAnswers, $exam) {
+            $qa = $exam->qa->firstWhere('id', $answer['id']);
+            $inputAnswer = $inputAnswers->firstWhere('id', $answer['id']);
+
             if ($qa['type'] === 'upload') {
-                if (!isset($value['file']))
+                if (!isset($inputAnswer['file']))
                     throw new CustomException('File needed in question id: ' . $qa['id']);
 
                 $this->addMediaCollection($exam->id . '.' . $qa['id'])->singleFile();
 
-                $this->addMediaFromRequest(request()->file('file'))
+                $file = $this->addMedia($inputAnswer['file'])
                     ->toMediaCollection($exam->id . '.' . $qa['id']);
+
+                unset($inputAnswer['file']);
+                $inputAnswer['file']['url'] = route('api.files.exams.show', [
+                    'exam' => $exam->id,
+                    'user' => auth()->id(),
+                    'questionId' => $qa['id']
+                ]);
+                $inputAnswer['file']['name'] = $file->file_name;
+                return $inputAnswer;
             }
-        }
+
+            return $answer;
+        })->unique('id');
     }
 
     public function exam(): BelongsTo

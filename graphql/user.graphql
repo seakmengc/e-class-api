@@ -61,7 +61,7 @@ input UpdateIdentityInput {
 }
 
 input CreateUserInput {
-    uuid: String!
+    uuid: String
     username: String!
     email: String!
     password: String!
@@ -73,7 +73,7 @@ input UpdateUserInput {
     email: String
     username: String
     uuid: String
-    password: String @hash
+    password: String
 }
 
 input SyncRolesInput {
