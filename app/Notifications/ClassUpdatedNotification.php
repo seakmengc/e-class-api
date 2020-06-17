@@ -46,6 +46,7 @@ class ClassUpdatedNotification extends Notification
         $mail = (object) [];
         $mail->content = $this->prepareContent();
         $mail->url = config('app.url');
+        $mail->name = $notifiable->identity->full_name;
 
         return (new MailMessage)
             ->subject('Class Notification')

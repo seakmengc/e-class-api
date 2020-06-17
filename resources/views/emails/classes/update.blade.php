@@ -1,5 +1,5 @@
 @component('mail::message')
-# {{ config('app.name') }}
+# Dear, {{ $mail->name }}
 
 {{ $mail->content }}
 

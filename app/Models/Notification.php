@@ -9,22 +9,30 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Notification extends Model
 {
-
     protected $fillable = ['type', 'notifiable_type', 'notifiable_id', 'data'];
 
     protected $keyType = 'string';
 
     protected $casts = [
-        'data' => 'collection'
+        'data' => 'collection',
+        'read_at' => 'datetime'
     ];
 
     public function isRead()
     {
-        $rtn = (bool) $this->read_at;
+        return (bool) $this->read_at;
+    }
 
-        $this->markAsRead();
+    public static function boot()
+    {
+        parent::boot();
 
-        return $rtn;
+        static::retrieved(function (Notification $notification) {
+            if (is_null($notification->read_at)) {
+                $notification->markAsRead();
+                $notification->read_at = null;
+            }
+        });
     }
 
     public function paginate($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): Builder
@@ -36,8 +44,6 @@ class Notification extends Model
 
     public function markAsRead()
     {
-        if (is_null($this->read_at)) {
-            $this->forceFill(['read_at' => $this->freshTimestamp()])->save();
-        }
+        $this->forceFill(['read_at' => $this->freshTimestamp()])->save();
     }
 }

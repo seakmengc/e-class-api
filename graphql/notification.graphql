@@ -1,5 +1,3 @@
-union Notifiable = User
-
 type NotificationData {
     action: String
     url: String
@@ -11,6 +9,7 @@ type Notification {
     data: NotificationData!
     is_read: Boolean! @method(name: "isRead")
     created_at: DateTimeTz!
+    read_at: DateTimeTz
 }
 
 extend type Mutation @guard {
