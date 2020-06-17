@@ -12,28 +12,6 @@ class CommentPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function viewAny(User $user, array $injected)
-    {
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
-     * @return mixed
-     */
-    public function view(User $user, Comment $comment)
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
@@ -58,7 +36,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
-        //
+        return $user->id == $comment->author_id;
     }
 
     /**
@@ -70,7 +48,10 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment)
     {
-        //
+        $classId = $comment->commentable->class_id;
+
+        return $user->isATeacherOf($classId)
+            or $user->id == $comment->author_id;
     }
 
     public function determine(User $user, $classId)
