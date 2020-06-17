@@ -18,8 +18,8 @@ class CreateScheduleSessionsTable extends Migration
             $table->foreignId('schedule_id')
                 ->constrained()
                 ->onDelete('cascade');
-            $table->string('start_time');
-            $table->string('end_time');
+            $table->unsignedSmallInteger('start_time');
+            $table->unsignedSmallInteger('end_time');
         });
     }
 

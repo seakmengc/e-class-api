@@ -4,7 +4,9 @@ type Classes {
     code: String!
     teacher: User @belongsTo
     students: [User!] @belongsToMany
+    class_categories: [ClassCategory!] @hasMany(relation: "classCategories")
     exams: [Exam!] @hasMany
+    schedules: [Schedule!] @hasMany
 }
 
 extend type Query {

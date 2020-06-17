@@ -1,14 +1,14 @@
 type ScheduleSession {
     id: ID!
-    start_time: String
-    end_time: String
+    start_time: Int
+    end_time: Int
     schedule: Schedule @belongsTo
 }
 
 input CreateScheduleSessionInput {
     schedule: CreateScheduleSessionBelongsTo
-    start_time: String
-    end_time: String
+    start_time: Int
+    end_time: Int
 }
 
 input CreateScheduleSessionBelongsTo {

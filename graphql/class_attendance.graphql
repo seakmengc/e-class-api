@@ -1,7 +1,10 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
 type ClassAttendance {
     id: ID!
     schedule_sessions_id: Int!
-    date: DateTimeTz!
+    date: Date!
 }
 
 extend type Query {

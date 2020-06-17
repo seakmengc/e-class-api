@@ -12,6 +12,7 @@ type Schedule {
     id: ID!
     class: Classes @belongsTo
     day: Day
+    sessions: [ScheduleSession!] @hasMany
 }
 
 input CreateScheduleInput {

@@ -13,7 +13,7 @@ class CreateStudentExamValidationDirective extends ValidationDirective
             'exam_id' => ['bail', 'required', 'integer', 'exists:exams,id'],
             'answers.*.id' => ['required', 'distinct'],
             'answers.*.answers' => ['array'],
-            'answers.*.file' => ['required', 'mimes', 'size:512'],
+            'answers.*.file' => ['required', 'file', 'size:10240'],
         ];
     }
 }

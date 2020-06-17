@@ -22,7 +22,7 @@ class CreateClassAttendancesTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
 
-            $table->timestamp('date');
+            $table->date('date');
             $table->timestamps();
         });
     }
