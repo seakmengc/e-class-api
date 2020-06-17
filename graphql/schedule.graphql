@@ -16,29 +16,29 @@ type Schedule {
 }
 
 input CreateScheduleInput {
-    day: Day
-    class: CreateClassBelongsTo
+    day: Day!
+    class: CreateClassBelongsTo!
 }
 
 input CreateClassBelongsTo {
-    connect: ID
+    connect: ID!
 }
 
 input UpdateScheduleInput {
     id: ID!
-    day: Day
+    day: Day!
 }
 
 extend type Mutation {
     createSchedule(input: CreateScheduleInput! @spread): Schedule!
         @create
-        @can(ability: "create", injectArgs: "true")
+        @canAccess(requiredRole: "admin")
     updateSchedule(input: UpdateScheduleInput! @spread): Schedule!
         @update
-        @can(ability: "update", find: "id")
+        @canAccess(requiredRole: "admin")
     deleteSchedule(id: ID! @eq): Schedule!
         @delete
-        @can(ability: "delete", find: "id")
+        @canAccess(requiredRole: "admin")
 }
 
 extend type Query {

@@ -45,6 +45,12 @@ class Forum extends Model
 
     protected static function booted()
     {
+        static::saving(function (Forum $forum) {
+            // dd($forum, $forum->classContent);
+            $forum->class_id = $forum->classContent->class_id;
+            $forum->class_id = 1;
+        });
+
         static::deleted(function (Forum $forum) {
             $forum->comments()->delete();
         });

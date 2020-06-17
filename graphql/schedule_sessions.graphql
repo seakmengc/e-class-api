@@ -1,14 +1,14 @@
 type ScheduleSession {
     id: ID!
-    start_time: Int
-    end_time: Int
-    schedule: Schedule @belongsTo
+    start_time: Int!
+    end_time: Int!
+    schedule: Schedule! @belongsTo
 }
 
 input CreateScheduleSessionInput {
     schedule: CreateScheduleSessionBelongsTo
-    start_time: Int
-    end_time: Int
+    start_time: Int! @rules(apply: ["integer", "max:2400", "min:0"])
+    end_time: Int! @rules(apply: ["integer", "max:2400", "min:0", "gt:start_time"])
 }
 
 input CreateScheduleSessionBelongsTo {
@@ -26,20 +26,20 @@ input UpsertScheduleSessionInput {
 
 input UpdateScheduleSessionInput {
     id: ID!
-    start_time: String
-    end_time: String
+    start_time: Int! @rules(apply: ["integer", "max:2400", "min:0"])
+    end_time: Int! @rules(apply: ["integer", "max:2400", "min:0", "gt:start_time"])
 }
 
 extend type Mutation {
     createScheduleSession(
         input: CreateScheduleSessionInput! @spread
-    ): ScheduleSession! @create @can(ability: "create", injectArgs: "true")
+    ): ScheduleSession! @create @canAccess(requiredRole: "admin")
     updateScheduleSession(
         input: UpdateScheduleSessionInput! @spread
-    ): ScheduleSession! @update @can(ability: "update", find: "id")
+    ): ScheduleSession! @update @canAccess(requiredRole: "admin")
     deleteScheduleSession(id: ID! @eq): ScheduleSession!
         @delete
-        @can(ability: "delete", find: "id")
+        @canAccess(requiredRole: "admin")
 }
 
 extend type Query {

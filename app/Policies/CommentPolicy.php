@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Arr;
 
 class CommentPolicy
 {
@@ -18,7 +19,6 @@ class CommentPolicy
      */
     public function viewAny(User $user, array $injected)
     {
-        dd($injected);
     }
 
     /**
@@ -41,7 +41,12 @@ class CommentPolicy
      */
     public function create(User $user, array $injected)
     {
-        dd($user, $injected);
+        $commentableType = Arr::get($injected, 'commentable.connect.type');
+        $commentableId = Arr::get($injected, 'commentable.connect.id');
+
+        $classId = $commentableType::findOrFail($commentableId)->class_id;
+
+        return $this->determine($user, $classId);
     }
 
     /**
@@ -66,5 +71,10 @@ class CommentPolicy
     public function delete(User $user, Comment $comment)
     {
         //
+    }
+
+    public function determine(User $user, $classId)
+    {
+        return $user->isATeacherOf($classId) or $user->isAStudentIn($classId);
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\ClassContent;
 use App\Models\Forum;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Arr;
 
 class ForumPolicy
 {
@@ -44,7 +46,7 @@ class ForumPolicy
      */
     public function create(User $user, $injected)
     {
-        $classId = $injected['class_id'];
+        $classId = ClassContent::findOrFail(Arr::get($injected, 'class_content_id'))->pluck('class_id')->first();
 
         return $this->determine($user, $classId);
     }

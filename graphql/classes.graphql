@@ -18,13 +18,13 @@ extend type Mutation @guard {
     createClass(input: CreateClassInput! @spread): Classes!
         @create
         @createClassesValidation
-        @can(ability: "create", injectArgs: "true")
+        @canAccess(requiredRole: "admin")
     updateClass(input: UpdateClassInput! @spread): Classes!
         @update
-        @can(ability: "update", find: "id")
+        @canAccess(requiredRole: "admin")
     deleteClass(id: ID! @eq): Classes!
         @delete
-        @can(ability: "delete", find: "id")
+        @canAccess(requiredRole: "admin")
     syncStudents(input: SyncStudentsToClassInput @spread): Classes
         @canAccess(requiredRole: "admin")
 }

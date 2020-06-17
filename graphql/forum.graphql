@@ -2,10 +2,11 @@ type Forum {
     id: ID!
     title: String
     description: String
-    classContent: ClassContent! @belongsTo
+    class_content: ClassContent! @belongsTo(relation: "classContent")
     class: Classes! @belongsTo
     author: User! @belongsTo
-    comments: [Comment!] @morphMany
+    comments: [Comment!] @morphMany(type: "paginator")
+    comments_count: Int! @count(relation: "comments")
     answer: Comment @belongsTo
     created_at: DateTimeTz
     updated_at: DateTimeTz
@@ -22,8 +23,8 @@ input CreateClassContentBelongsTo {
 input CreateForumInput {
     title: String @rules(apply: ["required", "max:255", "string"])
     description: String @rules(apply: ["required", "max:60000"])
-    classContent: CreateClassContentBelongsTo
-    class_id: ID! @rules(apply: ["required", "integer", "exists:classes,id"])
+    class_content_id: ID!
+    # class_id: ID! @rules(apply: ["required", "integer", "exists:classes,id"])
 }
 
 input UpdateForumInput {
@@ -49,5 +50,5 @@ extend type Query @guard {
     forumsInClass(class_id: ID! @eq): [Forum!]
         @paginate
         @can(ability: "viewAny", injectArgs: "true")
-    forum(id: ID! @eq): Forum! @find @can(ability: "view", find: "id")
+    forum(id: ID! @eq): Forum @first @can(ability: "view", find: "id")
 }
