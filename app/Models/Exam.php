@@ -66,4 +66,11 @@ class Exam extends Model
 
         return $modified->union($original)->values();
     }
+
+    public static function booted()
+    {
+        static::saving(function (Exam $exam) {
+            $exam->possible = $exam->qa->sum('points');
+        });
+    }
 }
