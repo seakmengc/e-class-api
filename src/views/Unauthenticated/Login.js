@@ -5,6 +5,7 @@ import useForm from '../../lib/useForm'
 import { FormWrapper, H3 } from './Styled'
 import { USER_LOGIN } from './Api'
 import Error from './ErrorMessage'
+import auth from '../../variables/constants.js'
 
 // reactstrap components
 import {
@@ -56,7 +57,15 @@ const Login = (props) => {
                   let res
                   try {
                     res = await login()
-                    console.log(res)
+                    localStorage.setItem(
+                      'refreshToken',
+                      res.data.login.refresh_token
+                    )
+                    auth.accessToken = res.data.login.access_token
+                    setInterval(() => {
+                      console.log(1)
+                    }, 2)
+                    console.log(res, auth)
                     // handle data
                     props.history.push('/')
                   } catch {}

@@ -41,6 +41,17 @@ export const USER_REGISTER = gql`
 export const USER_LOGIN = gql`
   mutation USER_LOGIN($username: String!, $password: String!) {
     login(input: { username: $username, password: $password }) {
+      refresh_token
+      access_token
+      expires_in
+    }
+  }
+`
+
+export const REFRESH_TOKEN = gql`
+  mutation REFRESH_TOKEN($refreshToken: String!) {
+    refreshToken(input: { refresh_token: $refreshToken }) {
+      refresh_token
       access_token
       expires_in
     }
@@ -58,7 +69,7 @@ export const FORGOT_PASSWORD = gql`
 `
 
 export const RESET_PASSWORD = gql`
-  mutation RESeT_PASSWORD($username: String!, $password: String!, $otp: Int!) {
+  mutation RESET_PASSWORD($username: String!, $password: String!, $otp: Int!) {
     resetPassword(
       input: { username: $username, password: $password, otp: $otp }
     ) {
