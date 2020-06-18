@@ -47,6 +47,7 @@ extend type Mutation @guard {
         @inject(context: "user.id", name: "student_id")
         @can(ability: "create", injectArgs: "true")
     gradeStudentExam(input: GradeStudentExamInput! @spread): StudentExam!
+        @gradeStudentExamValidation
         @can(ability: "grade", find: "id")
 }
 

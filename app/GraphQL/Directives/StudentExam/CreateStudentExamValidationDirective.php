@@ -9,6 +9,8 @@ class CreateStudentExamValidationDirective extends ValidationDirective
 {
     public function rules(): array
     {
+        dd(request()->all());
+
         return [
             'exam_id' => ['bail', 'required', 'integer', 'exists:exams,id'],
             'answers.*.id' => ['required', 'distinct'],
