@@ -11,7 +11,6 @@ class CreateExamValidationDirective extends ValidationDirective
         return [
             'class_category.connect' => ['bail', 'required', 'integer', 'exists:class_categories,id'],
             'name' => ['bail', 'required', 'string', 'max:255'],
-            'possible' => ['bail', 'required'],
             'description' => ['bail', 'string'],
             'qa' => ['bail', 'array'],
             'attempts' => ['bail', 'required', 'integer'],

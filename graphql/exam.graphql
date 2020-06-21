@@ -32,7 +32,6 @@ type Exam {
 input CreateExamInput {
     class_category: CreateClassCategoryBelongsTo
     name: String!
-    possible: Float!
     description: String
     qa: [CreateQuestionInput]
     attempts: Int!
