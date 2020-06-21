@@ -5,6 +5,7 @@ type Classes {
     teacher: User @belongsTo
     students: [User!] @belongsToMany
     class_categories: [ClassCategory!] @hasMany(relation: "classCategories")
+    class_contents: [ClassContent!] @hasMany(relation: "classContents")
     exams: [Exam!] @hasMany
     schedules: [Schedule!] @hasMany
 }

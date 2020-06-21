@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Stmt\ClassConst;
 
 class Classes extends Model
 {
@@ -28,6 +29,11 @@ class Classes extends Model
 	public function classCategories(): HasMany
 	{
 		return $this->hasMany(ClassCategory::class, 'class_id');
+	}
+
+	public function classContents(): HasMany
+	{
+		return $this->hasMany(ClassContent::class, 'class_id');
 	}
 
 	public function exams(): HasMany
