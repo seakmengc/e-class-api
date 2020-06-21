@@ -44,7 +44,6 @@ input ConnectCommentableInput {
     id: ID!
 }
 
-#TODO: not yet
 extend type Mutation @guard {
     createComment(input: CreateCommentInput! @spread): Comment!
         @can(ability: "create", injectArgs: "true")
