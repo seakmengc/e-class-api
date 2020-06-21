@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use App\Traits\HasAuthIdFields;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use GraphQL\Type\Definition\ResolveInfo;
+use App\Traits\HasAuthIdFields;
 
 class Forum extends Model
 {
@@ -43,8 +45,10 @@ class Forum extends Model
         return $this->belongsTo(User::class);
     }
 
-    protected static function booted()
+    protected static function boot()
     {
+        parent::boot();
+
         static::saving(function (Forum $forum) {
             // dd($forum, $forum->classContent);
             $forum->class_id = $forum->classContent->class_id;
@@ -54,5 +58,11 @@ class Forum extends Model
         static::deleted(function (Forum $forum) {
             $forum->comments()->delete();
         });
+    }
+
+    public function myForumsPaginate($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): Builder
+    {
+        return Forum::whereAuthorId($context->user->id)
+            ->latest();
     }
 }

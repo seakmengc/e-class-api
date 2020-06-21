@@ -52,3 +52,7 @@ extend type Mutation @guard {
     deleteComment(id: ID! @eq): Comment!
         @can(ability: "delete", find: "id")
 }
+
+extend type Query @guard {
+    myComments: [Comment!] @paginate(builder: "App\\Models\\Comment@myCommentsPaginate")
+}

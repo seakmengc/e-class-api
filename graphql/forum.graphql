@@ -46,6 +46,7 @@ extend type Mutation @guard {
 }
 
 extend type Query @guard {
+    myForums: [Forum!] @paginate(builder: "App\\Models\\Forum@myForumsPaginate")
     forumsInClass(class_id: ID! @eq): [Forum!]
         @paginate
         @can(ability: "viewAny", injectArgs: "true")
