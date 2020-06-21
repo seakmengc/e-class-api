@@ -41,7 +41,9 @@ GRAPHQL;
         return $next(
             $fieldValue->setResolver(
                 function ($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo) use ($originalResolver) {
+
                     $requiredRole = $this->directiveArgValue('requiredRole');
+
                     // Throw in case of an invalid schema definition to remind the developer
                     if ($requiredRole === null) {
                         throw new DefinitionException("Missing argument 'requiredRole' for directive '@canAccess'.");
@@ -52,7 +54,7 @@ GRAPHQL;
                         // Unauthenticated users don't get to see anything
                         !$user
                         // The user's role has to match have the required role
-                        || !$user->roles()->whereName($requiredRole)->exists()
+                        || !$user->hasRole($requiredRole)
                     ) {
                         throw new CustomException('User cannot perform this action');
                     }

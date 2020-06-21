@@ -59,6 +59,22 @@ class User extends Authenticatable
         return $this->where(self::usernameOrEmail($username), $username)->first();
     }
 
+    public function isTeacher(){
+      return $this->hasRole('teacher');
+    }
+
+    public function isStudent(){
+      return $this->hasRole('student');
+    }
+
+    public function isUser(){
+      return $this->hasRole('user');
+    }
+
+    public function isAdmin(){
+      return $this->hasRole('admin');
+    }
+
     public static function usernameOrEmail($input)
     {
         if (filter_var($input, FILTER_VALIDATE_EMAIL))

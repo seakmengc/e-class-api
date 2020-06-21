@@ -38,7 +38,7 @@ GRAPHQL;
         return $next(
             $fieldValue->setResolver(
                 function ($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo) use ($originalResolver) {
-                    dd($this->directiveArgValue('find'));
+                    
                     $classId = $this->directiveArgValue('find');
                     // Throw in case of an invalid schema definition to remind the developer
                     if ($classId === null) {

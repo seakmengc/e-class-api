@@ -10,6 +10,7 @@ class CreateClassAttendanceValidationDirective extends ValidationDirective
   {
     return [
       'schedule_sessions_id' => 'required',
+      'class_id'=> 'required',
       'date' => 'required'
     ];
   }
