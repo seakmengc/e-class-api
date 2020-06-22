@@ -15,7 +15,9 @@ class ClassAttendance extends Model
     {
       return $this->belongsTo(ScheduleSession::class, 'schedule_sessions_id');
     }
-
-
+    public function class(): BelongsTo
+    {
+      return $this->belongsTo(Classes::class, 'class_id');
+    }
 
 }

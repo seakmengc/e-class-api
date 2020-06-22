@@ -7,8 +7,8 @@ type StudentAbsence {
 }
 
 extend type Query {
-    StudentAbsences: [StudentAbsence!] @paginate(defaultCount: 10)
-    StudentAbsence(id: ID! @eq): StudentAbsence! @find
+    StudentAbsences: [StudentAbsence!] @paginate(defaultCount: 10) @can(ability: "viewAny")
+    StudentAbsence(id: ID! @eq): StudentAbsence! @find @can(ability: "viewAny")
 }
 
 extend type Mutation @guard {
