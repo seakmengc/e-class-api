@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-    // 'middleware' => ['auth:api'],
+    'middleware' => ['auth:api'],
     'namespace' => 'Api'
 ], function () {
     Route::get('users/{user}/exams/{exam}/{questionId}', 'GetStudentUploadedFileInExam')->name('api.files.exams.show');
