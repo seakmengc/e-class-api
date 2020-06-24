@@ -1,7 +1,7 @@
 enum Day {
     MONDAY @enum(value: "monday")
     TUESDAY @enum(value: "tuesday")
-    WEDDAY @enum(value: "wedday")
+    WEDNESDAY @enum(value: "wednesday")
     THURSDAY @enum(value: "thursday")
     FRIDAY @enum(value: "friday")
     SATURDAY @enum(value: "saturday")

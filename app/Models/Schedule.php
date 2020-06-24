@@ -21,6 +21,6 @@ class Schedule extends Model
 
     public function sessions(): HasMany
     {
-        return $this->hasMany(ScheduleSession::class, 'schedule_id');
+        return $this->hasMany(ScheduleSession::class, 'schedule_id')->orderBy('start_time');
     }
 }
