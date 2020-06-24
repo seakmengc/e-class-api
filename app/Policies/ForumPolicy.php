@@ -62,7 +62,7 @@ class ForumPolicy
     {
         $classId = $forum->class_id;
 
-        return $this->determine($user, $classId);
+        return $user->isATeacherOf($classId) or $user->id == $forum->author_id;
     }
 
     /**
@@ -76,7 +76,7 @@ class ForumPolicy
     {
         $classId = $forum->class_id;
 
-        return $this->determine($user, $classId);
+        return $user->isATeacherOf($classId) or $user->id == $forum->author_id;
     }
 
     public function determine(User $user, $classId)

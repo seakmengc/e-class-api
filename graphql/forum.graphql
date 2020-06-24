@@ -23,8 +23,7 @@ input CreateClassContentBelongsTo {
 input CreateForumInput {
     title: String @rules(apply: ["required", "max:255", "string"])
     description: String @rules(apply: ["required", "max:60000"])
-    class_content_id: ID!
-    # class_id: ID! @rules(apply: ["required", "integer", "exists:classes,id"])
+    class_content_id: ID! @rules(apply: ["required", "integer", "exists:class_contents,id"])
 }
 
 input UpdateForumInput {
@@ -47,6 +46,7 @@ extend type Mutation @guard {
 }
 
 extend type Query @guard {
+    myForums: [Forum!] @paginate(builder: "App\\Models\\Forum@myForumsPaginate")
     forumsInClass(class_id: ID! @eq): [Forum!]
         @paginate
         @can(ability: "viewAny", injectArgs: "true")

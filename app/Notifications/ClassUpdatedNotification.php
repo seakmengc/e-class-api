@@ -6,8 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Log;
 
-class ClassUpdatedNotification extends Notification
+class ClassUpdatedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

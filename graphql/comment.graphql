@@ -44,7 +44,6 @@ input ConnectCommentableInput {
     id: ID!
 }
 
-#TODO: not yet
 extend type Mutation @guard {
     createComment(input: CreateCommentInput! @spread): Comment!
         @can(ability: "create", injectArgs: "true")
@@ -52,4 +51,8 @@ extend type Mutation @guard {
         @can(ability: "update", find: "id")
     deleteComment(id: ID! @eq): Comment!
         @can(ability: "delete", find: "id")
+}
+
+extend type Query @guard {
+    myComments: [Comment!] @paginate(builder: "App\\Models\\Comment@myCommentsPaginate")
 }
