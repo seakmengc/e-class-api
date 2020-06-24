@@ -19,7 +19,6 @@ class UsersSeeder extends Seeder
 
         factory(Identity::class)->create(['user_id' => $user->id]);
 
-
         $user->assignRole('admin');
     }
 }

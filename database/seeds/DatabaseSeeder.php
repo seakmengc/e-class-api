@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolesPermissionsSeeder::class);
         $this->call(UsersSeeder::class);
+        Auth::guard('api')->setUser(User::find(1));
         $this->call(ClassSeeder::class);
     }
 }

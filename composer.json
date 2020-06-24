@@ -82,6 +82,10 @@
         "msp": [
             "@php artisan migrate:fresh --seed",
             "@php artisan passport:install"
+        ],
+        "mp": [
+            "@php artisan migrate:fresh",
+            "@php artisan passport:install"
         ]
     }
 }

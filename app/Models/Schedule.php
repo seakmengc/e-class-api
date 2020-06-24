@@ -14,6 +14,10 @@ class Schedule extends Model
 
     protected $fillable = ['day', 'class_id'];
 
+    public static $days = [
+        'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+    ];
+
     public function class(): BelongsTo
     {
         return $this->belongsTo(Classes::class);

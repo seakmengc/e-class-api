@@ -15,7 +15,7 @@ class RolesPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        $defaultRoles = ['admin', 'teacher', 'student', 'user'];
+        $defaultRoles = ['admin', 'teacher', 'student'];
 
         DB::beginTransaction();
 

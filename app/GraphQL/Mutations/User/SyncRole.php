@@ -6,7 +6,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Models\User;
 
-class SyncRoles
+class SyncRole
 {
     /**
      * Return a value for the field.
@@ -21,7 +21,7 @@ class SyncRoles
     {
         $user = User::findOrFail($args['user_id']);
 
-        $user->roles()->sync($args['role_ids']);
+        $user->roles()->sync($args['role_id']);
 
         return $user;
     }

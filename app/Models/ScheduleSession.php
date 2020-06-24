@@ -11,7 +11,7 @@ class ScheduleSession extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['start_time', 'end_time'];
+    protected $fillable = ['schedule_id', 'start_time', 'end_time'];
 
     public function schedule(): BelongsTo
     {

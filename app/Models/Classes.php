@@ -43,6 +43,6 @@ class Classes extends Model
 
 	public function schedules(): HasMany
 	{
-		return $this->hasMany(Schedule::class, 'class_id')->orderByRaw("FIELD(day, \"monday\", \"tuesday\", \"wednesday\", \"thursday\", \"friday\", \"saturday\", \"sunday\")");
+		return $this->hasMany(Schedule::class, 'class_id')->orderByRaw('FIELD(day, ' . implode(',', Schedule::$days) . ' )');
 	}
 }
