@@ -1,14 +1,14 @@
 type ScheduleSession {
     id: ID!
-    start_time: Int!
-    end_time: Int!
+    start_time: String!
+    end_time: String!
     schedule: Schedule! @belongsTo
 }
 
 input CreateScheduleSessionInput {
     schedule: CreateScheduleSessionBelongsTo
-    start_time: Int! @rules(apply: ["integer", "max:2400", "min:0"])
-    end_time: Int! @rules(apply: ["integer", "max:2400", "min:0"])
+    start_time: String! @rules(apply: ["date_format:H:i", "before:end_time"])
+    end_time: String! @rules(apply: ["date_format:H:i"])
 }
 
 input CreateScheduleSessionBelongsTo {
@@ -26,8 +26,8 @@ input UpsertScheduleSessionInput {
 
 input UpdateScheduleSessionInput {
     id: ID!
-    start_time: Int! @rules(apply: ["integer", "max:2400", "min:0"])
-    end_time: Int! @rules(apply: ["integer", "max:2400", "min:0"])
+    start_time: String! @rules(apply: ["date_format:H:i"])
+    end_time: String! @rules(apply: ["date_format:H:i", "after:start_time"])
 }
 
 extend type Mutation {

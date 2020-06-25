@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -16,5 +17,15 @@ class ScheduleSession extends Model
     public function schedule(): BelongsTo
     {
         return $this->belongsTo(Schedule::class);
+    }
+
+    public function getStartTimeAttribute()
+    {
+        return Carbon::createFromFormat('H:i:s', $this->attributes['start_time'])->toTimeString('minute');
+    }
+
+    public function getEndTimeAttribute()
+    {
+        return Carbon::createFromFormat('H:i:s', $this->attributes['end_time'])->toTimeString('minute');
     }
 }

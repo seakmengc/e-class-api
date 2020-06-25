@@ -12,9 +12,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::beginTransaction();
         $this->call(RolesPermissionsSeeder::class);
         $this->call(UsersSeeder::class);
-        Auth::guard('api')->setUser(User::find(1));
+        Auth::guard('api')->setUser(User::first());
         $this->call(ClassSeeder::class);
+
+        DB::commit();
     }
 }
