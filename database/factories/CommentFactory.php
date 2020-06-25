@@ -9,6 +9,5 @@ $factory->define(App\Models\Comment::class, function (Faker $faker) {
         'commentable_id' => $faker->randomNumber(),
         'commentable_type' => $faker->word,
         'comment' => $faker->text,
-        'author_id' => factory(App\Models\User::class),
     ];
 });
