@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Directives\Exam;
 
+use Illuminate\Validation\Rule;
 use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
 class CreateExamValidationDirective extends ValidationDirective
