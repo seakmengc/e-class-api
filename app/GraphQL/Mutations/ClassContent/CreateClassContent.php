@@ -26,11 +26,8 @@ class CreateClassContent
 		]);
 
 		if (isset($args['file_url'])) {
-			$classContent->addMedia($args['file_url'])->toMediaCollection('class-content');
+			$classContent->addMedia($args['file'])->toMediaCollection('class-content');
 			$fullPathOnDisk = $classContent->getMedia('class-content')->first()->file_name;
-			$classContent->update([
-				'file_url' => $fullPathOnDisk
-			]);
 		}
 
 		return $classContent;

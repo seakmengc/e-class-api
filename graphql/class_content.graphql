@@ -28,7 +28,7 @@ input createClassContentInput {
     name: String!
     description: String!
     class_id: Int!
-    file_url: Upload
+    file: Upload
 }
 
 input updateClassContentInput {
@@ -36,5 +36,5 @@ input updateClassContentInput {
     name: String!
     description: String!
     class_id: Int
-    file_url: Upload
+    file: Upload
 }

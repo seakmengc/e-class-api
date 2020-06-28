@@ -25,14 +25,14 @@ class DeleteClassContent
     {
 
 
-      $class_id = ClassContent::findOrFail($args['id'])->class_id;
-      $teacher_id = Classes::findOrFail($class_id)->teacher_id;
-      $user_id = User::findOrFail($teacher_id);
-       if(Auth::id() !== $user_id){
-        throw new ClassContentException(
-               'Unantorize to delete since you are not owner of this class content',
-               'Unanthorize to delete.'
-           );
+        $class_id = ClassContent::findOrFail($args['id'])->class_id;
+        $teacher_id = Classes::findOrFail($class_id)->teacher_id;
+        $user_id = User::findOrFail($teacher_id);
+        if (Auth::id() !== $user_id) {
+            throw new ClassContentException(
+                'Unantorize to delete since you are not owner of this class content',
+                'Unanthorize to delete.'
+            );
         }
         $classContent = ClassContent::findOrFail($args['id']);
         $classContent->delete();
