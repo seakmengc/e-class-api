@@ -21,7 +21,6 @@ extend type Mutation @guard {
         @updateClassContentValidation
         @can(ability: "update", find: "id")
     deleteClassContent(id: ID!): ClassContent!
-        @deleteClassContentValidation
         @can(ability: "delete", find: "id")
 }
 

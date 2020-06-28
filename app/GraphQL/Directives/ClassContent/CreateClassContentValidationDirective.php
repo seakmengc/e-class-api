@@ -2,20 +2,18 @@
 
 namespace App\GraphQL\Directives\ClassContent;
 
-
+use Illuminate\Validation\Rule;
 use Nuwave\Lighthouse\Schema\Directives\ValidationDirective;
 
 class CreateClassContentValidationDirective extends ValidationDirective
 {
-
-
-    public function rules(): array
-    {
-      return [
-        'name' => 'required|min:4|unique:class_contents',
-        'description' => 'required',
-        'class_id' => 'required',
-        'file_url' => 'unique:class_contents'
-      ];
-    }
+	public function rules(): array
+	{
+		return [
+			'class_id' => 'required|exists:classes,id',
+			'name' => ['required', 'min:4', Rule::unique('class_contents', 'name')->where('class_id', (int) $this->args['class_id'])],
+			'description' => 'required',
+			'file' => 'file'
+		];
+	}
 }
