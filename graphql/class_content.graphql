@@ -9,8 +9,8 @@ type ClassContent {
     file_url: String
 }
 extend type Query {
-    ClassContents: [ClassContent!]! @paginate(defaultCount: 10)
-    ClassContent(id: ID @eq): ClassContent @find
+    ClassContents(class_id: ID!): [ClassContent!]! @paginate(defaultCount: 10) @can(ability: "viewAny", injectArgs:"true")
+    ClassContent(id: ID! @eq): ClassContent @find @can(ability: "view", find:"id")
 }
 
 extend type Mutation @guard {

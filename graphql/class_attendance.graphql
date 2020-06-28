@@ -9,8 +9,7 @@ type ClassAttendance {
 }
 
 extend type Query {
-    ClassAttendances: [ClassAttendance!] @paginate(defaultCount: 10) @can(ability: "view")
-    ClassAttendance(id: ID! @eq): ClassAttendance! @find @can(ability: "view")
+    ClassAttendances(class_id: ID!): [ClassAttendance!] @paginate(defaultCount: 10) @can(ability: "viewAny", injectArgs:"true")
 }
 
 extend type Mutation @guard {

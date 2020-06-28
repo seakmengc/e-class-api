@@ -5,16 +5,25 @@ namespace App\Policies;
 use App\Models\ClassContent;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use PhpParser\Node\Stmt\ClassConst;
 
 class ClassContentPolicy
 {
     use HandlesAuthorization;
 
-
-    public function create(User $user)
+    public function viewAny(User $user, $injected)
     {
-        //
-        return $this->isTeacher();
+        return $user->isATeacherOf($injected['class_id']);
+    }
+
+    public function view(User $user, ClassContent $classContent)
+    {
+        return $user->isATeacherOf($classContent->class_id);
+    }
+
+    public function create(User $user, $injected)
+    {
+        return $user->isATeacherOf($injected['class_id']);
     }
 
     /**
@@ -26,8 +35,7 @@ class ClassContentPolicy
      */
     public function update(User $user, ClassContent $classContent)
     {
-        //
-        return $user->isTeacher() && $user->isATeacherOf($classAttendance->class_id);
+        return $user->isATeacherOf($classContent->class_id);
     }
 
     /**
@@ -39,9 +47,6 @@ class ClassContentPolicy
      */
     public function delete(User $user, ClassContent $classContent)
     {
-        //
-        return $user->isTeacher() && $user->isATeacherOf($classAttendance->class_id);
+        return $user->isATeacherOf($classContent->class_id);
     }
-
-
 }

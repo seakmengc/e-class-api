@@ -10,9 +10,9 @@ class ClassAttendancePolicy
 {
 	use HandlesAuthorization;
 
-	public function view(User $user, ClassAttendance $classAttendance)
+	public function viewAny(User $user, $injected)
 	{
-		return $user->isATeacherOf($classAttendance->class_id);
+		return $user->isATeacherOf($injected['class_id']);
 	}
 
 	/**
