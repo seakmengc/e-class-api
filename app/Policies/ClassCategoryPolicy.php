@@ -29,7 +29,6 @@ class ClassCategoryPolicy
      */
     public function update(User $user, ClassCategory $classCategory)
     {
-        //
         return $user->isATeacherOf($classCategory->class_id);
     }
 

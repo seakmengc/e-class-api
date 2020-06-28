@@ -22,7 +22,7 @@ extend type Mutation @guard {
         updateClassCategoryInput! @spread
         ): ClassCategory!
         @update
-        @createClassCategoryValidation
+        @updateClassCategoryValidation
         @can(ability: "update", find: "id")
     deleteClassCategory(id: ID! @eq): ClassCategory!
         @delete
@@ -39,7 +39,6 @@ input updateClassCategoryInput {
     id: Int!
     name: String!
     weight: Float!
-    class_id: Int!
 }
 
 input CreateClassCategoryBelongsTo {
