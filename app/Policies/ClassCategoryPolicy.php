@@ -15,10 +15,9 @@ class ClassCategoryPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, $injected)
     {
-        //
-        return $user->isTeacher();
+        return $user->isATeacherOf($injected['class_id']);
     }
 
     /**
@@ -31,7 +30,7 @@ class ClassCategoryPolicy
     public function update(User $user, ClassCategory $classCategory)
     {
         //
-        return $user->isTeacher() && $user->isATeacherOf($classAttendance->class_id);
+        return $user->isATeacherOf($classCategory->class_id);
     }
 
     /**
@@ -44,8 +43,6 @@ class ClassCategoryPolicy
     public function delete(User $user, ClassCategory $classCategory)
     {
         //
-        return $user->isTeacher() && $user->isATeacherOf($classAttendance->class_id);
+        return $user->isATeacherOf($classCategory->class_id);
     }
-
-
 }
