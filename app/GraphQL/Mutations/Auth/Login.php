@@ -26,7 +26,7 @@ class Login
 
         $response = $this->makeRequest($credentials);
 
-        $user = User::where($this->usernameOrEmail($args['username']), $args['username'])->with('identity')->firstOrFail();
+        $user = User::where($this->usernameOrEmail($args['username']), $args['username'])->firstOrFail();
 
         return array_merge($response, ['user' => $user]);
     }

@@ -21,12 +21,10 @@ class SendEmailNotification
      */
     public function handle(ClassUpdated $event)
     {
-        // Mail::to($this->userEmailsInClass($event->model))
-        //     ->sendNow(new ClassUpdatedEmail($event->model));
         $model = $event->model;
 
         $this->usersToNotify($model)->each(function ($user) use ($model) {
-            $user->notify(new ClassUpdatedNotification($model));
+            $user->notify(new ClassUpdatedNotification($model, $model->wasRecentlyCreated));
         });
     }
 

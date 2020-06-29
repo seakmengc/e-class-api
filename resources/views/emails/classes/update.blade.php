@@ -4,7 +4,7 @@
 {{ $mail->content }}
 
 @component('mail::button', ['url' => $mail->url])
-More Details
+Detail
 @endcomponent
 
 Thanks,<br>
