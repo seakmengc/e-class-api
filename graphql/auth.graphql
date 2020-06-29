@@ -23,6 +23,7 @@ type RefreshTokenPayload {
 }
 
 type LogoutResponse {
+    success: Boolean!
     status: String!
     message: String
 }
@@ -61,28 +62,12 @@ input UpdatePassword {
 
 extend type Mutation {
     login(input: LoginInput @spread): AuthPayload!
-        @field(
-            resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Login@resolve"
-        )
     refreshToken(input: RefreshTokenInput @spread): RefreshTokenPayload!
-        @field(
-            resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\RefreshToken@resolve"
-        )
-    logout: LogoutResponse!
-        @field(
-            resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\Logout@resolve"
-        )
+    logout: LogoutResponse! @guard(with: ["api"])
     forgotPassword(input: ForgotPasswordInput! @spread): ForgotPasswordResponse!
     resetPassword(
         input: NewPasswordWithOtpInput @spread
     ): ResetPasswordResponse!
     updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse!
-        @field(
-            resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve"
-        )
-        @guard(with: ["api"])
-    updateEmail(email: String! @rules(apply: ["email"])): User!
-        @update
-        @inject(context: "user.id", name: "id")
         @guard(with: ["api"])
 }
