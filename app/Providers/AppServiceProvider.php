@@ -2,15 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Comment;
-use App\Models\User;
 use App\Models\Identity;
-use App\Observers\UserObserver;
-use App\Observers\IdentityObserver;
-use Arr;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Builder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +24,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Identity::observe(IdentityObserver::class);
     }
 }

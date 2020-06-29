@@ -14,27 +14,26 @@ extend type Query {
 }
 
 extend type Mutation @guard {
-    createClassContent(input: createClassContentInput @spread): ClassContent!
+    createClassContent(input: CreateClassContentInput @spread): ClassContent!
         @createClassContentValidation
         @can(ability: "create", injectArgs: "true")
-    updateClassContent(input: updateClassContentInput @spread): ClassContent!
+    updateClassContent(input: UpdateClassContentInput! @spread): ClassContent!
         @updateClassContentValidation
         @can(ability: "update", find: "id")
     deleteClassContent(id: ID!): ClassContent!
         @can(ability: "delete", find: "id")
 }
 
-input createClassContentInput {
+input CreateClassContentInput {
     name: String!
     description: String!
     class_id: Int!
     file: Upload
 }
 
-input updateClassContentInput {
+input UpdateClassContentInput {
     id: ID!
     name: String!
     description: String!
-    class_id: Int
     file: Upload
 }

@@ -13,7 +13,7 @@ class UpdateClassContentValidationDirective extends ValidationDirective
 		$classCon = ClassContent::findOrFail((int) $this->args['id']);
 
 		return [
-			'name' => ['min:4', Rule::unique('class_contents', 'name')->where('class_id', (int) $this->args['class_id'])->ignore($classCon->id)],
+			'name' => ['min:4', Rule::unique('class_contents', 'name')->where('class_id', (int) $classCon->class_id)->ignore($classCon->id)],
 			'description' => '',
 			'file' => 'file'
 		];

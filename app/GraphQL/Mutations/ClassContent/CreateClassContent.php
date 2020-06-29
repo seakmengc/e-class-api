@@ -21,7 +21,7 @@ class CreateClassContent
 	{
 		$classContent = ClassContent::create([
 			'name' => $args['name'],
-			'description' => $args['description'],
+			'description' => clean($args['description']),
 			'class_id' => $args['class_id']
 		]);
 

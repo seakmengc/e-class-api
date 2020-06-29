@@ -103,5 +103,9 @@ class User extends Authenticatable
             if ($user->isDirty('password'))
                 $user->password = bcrypt($user->password);
         });
+
+        static::deleting(function (User $user) {
+            $user->identity->delete();
+        });
     }
 }
