@@ -14,13 +14,13 @@ extend type Query {
 
 extend type Mutation @guard {
     createClassAttendance(
-        input: createClassAttendanceInput! @spread
+        input: CreateClassAttendanceInput! @spread
     ): ClassAttendance!
      @create
      @createClassAttendanceValidation
      @can(ability: "create", injectArgs: "true")
     updateClassAttendance(
-        input: updateClassAttendanceInput! @spread
+        input: UpdateClassAttendanceInput! @spread
     ): ClassAttendance!
         @update
         @createClassAttendanceValidation
@@ -30,15 +30,14 @@ extend type Mutation @guard {
         @can(ability: "delete", find: "id")
 }
 
-input createClassAttendanceInput {
+input CreateClassAttendanceInput {
     schedule_sessions_id: Int!
     class_id: Int!
     date: Date!
 }
 
-input updateClassAttendanceInput {
+input UpdateClassAttendanceInput {
     id: ID!
     schedule_sessions_id: Int!
-    class_id: Int!
     date: Date!
 }

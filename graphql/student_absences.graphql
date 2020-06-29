@@ -1,25 +1,24 @@
 type StudentAbsence {
     id: ID!
-    student_id: Int!
+    student: User! @belongsTo
     has_permission: Boolean!
     reason: String!
-    class_attendance_id: Int!
+    class_attendance: ClassAttendance! @belongsTo(relation: "classAttendance")
 }
 
 extend type Query {
-    StudentAbsences: [StudentAbsence!] @paginate(defaultCount: 10) @can(ability: "viewAny")
-    StudentAbsence(id: ID! @eq): StudentAbsence! @find @can(ability: "viewAny")
+    StudentAbsences(class_id: ID! @eq): [StudentAbsence!] @paginate(defaultCount: 10) @can(ability: "viewAny")
 }
 
 extend type Mutation @guard {
     createStudentAbsence(
-        input: createStudentAbsenceInput! @spread
+        input: CreateStudentAbsenceInput! @spread
     ): StudentAbsence!
         @create
         @createStudentAbsenceValidation
         @can(ability: "create", injectArgs: "true")
     updateStudentAbsence(
-        input: updateStudentAbsenceInput! @spread
+        input: UpdateStudentAbsenceInput! @spread
     ): StudentAbsence!
         @update
         @createStudentAbsenceValidation
@@ -29,17 +28,15 @@ extend type Mutation @guard {
         @can(ability: "delete", find: "id")
 }
 
-input createStudentAbsenceInput {
+input CreateStudentAbsenceInput {
     student_id: Int!
     has_permission: Boolean!
     reason: String!
     class_attendance_id: Int!
 }
 
-input updateStudentAbsenceInput {
+input UpdateStudentAbsenceInput {
     id: ID!
-    student_id: Int!
     has_permission: Boolean!
     reason: String!
-    class_attendance_id: Int!
 }

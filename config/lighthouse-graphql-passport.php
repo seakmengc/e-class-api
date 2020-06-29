@@ -10,7 +10,7 @@ return [
     | support the password grant
     |
     */
-    'client_id' => env('PASSPORT_CLIENT_ID', '1'),
+    'client_id' => env('PASSPORT_CLIENT_ID', 2),
     /*
     |--------------------------------------------------------------------------
     | Client secret

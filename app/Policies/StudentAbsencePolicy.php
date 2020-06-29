@@ -16,17 +16,10 @@ class StudentAbsencePolicy
      * @param  User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user, $injected)
     {
-        //
-        if($user->isUser())
-       {
-         return false;
-       }
-
-       return true;
+        return $user->isATeacherOf($injected['class_id']);
     }
-
 
     /**
      * Determine whether the user can create models.
@@ -34,10 +27,9 @@ class StudentAbsencePolicy
      * @param  User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, $injected)
     {
-        //
-         return $user->isTeacher();
+        return $user->isATeacherOf($injected['class_id']);
     }
 
     /**
@@ -49,8 +41,7 @@ class StudentAbsencePolicy
      */
     public function update(User $user, StudentAbsence $studentAbsence)
     {
-        //
-         return $user->isTeacher() && $user->isTeachingThis($user);
+        return $user->isATeacherOf($studentAbsence->classAttendance->class_id);
     }
 
     /**
@@ -62,9 +53,6 @@ class StudentAbsencePolicy
      */
     public function delete(User $user, StudentAbsence $studentAbsence)
     {
-        //
-         return $user->isTeacher() && $user->isTeachingThis($user);
+        return $user->isATeacherOf($studentAbsence->classAttendance->class_id);
     }
-
-
 }

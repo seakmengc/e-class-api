@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Faker\Provider\Color;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Image\Manipulations;
@@ -23,14 +24,10 @@ class Identity extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
-    public function getFullNameAttribute()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
-
     public function getPhotoUrlAttribute()
     {
-        return route('api.files.portraits.show', $this->user_id);
+        return config('app.url')
+            . route('api.files.portraits.show', $this->user_id, false);
     }
 
     public function registerMediaCollections(): void
@@ -57,7 +54,7 @@ class Identity extends Model implements HasMedia
                 $identity->addMedia($identity['photo'])->toMediaCollection();
             } elseif ($identity->getMedia()->count() === 0) {
                 $avatar = new InitialAvatar();
-                $image = $avatar->autoFont()->rounded()->smooth()->background('#21CCF7')->color('#FFFFFF')->size(128)->name($identity->full_name)->generate();
+                $image = $avatar->autoFont()->rounded()->smooth()->background(Color::hexColor())->color('#FFFFFF')->size(128)->name($identity->full_name)->generate();
 
                 $identity->addMediaFromBase64($image->encode('data-url', 100))->toMediaCollection();
             }

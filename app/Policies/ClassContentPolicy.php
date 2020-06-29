@@ -11,11 +11,6 @@ class ClassContentPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user, $injected)
-    {
-        return $user->isATeacherOf($injected['class_id']);
-    }
-
     public function view(User $user, ClassContent $classContent)
     {
         return $user->isATeacherOf($classContent->class_id);
