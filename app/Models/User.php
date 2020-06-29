@@ -96,6 +96,12 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::observe(UserObserver::class);
+        static::saving(function (User $user) {
+            $user->username = strtolower($user->username);
+            $user->email = strtolower($user->email);
+
+            if ($user->isDirty('password'))
+                $user->password = bcrypt($user->password);
+        });
     }
 }

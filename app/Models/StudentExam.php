@@ -83,8 +83,15 @@ class StudentExam extends Model implements HasMedia
         return $this->exam->class();
     }
 
-    public static function booted()
+    public static function boot()
     {
-        static::observe(StudentExamObserver::class);
+        parent::boot();
+
+        static::saving(function (StudentExam $studentExam) {
+            if (isset($studentExam->attempts))
+                $studentExam->increment('attempts');
+            else
+                $studentExam->attempts = 1;
+        });
     }
 }

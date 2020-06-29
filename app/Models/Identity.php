@@ -5,6 +5,7 @@ namespace App\Models;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Image\Manipulations;
+use LasseRafn\InitialAvatarGenerator\InitialAvatar;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,5 +43,26 @@ class Identity extends Model implements HasMedia
             ->sharpen(10)
             ->keepOriginalImageFormat()
             ->nonQueued();
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (Identity $identity) {
+            $identity->first_name = ucwords(strtolower(trim($identity->first_name)));
+            $identity->last_name = ucwords(strtolower(trim($identity->last_name)));
+
+            if (isset($identity['photo'])) {
+                $identity->addMedia($identity['photo'])->toMediaCollection();
+            } elseif ($identity->getMedia()->count() === 0) {
+                $avatar = new InitialAvatar();
+                $image = $avatar->autoFont()->rounded()->smooth()->background('#21CCF7')->color('#FFFFFF')->size(128)->name($identity->full_name)->generate();
+
+                $identity->addMediaFromBase64($image->encode('data-url', 100))->toMediaCollection();
+            }
+
+            unset($identity['photo']);
+        });
     }
 }
