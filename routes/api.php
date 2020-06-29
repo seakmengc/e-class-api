@@ -18,5 +18,7 @@ Route::group([
 ], function () {
     Route::get('users/{user}/exams/{exam}/{questionId}', 'GetStudentUploadedFileInExam')->name('api.files.exams.show');
 
+    Route::get('class-contents/{class_content}', 'GetClassContentFile')->name('api.files.class_contents.show');
+
     Route::get('users/{user}/portrait', 'GetPortrait')->name('api.files.portraits.show');
 });

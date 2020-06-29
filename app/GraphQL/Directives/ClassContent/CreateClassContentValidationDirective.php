@@ -12,8 +12,8 @@ class CreateClassContentValidationDirective extends ValidationDirective
 		return [
 			'class_id' => 'required|exists:classes,id',
 			'name' => ['required', 'min:4', Rule::unique('class_contents', 'name')->where('class_id', (int) $this->args['class_id'])],
-			'description' => 'required',
-			'file' => 'file'
+			'description' => 'required|string',
+			'file' => 'mimes:png,jpeg,jpg,zip,pdf,docx,pptx,xlsx'
 		];
 	}
 }

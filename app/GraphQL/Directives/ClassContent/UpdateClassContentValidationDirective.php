@@ -14,8 +14,8 @@ class UpdateClassContentValidationDirective extends ValidationDirective
 
 		return [
 			'name' => ['min:4', Rule::unique('class_contents', 'name')->where('class_id', (int) $classCon->class_id)->ignore($classCon->id)],
-			'description' => '',
-			'file' => 'file'
+			'description' => 'required|string',
+			'file' => 'mimes:png,jpeg,jpg,zip,pdf,docx,pptx,xlsx'
 		];
 	}
 }

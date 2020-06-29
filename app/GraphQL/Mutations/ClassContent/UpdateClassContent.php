@@ -24,16 +24,6 @@ class UpdateClassContent
 	 */
 	public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
 	{
-		// $class_id = $args['class_id'];
-		// $teacher_id = Classes::findOrFail($class_id)->teacher_id;
-		// $user_id = User::findOrFail($teacher_id)->id;
-
-		// if (Auth::id() !== $user_id) {
-		//   throw new ClassContentException(
-		//     'Unantorize to update since you are not owner of this class content',
-		//     'Unanthorize to update.'
-		//   );
-		// } else {
 		$classContent = ClassContent::findOrFail($args['id']);
 		$classContent->update([
 			'name' => $args['name'],
@@ -44,11 +34,9 @@ class UpdateClassContent
 			//delete previous media
 			$classContent->clearMediaCollection('class-content');
 
-			$Media = $classContent->addMedia($args['file'])->toMediaCollection('class-content');
-			$fullPathOnDisk = $classContent->getMedia('class-content')->first()->file_name;
+			$classContent->addMedia($args['file'])->toMediaCollection('class-content');
 		}
 
 		return $classContent;
-		// }
 	}
 }

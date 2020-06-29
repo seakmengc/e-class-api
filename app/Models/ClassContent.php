@@ -21,6 +21,11 @@ class ClassContent extends Model implements HasMedia
 		'saved' => ClassUpdated::class,
 	];
 
+	public function getFileUrlAttribute()
+	{
+		return route('api.files.class_contents.show', $this);
+	}
+
 	public function class(): BelongsTo
 	{
 		return $this->belongsTo(Classes::class);
