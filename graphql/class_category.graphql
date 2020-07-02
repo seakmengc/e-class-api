@@ -7,7 +7,7 @@ type ClassCategory {
 }
 
 extend type Query {
-    ClassCategory: [ClassCategory!] @paginate(defaultCount: 10)
+    ClassCategory: [ClassCategory!] @all
     ClassCategory(id: ID @eq): ClassCategory @find
 }
 
@@ -18,9 +18,8 @@ extend type Mutation @guard {
         @createClassCategoryValidation
         @can(ability: "create", injectArgs: "true")
     updateClassCategory(
-        input:
-        updateClassCategoryInput! @spread
-        ): ClassCategory!
+        input: updateClassCategoryInput! @spread
+    ): ClassCategory!
         @update
         @updateClassCategoryValidation
         @can(ability: "update", find: "id")

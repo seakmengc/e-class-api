@@ -31,10 +31,4 @@ class Comment extends Model
             'full_name' => '[Deleted Author]'
         ]);
     }
-
-    public function myCommentsPaginate($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): Builder
-    {
-        return Comment::whereAuthorId($context->user->id)
-            ->latest();
-    }
 }

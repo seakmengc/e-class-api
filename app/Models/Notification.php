@@ -35,13 +35,6 @@ class Notification extends Model
         });
     }
 
-    public function paginate($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): Builder
-    {
-        return Notification::where('notifiable_id', $context->user->id)
-            ->where('notifiable_type', get_class($context->user))
-            ->latest();
-    }
-
     public function markAsRead()
     {
         $this->forceFill(['read_at' => $this->freshTimestamp()])->save();

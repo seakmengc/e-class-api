@@ -18,6 +18,5 @@ extend type Mutation @guard {
 
 extend type Query @guard {
     notifications: [Notification!]
-        @paginate(builder: "App\\Models\\Notification@paginate")
     notification(id: ID! @eq): Notification @first
 }

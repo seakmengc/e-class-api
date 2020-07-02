@@ -87,7 +87,7 @@ extend type Query @guard {
         @can(ability: "view", injectArgs: "true")
     #students and teacher access to the same query
     exams(class_id: ID! @eq): [Exam!]
-        @paginate
+        @all
         @can(ability: "viewAny", injectArgs: "true")
     studentExamIds(id: ID! @eq): [ID!]!
         @field(resolver: "Exam\\GetStudentExamIds")

@@ -12,7 +12,7 @@ type Classes {
 }
 
 extend type Query {
-    classes: [Classes!] @paginate(defaultCount: 10)
+    classes: [Classes!] @all
     class(id: ID @eq): Classes @find
 }
 
@@ -24,9 +24,7 @@ extend type Mutation @guard {
     updateClass(input: UpdateClassInput! @spread): Classes!
         @update
         @canAccess(requiredRole: "admin")
-    deleteClass(id: ID! @eq): Classes!
-        @delete
-        @canAccess(requiredRole: "admin")
+    deleteClass(id: ID! @eq): Classes! @delete @canAccess(requiredRole: "admin")
     syncStudents(input: SyncStudentsToClassInput @spread): Classes
         @canAccess(requiredRole: "admin")
 }

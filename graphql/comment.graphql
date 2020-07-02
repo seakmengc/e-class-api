@@ -49,10 +49,9 @@ extend type Mutation @guard {
         @can(ability: "create", injectArgs: "true")
     updateComment(input: UpdateCommentInput! @spread): Comment!
         @can(ability: "update", find: "id")
-    deleteComment(id: ID! @eq): Comment!
-        @can(ability: "delete", find: "id")
+    deleteComment(id: ID! @eq): Comment! @can(ability: "delete", find: "id")
 }
 
 extend type Query @guard {
-    myComments: [Comment!] @paginate(builder: "App\\Models\\Comment@myCommentsPaginate")
+    myComments: [Comment!]
 }

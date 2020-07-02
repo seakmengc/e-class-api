@@ -112,12 +112,12 @@ type Query @guard {
     me: User @auth
     user(id: ID! @eq): User @first @can(ability: "view", find: "id")
     users(orderBy: _ @orderBy(columns: ["username", "uuid", "email"])): [User!]
-        @paginate
+        @all
         @canAccess(requiredRole: "admin")
     usersFindByUsername(username: String!): [User!]
-        @paginate
+        @all
         @canAccess(requiredRole: "admin")
     usersFindByUuid(uuid: String!): [User!]
-        @paginate
+        @all
         @canAccess(requiredRole: "admin")
 }

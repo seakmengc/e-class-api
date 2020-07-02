@@ -10,7 +10,9 @@ type ClassContent {
 }
 extend type Query {
     # classContents(class_id: ID!): [ClassContent!]! @paginate(defaultCount: 10) @can(ability: "viewAny", injectArgs:"true")
-    classContent(id: ID! @eq): ClassContent @find @can(ability: "view", find:"id")
+    classContent(id: ID! @eq): ClassContent
+        @find
+        @can(ability: "view", find: "id")
 }
 
 extend type Mutation @guard {

@@ -59,10 +59,4 @@ class Forum extends Model
             $forum->comments()->delete();
         });
     }
-
-    public function myForumsPaginate($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): Builder
-    {
-        return Forum::whereAuthorId($context->user->id)
-            ->latest();
-    }
 }
