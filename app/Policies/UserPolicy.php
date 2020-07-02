@@ -32,7 +32,7 @@ class UserPolicy
         if ($user->id === $model->id)
             return true;
 
-        return $user->isTeachingThis($model);
+        return $user->isAdmin() || $user->isTeachingThis($model);
     }
 
     /**

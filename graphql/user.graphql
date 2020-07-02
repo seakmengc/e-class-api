@@ -110,7 +110,7 @@ input OrderByInput {
 
 type Query @guard {
     me: User @auth
-    user(id: ID! @eq): User @first @can(ability: "view", find: "id") @canAccess(requiredRole: "admin")
+    user(id: ID! @eq): User @first @can(ability: "view", find: "id")
     users(orderBy: _ @orderBy(columns: ["username", "uuid", "email"])): [User!]
         @paginate
         @canAccess(requiredRole: "admin")
