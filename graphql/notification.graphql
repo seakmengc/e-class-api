@@ -17,6 +17,6 @@ extend type Mutation @guard {
 }
 
 extend type Query @guard {
-    notifications: [Notification!]
+    myNotifications: [Notification!]
     notification(id: ID! @eq): Notification @first
 }
