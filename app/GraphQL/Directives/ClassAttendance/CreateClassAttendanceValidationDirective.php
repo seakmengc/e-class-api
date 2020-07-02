@@ -9,8 +9,8 @@ class CreateClassAttendanceValidationDirective extends ValidationDirective
   public function rules(): array
   {
     return [
-      'schedule_sessions_id' => 'required',
-      'class_id'=> 'required',
+      'schedule_session_id' => 'required',
+      'class_id' => 'required',
       'date' => 'required'
     ];
   }

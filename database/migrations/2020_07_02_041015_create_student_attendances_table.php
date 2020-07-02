@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStudentAbsencesTable extends Migration
+class CreateStudentAttendancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,18 @@ class CreateStudentAbsencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('student_absences', function (Blueprint $table) {
+        Schema::create('student_attendances', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('student_id')
                 ->constrained('users')
                 ->onDelete('cascade');
-
-            $table->boolean('has_permission');
 
             $table->foreignId('class_attendance_id')
                 ->constrained()
                 ->onDelete('cascade');
 
-            $table->text('reason');
-            $table->timestamps();
+            $table->enum('attendance_type', ['permission', 'absence', 'present'])->index();
         });
     }
 
@@ -37,6 +35,6 @@ class CreateStudentAbsencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('student_absences');
+        Schema::dropIfExists('student_attendances');
     }
 }

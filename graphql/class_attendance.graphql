@@ -1,43 +1,42 @@
 "A date string with format `Y-m-d`, e.g. `2011-05-23`."
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
+
 type ClassAttendance {
     id: ID!
-    schedule_sessions_id: Int!
+    schedule_session_id: Int!
     class_id: Int!
     date: Date!
+    student_attendances: [StudentAttendance!] @hasMany(relation: "studentAttendances")
 }
 
 extend type Query {
-    ClassAttendances(class_id: ID!): [ClassAttendance!] @paginate(defaultCount: 10) @can(ability: "viewAny", injectArgs:"true")
+    ClassAttendances(class_id: ID!): [ClassAttendance!] @all @can(ability: "viewAny", injectArgs:"true")
 }
 
 extend type Mutation @guard {
     createClassAttendance(
         input: CreateClassAttendanceInput! @spread
     ): ClassAttendance!
-     @create
      @createClassAttendanceValidation
      @can(ability: "create", injectArgs: "true")
     updateClassAttendance(
         input: UpdateClassAttendanceInput! @spread
     ): ClassAttendance!
-        @update
-        @createClassAttendanceValidation
-        @can(ability: "update", injectArgs: "true")
+        @can(ability: "update", find: "id")
     deleteClassAttendance(id: ID! @eq): ClassAttendance!
         @delete
         @can(ability: "delete", find: "id")
 }
 
 input CreateClassAttendanceInput {
-    schedule_sessions_id: Int!
+    schedule_session_id: Int!
     class_id: Int!
     date: Date!
+    student_attendances: [CreateStudentAttendanceInput!]
 }
 
 input UpdateClassAttendanceInput {
     id: ID!
-    schedule_sessions_id: Int!
-    date: Date!
+    student_attendances: [UpdateStudentAttendanceInput!]
 }

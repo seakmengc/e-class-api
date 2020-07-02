@@ -36,6 +36,11 @@ class Classes extends Model
 		return $this->hasMany(ClassContent::class, 'class_id');
 	}
 
+	public function classAttendances(): HasMany
+	{
+		return $this->hasMany(ClassAttendance::class, 'class_id');
+	}
+
 	public function exams(): HasMany
 	{
 		return $this->hasMany(Exam::class, 'class_id');

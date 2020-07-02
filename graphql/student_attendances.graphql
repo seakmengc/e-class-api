@@ -1,0 +1,26 @@
+enum AttendaceType {
+    PRESENT @enum(value: "present")
+    ABSENCE @enum(value: "absence")
+    PERMISSION @enum(value: "permission")
+}
+
+type StudentAttendance {
+    id: ID!
+    student: User! @belongsTo
+    class_attendance: ClassAttendance! @belongsTo(relation: "classAttendance")
+    attendance_type: AttendaceType!
+}
+
+input CreateStudentAttendanceInput {
+    student_id: Int!
+    attendance_type: AttendaceType!
+}
+
+input UpdateStudentAttendanceInput {
+    id: ID!
+    attendance_type: AttendaceType!
+}
+
+extend type Query @guard {
+    myAttendances(class_id: ID! @eq): [StudentAttendance!]
+}
