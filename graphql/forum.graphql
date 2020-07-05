@@ -40,10 +40,10 @@ extend type Mutation @guard {
         @can(ability: "create", injectArgs: "true")
     updateForum(input: UpdateForumInput! @spread): Forum!
         @update
-        @can(ability: "update", injectArgs: "true")
+        @can(ability: "update", find: "id")
     deleteForum(id: ID! @eq): Forum!
         @delete
-        @can(ability: "delete", injectArgs: "true")
+        @can(ability: "delete", find: "id")
 }
 
 extend type Query @guard {
