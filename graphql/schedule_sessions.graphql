@@ -43,5 +43,5 @@ extend type Mutation {
 }
 
 extend type Query {
-    ScheduleSession(id: ID! @eq): ScheduleSession! @find
+    scheduleSession(id: ID! @eq): ScheduleSession! @find
 }

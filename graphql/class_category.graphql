@@ -6,9 +6,8 @@ type ClassCategory {
     exams: [Exam!] @hasMany
 }
 
-extend type Query {
-    ClassCategory: [ClassCategory!] @all
-    ClassCategory(id: ID @eq): ClassCategory @find
+extend type Query @guard {
+    classCategoriesInClass(class_id: ID! @eq): [ClassCategory!] 
 }
 
 extend type Mutation @guard {

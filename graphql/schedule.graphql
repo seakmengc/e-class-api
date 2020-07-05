@@ -42,5 +42,5 @@ extend type Mutation {
 }
 
 extend type Query {
-    Schedule(id: ID! @eq): Schedule! @find
+    schedule(id: ID! @eq): Schedule! @find
 }
