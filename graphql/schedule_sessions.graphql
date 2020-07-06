@@ -12,10 +12,8 @@ input CreateScheduleSessionInput {
 }
 
 input CreateScheduleSessionBelongsTo {
-    connect: ID
-    create: CreateScheduleInput
     upsert: UpsertScheduleSessionInput
-    disconnect: ID
+    disconnect: Boolean
 }
 
 input UpsertScheduleSessionInput {

@@ -18,11 +18,9 @@ extend type Query {
 
 extend type Mutation @guard {
     createClass(input: CreateClassInput! @spread): Classes!
-        @create
         @createClassesValidation
         @canAccess(requiredRole: "admin")
     updateClass(input: UpdateClassInput! @spread): Classes!
-        @update
         @canAccess(requiredRole: "admin")
     deleteClass(id: ID! @eq): Classes! @delete @canAccess(requiredRole: "admin")
     syncStudents(input: SyncStudentsToClassInput @spread): Classes
@@ -38,17 +36,21 @@ input CreateStudentsRelation {
     sync: [ID!] @rulesForArray(apply: ["exists:users,id"])
 }
 
+input SyncScheduleSessionsInput {
+    sync: [CreateScheduleSessionInput]
+}
+
 #create
 input CreateClassInput {
     name: String!
     code: String!
     teacher: CreateUserBelongsTo
+    students: CreateStudentsRelation
+    schedule_sessions: SyncScheduleSessionsInput
 }
 
 input CreateUserBelongsTo {
     connect: ID
-    create: CreateUserInput
-    disconnect: ID
 }
 
 #update
@@ -57,9 +59,11 @@ input UpdateClassInput {
     name: String
     code: String
     teacher: UpdateUserBelongsTo
+    students: CreateStudentsRelation
+    schedule_sessions: SyncScheduleSessionsInput
 }
 
 input UpdateUserBelongsTo {
     connect: ID
-    disconnect: ID
+    disconnect: Boolean
 }
