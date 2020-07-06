@@ -7,8 +7,10 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\Classes::class, function (Faker $faker) {
     return [
-        'name' => $faker->unique()->userName,
-        'code' => $faker->postcode,
-        'teacher_id' => factory(App\Models\User::class),
+        'name' => $faker->unique()->jobTitle,
+        'code' => $faker->numerify('CS###'),
+        'teacher_id' => factory(App\Models\User::class)->create([
+            'username' => $faker->unique()->numerify('teacher##')
+        ]),
     ];
 });

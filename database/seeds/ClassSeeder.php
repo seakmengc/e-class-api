@@ -41,19 +41,27 @@ class ClassSeeder extends Seeder
 
             factory(ClassContent::class, $numClassContents)->create([
                 'class_id' => $class->id,
-            ]);
-
-            factory(ClassCategory::class, $numClassCategories)->create([
-                'class_id' => $class->id,
             ])->each(function ($classContent) use ($students) {
-                $forum = factory(Forum::class)->create([
+                $forums = factory(Forum::class, 2)->create([
                     'class_content_id' => $classContent->id,
                     'class_id' => $classContent->class_id,
                     'author_id' => $students[rand(0, 9)]->id
                 ]);
 
-                $forum->comments()->create(factory(Comment::class)->make([
-                    'author_id' => $students[rand(0, 9)]->id
+                $forums->each(function ($forum) use ($students) {
+                    $forum->comments()->createMany(factory(Comment::class, 2)->make([
+                        'author_id' => $students[rand(0, 9)]->id
+                    ])->toArray());
+                });
+            });
+
+            factory(ClassCategory::class, $numClassCategories, 2)->create([
+                'class_id' => $class->id,
+                'weight' => 50
+            ])->each(function ($classCategory) use ($students) {
+                $classCategory->exams()->createMany(factory(Exam::class, 2)->make([
+                    'class_category_id' => $classCategory->id,
+                    'class_id' => $classCategory->class_id,
                 ])->toArray());
             });
 
