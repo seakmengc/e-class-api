@@ -54,6 +54,8 @@ input CreateUserBelongsTo {
 #update
 input UpdateClassInput {
     id: ID!
+    name: String
+    code: String
     teacher: UpdateUserBelongsTo
 }
 
