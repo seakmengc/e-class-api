@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ScheduleSession extends Model
 {
@@ -17,6 +18,11 @@ class ScheduleSession extends Model
     public function schedule(): BelongsTo
     {
         return $this->belongsTo(Schedule::class);
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(ClassAttendance::class);
     }
 
     public function getStartTimeAttribute()
