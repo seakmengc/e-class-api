@@ -1,4 +1,4 @@
-enum AttendaceType {
+enum AttendanceType {
     PRESENT @enum(value: "present")
     ABSENCE @enum(value: "absence")
     PERMISSION @enum(value: "permission")
@@ -8,17 +8,17 @@ type StudentAttendance {
     id: ID!
     student: User! @belongsTo
     class_attendance: ClassAttendance! @belongsTo(relation: "classAttendance")
-    attendance_type: AttendaceType!
+    attendance_type: AttendanceType!
 }
 
 input CreateStudentAttendanceInput {
     student_id: Int!
-    attendance_type: AttendaceType!
+    attendance_type: AttendanceType!
 }
 
 input UpdateStudentAttendanceInput {
     id: ID!
-    attendance_type: AttendaceType!
+    attendance_type: AttendanceType!
 }
 
 extend type Query @guard {
