@@ -9,6 +9,11 @@ type Classes {
     class_attendances: [ClassAttendance!] @hasMany(relation: "classAttendances")
     exams: [Exam!] @hasMany
     schedules: [Schedule!] @hasMany
+    pivot: StudentClassPivot
+}
+
+type StudentClassPivot {
+  score: Float
 }
 
 extend type Query {

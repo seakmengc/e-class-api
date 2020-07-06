@@ -21,6 +21,8 @@ class CreateStudentHasClassesTables extends Migration
             $table->foreignId('class_id')
                 ->constrained()
                 ->cascadeOnDelete();
+
+            $table->unsignedFloat('score')->default(0);
         });
     }
 
