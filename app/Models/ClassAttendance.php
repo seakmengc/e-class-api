@@ -10,7 +10,7 @@ class ClassAttendance extends Model
 {
 	protected $fillable = ['schedule_session_id', 'date', 'class_id'];
 
-	public function scheduleSessions(): BelongsTo
+	public function scheduleSession(): BelongsTo
 	{
 		return $this->belongsTo(ScheduleSession::class);
 	}
