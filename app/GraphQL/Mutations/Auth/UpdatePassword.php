@@ -26,7 +26,7 @@ class UpdatePassword
                 'password' => __('Current password is incorrect'),
             ], 'Validation Exception');
         }
-        $user->password = Hash::make($args['password']);
+        $user->password = $args['password'];
         $user->save();
 
         return [
