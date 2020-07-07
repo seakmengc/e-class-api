@@ -23,8 +23,8 @@ class ClassContent extends Model implements HasMedia
 
 	public function getFileUrlAttribute()
 	{
-		if (!$classContent->getMedia('class-content')->first())
-			return null;
+		if (!$this->getMedia('class-content')->first())
+			return '';
 
 		return route('api.files.class_contents.show', $this);
 	}
