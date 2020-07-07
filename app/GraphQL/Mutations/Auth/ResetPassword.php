@@ -38,13 +38,12 @@ class ResetPassword
         if (!password_verify($args['otp'], $pwReset->token))
             throw new Exception('OTP incorrect');
 
-        DB::beginTransaction(function () use ($user, $args) {
-            $user->update([
-                'password' => $args['password']
-            ]);
-
-            DB::table('password_resets')->where('user_id', $user->id)->delete();
-        });
+        DB::beginTransaction();
+        $user->update([
+            'password' => $args['password']
+        ]);
+        DB::table('password_resets')->where('user_id', $user->id)->delete();
+        DB::commit();
 
         return [
             'status' => 'RESET_PASSWORD',
