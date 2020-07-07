@@ -29,6 +29,11 @@ class Identity extends Model implements HasMedia
         return config('app.url') . route('api.files.portraits.show', $this->user_id, false);
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('default')
