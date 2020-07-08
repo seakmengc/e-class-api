@@ -62,6 +62,7 @@ input CreateUserInput {
     username: String!
     email: String!
     password: String!
+    role_id: ID!
     identity: CreateIdentityBelongsTo
 }
 
@@ -70,7 +71,12 @@ input UpdateUserInput {
     email: String
     username: String
     uuid: String
-    password: String
+    role_id: ID!
+    first_name: String
+    last_name: String
+    gender: Gender
+    contact_number: String
+    photo: Upload
 }
 
 input SyncRolesInput {
@@ -82,12 +88,10 @@ type Mutation @guard {
     me: User! @auth
 
     createUser(input: CreateUserInput! @spread): User!
-        @create
         @createUserValidation
         @canAccess(requiredRole: "admin")
 
     updateUser(input: UpdateUserInput! @spread): User!
-        @update
         @updateUserValidation
         @canAccess(requiredRole: "admin")
 
