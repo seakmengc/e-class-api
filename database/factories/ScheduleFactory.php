@@ -7,7 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Schedule::class, function (Faker $faker) {
     return [
-        'class_id' => factory(App\Models\Classes::class),
         'day' => $faker->randomElement(Schedule::$days)
     ];
 });

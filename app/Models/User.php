@@ -27,7 +27,7 @@ class User extends Authenticatable
 
     public function learnings(): BelongsToMany
     {
-        return $this->belongsToMany(Classes::class, 'student_has_classes', 'student_id', 'class_id');
+        return $this->belongsToMany(Classes::class, 'student_has_classes', 'student_id', 'class_id')->withPivot('score');
     }
 
     public function teachings(): HasMany

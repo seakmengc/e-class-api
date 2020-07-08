@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\StudentExamObserver;
 use App\Traits\TimestampsShouldInHumanReadable;
+use DB;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -88,11 +89,25 @@ class StudentExam extends Model implements HasMedia
     {
         parent::boot();
 
-        static::saving(function (StudentExam $studentExam) {
-            if (isset($studentExam->attempts))
-                $studentExam->increment('attempts');
-            else
-                $studentExam->attempts = 1;
+        static::saved(function (StudentExam $studentExam) {
+            if ($studentExam->isDirty('points')) {
+                $class = $studentExam->class()->first();
+                $score = 0.0;
+                $class->classCategories()->get()->each(function ($classCategory) use ($studentExam, &$score) {
+                    $scoreInCat = 0.0;
+                    $studentExamsInCategory = StudentExam::whereIn('exam_id', $classCategory->exams()->pluck('id'))->where('student_id', $studentExam->student_id)->get();
+
+                    $studentExamsInCategory->each(function ($studentExamInCategory) use (&$scoreInCat) {
+                        $scoreInCat += ($studentExamInCategory->points / $studentExamInCategory->exam->possible);
+                    });
+
+                    if ($studentExamsInCategory->isNotEmpty()) {
+                        $score = $score + ($scoreInCat / $studentExamsInCategory->count() * $classCategory->weight);
+                    }
+                });
+
+                DB::table('student_has_classes')->where('student_id', $studentExam->student_id)->where('class_id', $class->id)->update(['score' => $score]);
+            }
         });
     }
 }

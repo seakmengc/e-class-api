@@ -32,6 +32,10 @@ class StudentTakesExam
 
         $studentExam->fill($args);
         $studentExam->resolveUploadedFileInAnswer($args['answer']);
+        if (isset($studentExam->attempts))
+            $studentExam->increment('attempts');
+        else
+            $studentExam->attempts = 1;
         $studentExam->save();
 
         return $studentExam;
