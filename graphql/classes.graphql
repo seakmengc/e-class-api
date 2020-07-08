@@ -11,16 +11,19 @@ type Classes {
     schedules: [Schedule!] @hasMany
     created_at: String
     updated_at: String
-    pivot: StudentClassPivot
 }
 
-type StudentClassPivot {
+type StudentScore {
+    student_id: ID!
     score: Float
+    overall: Float
 }
 
 extend type Query @guard {
     classes: [Classes!] @all @canAccess(requiredRole: "admin")
     class(id: ID @eq): Classes @find
+    myScoreInClass(class_id: ID! @eq): StudentScore
+    studentScoresInClass(class_id: ID! @eq): [StudentScore]
 }
 
 extend type Mutation @guard {
