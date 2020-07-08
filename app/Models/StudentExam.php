@@ -7,12 +7,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use App\Observers\StudentExamObserver;
+use App\Traits\TimestampsShouldInHumanReadable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class StudentExam extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia, TimestampsShouldInHumanReadable;
 
     protected $fillable = ['student_id', 'exam_id', 'answer', 'points'];
 

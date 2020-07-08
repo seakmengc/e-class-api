@@ -8,8 +8,8 @@ type Forum {
     comments: [Comment!] @morphMany(type: "paginator")
     comments_count: Int! @count(relation: "comments")
     answer: Comment @belongsTo
-    created_at: DateTimeTz
-    updated_at: DateTimeTz
+    created_at: String
+    updated_at: String
 }
 
 input CreateForumBelongsTo {
@@ -41,15 +41,14 @@ extend type Mutation @guard {
     updateForum(input: UpdateForumInput! @spread): Forum!
         @update
         @can(ability: "update", find: "id")
-    deleteForum(id: ID! @eq): Forum!
-        @delete
-        @can(ability: "delete", find: "id")
+    deleteForum(id: ID! @eq): Forum! @delete @can(ability: "delete", find: "id")
 }
 
-extend type Query @guard {
+extend type Query {
     myForums: [Forum!]
     forumsInClass(class_id: ID! @eq): [Forum!]
         @all
         @can(ability: "viewAny", injectArgs: "true")
-    forum(id: ID! @eq): Forum @first @can(ability: "view", find: "id")
+    forum(id: ID! @eq): Forum @first
+    # @can(ability: "view", find: "id")
 }

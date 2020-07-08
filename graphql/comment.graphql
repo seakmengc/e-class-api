@@ -11,8 +11,8 @@ type Comment {
     author: User! @belongsTo
     commentable: Commentable @morphTo
     commentable_type: String
-    created_at: DateTimeTz
-    updated_at: DateTimeTz
+    created_at: String
+    updated_at: String
 }
 
 input CreateCommentBelongsTo {

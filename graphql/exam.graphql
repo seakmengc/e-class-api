@@ -25,8 +25,8 @@ type Exam {
     class_category: ClassCategory! @belongsTo(relation: "classCategory")
     class: Classes! @belongsTo
     submittings: [StudentExam!] @hasMany
-    created_at: DateTimeTz
-    updated_at: DateTimeTz
+    created_at: String
+    updated_at: String
 }
 
 input CreateExamInput {
@@ -86,9 +86,8 @@ extend type Query {
         @field(resolver: "Exam\\FindExamFor")
         @can(ability: "view", injectArgs: "true")
     #students and teacher access to the same query
-    exams(class_id: ID! @eq): [Exam!]
-        @all
-        # @can(ability: "viewAny", injectArgs: "true")
+    exams(class_id: ID! @eq): [Exam!] @all
+    # @can(ability: "viewAny", injectArgs: "true")
     studentExamIds(id: ID! @eq): [ID!]!
         @field(resolver: "Exam\\GetStudentExamIds")
         @can(ability: "viewAny", injectArgs: "true")

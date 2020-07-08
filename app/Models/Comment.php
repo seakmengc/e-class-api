@@ -11,10 +11,11 @@ use GraphQL\Type\Definition\ResolveInfo;
 use App\Traits\HasAuthIdFields;
 use App\Models\User;
 use App\Models\Forum;
+use App\Traits\TimestampsShouldInHumanReadable;
 
 class Comment extends Model
 {
-    use HasAuthIdFields;
+    use HasAuthIdFields, TimestampsShouldInHumanReadable;
 
     protected $fillable = ['comment'];
 

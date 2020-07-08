@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Traits\HasAuthIdFields;
+use App\Traits\TimestampsShouldInHumanReadable;
 
 class Forum extends Model
 {
-    use HasAuthIdFields;
+    use HasAuthIdFields, TimestampsShouldInHumanReadable;
 
     protected $fillable = [
         'class_content_id', 'class_id', 'title', 'description', 'author'

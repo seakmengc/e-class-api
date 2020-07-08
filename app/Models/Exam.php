@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\ClassUpdated;
+use App\Traits\TimestampsShouldInHumanReadable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,6 +11,8 @@ use Illuminate\Support\Collection;
 
 class Exam extends Model
 {
+    use TimestampsShouldInHumanReadable;
+
     protected $fillable = ['class_category_id', 'class_id', 'name', 'possible', 'description', 'qa', 'attempts', 'due_at', 'publishes_at'];
 
     protected $casts = [

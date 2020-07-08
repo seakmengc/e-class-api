@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Database\Eloquent\Builder;
+use App\Traits\TimestampsShouldInHumanReadable;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class Notification extends Model
 {
+    use TimestampsShouldInHumanReadable;
+
     protected $fillable = ['type', 'notifiable_type', 'notifiable_id', 'data'];
 
     protected $keyType = 'string';
@@ -33,6 +37,11 @@ class Notification extends Model
                 $notification->read_at = null;
             }
         });
+    }
+
+    public function getReadAtAttribute()
+    {
+        return Carbon::parse($this->attributes['read_at'])->diffForHumans();
     }
 
     public function markAsRead()

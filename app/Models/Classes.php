@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\TimestampsShouldInHumanReadable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,8 @@ use PhpParser\Node\Stmt\ClassConst;
 
 class Classes extends Model
 {
+	use TimestampsShouldInHumanReadable;
+
 	protected $table = 'classes';
 
 	protected $fillable = [

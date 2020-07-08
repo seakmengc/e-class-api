@@ -8,8 +8,6 @@ type Role {
     id: ID!
     name: String!
     guard_name: String!
-    created_at: DateTimeTz!
-    updated_at: DateTimeTz!
 }
 
 type User {
@@ -22,8 +20,8 @@ type User {
     learnings: [Classes!] @belongsToMany
     teachings: [Classes!] @hasMany
     unreadNotificationsCount: Int!
-    created_at: DateTimeTz!
-    updated_at: DateTimeTz!
+    created_at: String
+    updated_at: String
 }
 
 type Identity {
@@ -34,8 +32,6 @@ type Identity {
     photo_url: String
     contact_number: String
     user: User! @belongsTo
-    created_at: DateTimeTz!
-    updated_at: DateTimeTz!
 }
 
 input CreateIdentityBelongsTo {
@@ -111,9 +107,7 @@ input OrderByInput {
 type Query @guard {
     me: User @auth
     user(id: ID! @eq): User @first @can(ability: "view", find: "id")
-    users: [User!]
-        @all
-        @canAccess(requiredRole: "admin")
+    users: [User!] @all @canAccess(requiredRole: "admin")
     usersFindByUsername(username: String!): [User!]
         @all
         @canAccess(requiredRole: "admin")

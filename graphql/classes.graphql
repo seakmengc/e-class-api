@@ -9,6 +9,8 @@ type Classes {
     class_attendances: [ClassAttendance!] @hasMany(relation: "classAttendances")
     exams: [Exam!] @hasMany
     schedules: [Schedule!] @hasMany
+    created_at: String
+    updated_at: String
 }
 
 extend type Query {

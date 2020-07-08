@@ -8,7 +8,7 @@ type Notification {
     id: ID!
     data: NotificationData!
     is_read: Boolean! @method(name: "isRead")
-    created_at: DateTimeTz!
+    created_at: String
     read_at: DateTimeTz
 }
 
