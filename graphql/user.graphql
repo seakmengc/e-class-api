@@ -4,7 +4,7 @@ enum Gender {
     OTHERS @enum(value: "others")
 }
 
-type Role {
+type Role @modelClass(class: "Spatie\\Permission\\Models\\Role"){
     id: ID!
     name: String!
     guard_name: String!
