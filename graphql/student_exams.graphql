@@ -4,8 +4,8 @@ type StudentExam {
     attempts: Int! #auto increment on saving
     answer: [ExamAnswer!]
     points: Float #auto calculate when grading
-    created_at: String
-    updated_at: String
+    created_at: DateTimeTz
+    updated_at: DateTimeTz
 }
 
 type ExamAnswer {

@@ -7,14 +7,14 @@ type Classes {
     class_categories: [ClassCategory!] @hasMany(relation: "classCategories")
     class_contents: [ClassContent!] @hasMany(relation: "classContents")
     class_attendances: [ClassAttendance!] @hasMany(relation: "classAttendances")
-    exams: [Exam!] @hasMany
+    exams: [Exam!]
     schedules: [Schedule!] @hasMany
     created_at: String
     updated_at: String
 }
 
-extend type Query {
-    classes: [Classes!] @all
+extend type Query @guard {
+    classes: [Classes!] @all @canAccess(requiredRole: "admin")
     class(id: ID @eq): Classes @find
 }
 

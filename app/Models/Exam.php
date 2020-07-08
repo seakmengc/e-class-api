@@ -7,6 +7,7 @@ use App\Traits\TimestampsShouldInHumanReadable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class Exam extends Model
@@ -70,8 +71,10 @@ class Exam extends Model
         return $modified->union($original)->values();
     }
 
-    public static function booted()
+    public static function boot()
     {
+        parent::boot();
+
         static::saving(function (Exam $exam) {
             $exam->possible = $exam->qa->sum('points');
         });

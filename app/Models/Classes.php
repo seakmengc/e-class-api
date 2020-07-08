@@ -46,7 +46,10 @@ class Classes extends Model
 
 	public function exams(): HasMany
 	{
-		return $this->hasMany(Exam::class, 'class_id');
+		if (auth()->id() == $this->teacher_id)
+			return $this->hasMany(Exam::class, 'class_id');
+
+		return $this->hasMany(Exam::class, 'class_id')->where('publishes_at', '!=', null)->where('publishes_at', '<=', now());
 	}
 
 	public function schedules(): HasMany
