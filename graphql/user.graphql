@@ -118,4 +118,5 @@ type Query @guard {
     usersFindByUuid(uuid: String!): [User!]
         @all
         @canAccess(requiredRole: "admin")
+    roles: [Role] @all @canAccess(requiredRole: "admin")
 }
