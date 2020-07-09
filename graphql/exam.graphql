@@ -88,7 +88,4 @@ extend type Query {
     #students and teacher access to the same query
     exams(class_id: ID! @eq): [Exam!] @all
     # @can(ability: "viewAny", injectArgs: "true")
-    studentExams(exam_id: ID! @eq): [StudentExam]
-        @field(resolver: "Exam\\GetStudentExams")
-        @can(ability: "viewAny", injectArgs: "true")
 }
