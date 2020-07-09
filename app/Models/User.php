@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\UserObserver;
 use App\Traits\TimestampsShouldInHumanReadable;
+use DB;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -106,7 +107,11 @@ class User extends Authenticatable
         });
 
         static::deleting(function (User $user) {
+            DB::beginTransaction();
             $user->identity->delete();
+            $forums = Forum::whereAuthorId($user->id)->get();
+            $forums->each->delete();
+            DB::commit();
         });
     }
 }
