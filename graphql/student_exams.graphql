@@ -54,7 +54,7 @@ extend type Mutation @guard {
 extend type Query @guard {
     #intended for students
     myExamsInClass(class_id: ID! @eq): [StudentExam!]
-        @can(ability: "viewAny", injectArgs: "true")
+        @can(ability: "viewOwnAny", injectArgs: "true")
     myExam(id: ID! @eq): StudentExam @can(ability: "view", find: "id") @first
     #intended for teachers in grading exam part
     studentExam(id: ID! @eq): StudentExam!

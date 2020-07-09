@@ -20,6 +20,11 @@ class StudentExamPolicy
         return $user->isATeacherOf($classId);
     }
 
+    public function viewOwnAny(User $user, $injected)
+    {
+        return $user->isAStudentIn($injected['class_id']);
+    }
+
     /**
      * Determine whether the user can view the model.
      *
