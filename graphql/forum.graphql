@@ -5,7 +5,7 @@ type Forum {
     class_content: ClassContent! @belongsTo(relation: "classContent")
     class: Classes! @belongsTo
     author: User! @belongsTo
-    comments: [Comment!] @morphMany(type: "paginator")
+    comments: [Comment!] @morphMany
     comments_count: Int! @count(relation: "comments")
     answer: Comment @belongsTo
     created_at: String
