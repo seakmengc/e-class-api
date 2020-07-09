@@ -13,7 +13,7 @@ class Notification extends Model
 {
     use TimestampsShouldInHumanReadable;
 
-    protected $fillable = ['type', 'notifiable_type', 'notifiable_id', 'data'];
+    protected $fillable = ['type', 'notifiable_type', 'notifiable_id', 'data', 'read_at'];
 
     protected $keyType = 'string';
 
@@ -24,7 +24,7 @@ class Notification extends Model
 
     public function isRead()
     {
-        return (bool) $this->read_at;
+        return !is_null($this->read_at);
     }
 
     public static function boot()
@@ -33,7 +33,7 @@ class Notification extends Model
 
         static::retrieved(function (Notification $notification) {
             if (is_null($notification->read_at)) {
-                $notification->markAsRead();
+                $notification->update(['read_at' => now()]);
                 $notification->read_at = null;
             }
         });
@@ -41,11 +41,13 @@ class Notification extends Model
 
     public function getReadAtAttribute()
     {
+        if (is_null($this->attributes['read_at'])) return null;
+
         return Carbon::parse($this->attributes['read_at'])->diffForHumans();
     }
 
     public function markAsRead()
     {
-        $this->forceFill(['read_at' => $this->freshTimestamp()])->save();
+        $this->update(['read_at' => now()]);
     }
 }
