@@ -89,6 +89,6 @@ extend type Query {
     exams(class_id: ID! @eq): [Exam!] @all
     # @can(ability: "viewAny", injectArgs: "true")
     studentExams(exam_id: ID! @eq): [StudentExam]
-        @field(resolver: "Exam\\GetStudentExamIds")
+        @field(resolver: "Exam\\GetStudentExams")
         @can(ability: "viewAny", injectArgs: "true")
 }
