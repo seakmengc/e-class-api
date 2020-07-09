@@ -6,7 +6,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Models\Exam;
 
-class GetStudentExamIds
+class GetStudentExams
 {
     /**
      * Return a value for the field.
