@@ -16,7 +16,8 @@ class StudentExamPolicy
     {
         $classId = Exam::findOrFail($injected['exam_id'])->pluck('class_id')->first();
 
-        return $user->isAStudentIn($classId);
+        // return $user->isATeacherOf($classId) || $user->isAStudentIn($classId);
+        return $user->isATeacherOf($classId);
     }
 
     /**
