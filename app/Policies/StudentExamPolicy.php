@@ -14,7 +14,7 @@ class StudentExamPolicy
 
     public function viewAny(User $user, $injected)
     {
-        $classId = Classes::findOrFail($injected['class_id'])->pluck('id')->first();
+        $classId = Exam::findOrFail($injected['exam_id'])->pluck('class_id')->first();
 
         return $user->isAStudentIn($classId);
     }
