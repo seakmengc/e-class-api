@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class StudentExam extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia, TimestampsShouldInHumanReadable;
 
     protected $fillable = ['student_id', 'exam_id', 'answer', 'points'];
 
