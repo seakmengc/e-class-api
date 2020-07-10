@@ -12,6 +12,6 @@ class MyComments
      */
     public function __invoke($_, array $args)
     {
-        return Comment::whereAuthorId(auth()->id())->latest()->get();
+        return Comment::whereAuthorId(auth()->id())->latest()->limit(10)->get();
     }
 }

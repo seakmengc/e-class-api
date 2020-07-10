@@ -16,6 +16,7 @@ class MyNotifications
         return Notification::where('notifiable_id', auth()->id())
             ->where('notifiable_type', User::class)
             ->latest()
+            ->limit(10)
             ->get();
     }
 }

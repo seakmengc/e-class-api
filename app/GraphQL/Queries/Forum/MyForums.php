@@ -12,6 +12,6 @@ class MyForums
      */
     public function __invoke($_, array $args)
     {
-        return Forum::whereAuthorId(auth()->id())->latest()->get();
+        return Forum::whereAuthorId(auth()->id())->latest()->limit(10)->get();
     }
 }
