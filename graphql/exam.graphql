@@ -20,8 +20,8 @@ type Exam {
     description: String
     qa: [Question!]
     attempts: Int!
-    due_at: DateTimeTz
-    publishes_at: DateTimeTz
+    due_at: String
+    publishes_at: String
     class_category: ClassCategory! @belongsTo(relation: "classCategory")
     class: Classes! @belongsTo
     submittings: [StudentExam!] @hasMany
@@ -35,8 +35,8 @@ input CreateExamInput {
     description: String
     qa: [CreateQuestionInput]
     attempts: Int!
-    due_at: DateTimeTz
-    publishes_at: DateTimeTz
+    due_at: String
+    publishes_at: String
 }
 
 input CreateQuestionInput {
@@ -63,8 +63,8 @@ input UpdateExamInput {
     description: String
     qa: [UpdateQuestionInput]
     attempts: Int
-    due_at: DateTimeTz
-    publishes_at: DateTimeTz
+    due_at: String
+    publishes_at: String
 }
 
 input ConnectExamBelongsTo {
