@@ -10,7 +10,7 @@ type Classes {
     exams: [Exam!]
     schedules: [Schedule!] @hasMany
     student_scores: [StudentScore!]
-        @field(resolver: "App\\Models\\Classes\\getStudentScores")
+        @field(resolver: "App\\Models\\Classes@getStudentScores")
     created_at: String
     updated_at: String
 }
