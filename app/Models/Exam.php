@@ -30,7 +30,7 @@ class Exam extends Model
     public function hiddenBasedRole()
     {
         if (auth()->id() == $this->class->teacher_id)
-            return $this;
+            return $this['qa'];
 
         $obj = $this->toArray();
 
