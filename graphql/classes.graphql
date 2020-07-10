@@ -9,6 +9,8 @@ type Classes {
     class_attendances: [ClassAttendance!] @hasMany(relation: "classAttendances")
     exams: [Exam!]
     schedules: [Schedule!] @hasMany
+    student_scores: [StudentScore!]
+        @field(resolver: "App\\Models\\Classes\\getStudentScores")
     created_at: String
     updated_at: String
 }
