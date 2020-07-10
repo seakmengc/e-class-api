@@ -74,4 +74,14 @@ class Classes extends Model
 			];
 		});
 	}
+
+	public static function boot()
+	{
+		parent::boot();
+
+		static::retrieved(function (Classes $class) {
+			if (auth()->id() != $class->teacher_id)
+				$class->exams->each->qa->each->except(['answers']);
+		});
+	}
 }

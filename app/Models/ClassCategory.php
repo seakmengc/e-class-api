@@ -17,6 +17,19 @@ class ClassCategory extends Model
 
   public function exams(): HasMany
   {
-    return $this->hasMany(Exam::class);
+    if (auth()->id() == $this->teacher_id)
+      return $this->hasMany(Exam::class);
+
+    return $this->hasMany(Exam::class)->where('publishes_at', '!=', null)->where('publishes_at', '<=', now());
+  }
+
+  public static function boot()
+  {
+    parent::boot();
+
+    static::retrieved(function (ClassCategory $classCategory) {
+      if (auth()->id() != $classCategory->class->teacher_id)
+        $classCategory->exams->each->qa->each->except(['answers']);
+    });
   }
 }
