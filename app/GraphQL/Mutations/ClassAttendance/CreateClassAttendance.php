@@ -13,7 +13,7 @@ class CreateClassAttendance
     public function __invoke($_, array $args)
     {
         $classAttendance =  ClassAttendance::create($args);
-        dd($args);
+        dump($args);
         $classAttendance->studentAttendances()->createMany($args['student_attendances']);
 
         return $classAttendance;
