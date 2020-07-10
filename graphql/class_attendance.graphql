@@ -39,5 +39,6 @@ input CreateClassAttendanceInput {
 
 input UpdateClassAttendanceInput {
     id: ID!
+    date: Date!
     student_attendances: [UpdateStudentAttendanceInput!]
 }
