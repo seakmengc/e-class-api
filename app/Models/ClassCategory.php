@@ -17,7 +17,7 @@ class ClassCategory extends Model
 
 	public function exams(): HasMany
 	{
-		if (auth()->id() == $this->teacher_id) {
+		if (auth()->id() == $this->class->teacher_id) {
 			return $this->hasMany(Exam::class);
 		}
 
