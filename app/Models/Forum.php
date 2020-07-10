@@ -59,5 +59,9 @@ class Forum extends Model
         static::deleted(function (Forum $forum) {
             $forum->comments()->delete();
         });
+
+        static::addGlobalScope('sort', function ($query) {
+            return $query->orderBy('created_at', 'desc');
+        });
     }
 }
