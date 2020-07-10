@@ -81,7 +81,7 @@ class Classes extends Model
 
 		static::retrieved(function (Classes $class) {
 			if (auth()->id() != $class->teacher_id)
-				$class->exams->each->qa->each->except(['answers']);
+				$class->exams->each->qa->except(['answers']);
 		});
 	}
 }

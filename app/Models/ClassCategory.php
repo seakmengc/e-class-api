@@ -29,7 +29,7 @@ class ClassCategory extends Model
 
     static::retrieved(function (ClassCategory $classCategory) {
       if (auth()->id() != $classCategory->class->teacher_id)
-        $classCategory->exams->each->qa->each->except(['answers']);
+        $classCategory->exams->each->qa->except(['answers']);
     });
   }
 }
