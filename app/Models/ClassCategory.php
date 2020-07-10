@@ -18,7 +18,7 @@ class ClassCategory extends Model
 
 	public function exams(): HasMany
 	{
-		if (auth()->id() == DB::table('classes')->whereId($this->attributes['class_id'])->pluck('teacher_id')->first()) {
+		if (auth()->id() == DB::table('classes')->where('class_id', $this->getAttribute('class_id'))->pluck('teacher_id')->first()) {
 			return $this->hasMany(Exam::class);
 		}
 
