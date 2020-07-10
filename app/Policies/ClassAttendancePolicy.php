@@ -15,6 +15,11 @@ class ClassAttendancePolicy
 		return $user->isATeacherOf($injected['class_id']);
 	}
 
+	public function view(User $user, ClassAttendance $classAttendance)
+	{
+		return $user->isATeacherOf($classAttendance->class_id) || $user->isAStudentIn($classAttendance->class_id);
+	}
+
 	/**
 	 * Determine whether the user can create models.
 	 *

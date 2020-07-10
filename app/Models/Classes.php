@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\ClassConst;
+use Illuminate\Database\Eloquent\Model;
 use App\Traits\TimestampsShouldInHumanReadable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Stmt\ClassConst;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Classes extends Model
 {
@@ -41,7 +42,7 @@ class Classes extends Model
 
 	public function classAttendances(): HasMany
 	{
-		return $this->hasMany(ClassAttendance::class, 'class_id');
+		return $this->hasMany(ClassAttendance::class, 'class_id')->orderBy('date', 'desc');
 	}
 
 	public function exams(): HasMany
@@ -55,5 +56,22 @@ class Classes extends Model
 	public function schedules(): HasMany
 	{
 		return $this->hasMany(Schedule::class, 'class_id')->orderByRaw("FIELD(day, \"monday\", \"tuesday\", \"wednesday\", \"thursday\", \"friday\", \"saturday\", \"sunday\")");
+	}
+
+	public function getStudentScores()
+	{
+		$studentIds = $this->students()->pluck('id')->toArray();
+
+		$scores = DB::table('student_has_classes')->whereIn('student_id', $studentIds)->where('class_id', $this->id)->get();
+
+		$overall = $this->classCategories()->sum('weight');
+
+		return $scores->map(function ($score) use ($overall) {
+			return [
+				'student_id' => $score->student_id,
+				'score' => $score->score,
+				'overall' => $overall
+			];
+		});
 	}
 }

@@ -11,9 +11,12 @@ type ClassAttendance {
 }
 
 extend type Query {
-    ClassAttendances(class_id: ID!): [ClassAttendance!]
+    classAttendances(class_id: ID!): [ClassAttendance!]
         @all
         @can(ability: "viewAny", injectArgs: "true")
+    classAttendance(id: ID! @eq): ClassAttendance
+        @first
+        @can(ability: "view", find: "id")
 }
 
 extend type Mutation @guard {
@@ -39,5 +42,6 @@ input CreateClassAttendanceInput {
 
 input UpdateClassAttendanceInput {
     id: ID!
+    date: Date!
     student_attendances: [UpdateStudentAttendanceInput!]
 }
