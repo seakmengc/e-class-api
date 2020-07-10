@@ -1,6 +1,7 @@
 type StudentExam {
     id: ID!
     student: User! @belongsTo
+    exam: Exam! @belongsTo
     attempts: Int! #auto increment on saving
     answer: [ExamAnswer!]
     points: Float #auto calculate when grading
