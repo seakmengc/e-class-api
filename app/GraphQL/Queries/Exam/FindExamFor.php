@@ -19,6 +19,6 @@ class FindExamFor
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        return Exam::whereId($args['id'])->first()->hiddenBasedRole();
+        return Exam::whereId($args['id'])->first();
     }
 }

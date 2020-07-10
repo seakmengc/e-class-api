@@ -29,7 +29,7 @@ class Exam extends Model
 
     public function hiddenBasedRole()
     {
-        if (auth()->id() === $this->class->teacher_id)
+        if (auth()->id() == $this->class->teacher_id)
             return $this;
 
         $obj = $this->toArray();
@@ -37,10 +37,13 @@ class Exam extends Model
         shuffle($obj['qa']);
 
         array_walk($obj['qa'], function (&$q) {
-            unset($q['possibles']);
+            if (isset($q['possibles']))
+                unset($q['possibles']);
         });
 
-        return $obj;
+        dump($obj);
+
+        return $obj['qa'];
     }
 
     public function isDue()

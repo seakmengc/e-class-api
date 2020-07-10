@@ -74,15 +74,4 @@ class Classes extends Model
 			];
 		});
 	}
-
-	public static function boot()
-	{
-		parent::boot();
-
-		// static::retrieved(function (Classes $class) {
-		// 	foreach ($class->exams as &$exam) {
-		// 		$exam = $exam->hiddenBasedRole();
-		// 	}
-		// });
-	}
 }

@@ -103,7 +103,7 @@ return [
     */
 
     'namespaces' => [
-        'models' => ['App', 'App\\Models'],
+        'models' => ['App', 'App\\Models', 'App\\GraphQL\\Types'],
         'queries' => ['App\\GraphQL\\Queries', ...$customQueries],
         'mutations' => ['App\\GraphQL\\Mutations', ...$customMutations],
         'subscriptions' => 'App\\GraphQL\\Subscriptions',

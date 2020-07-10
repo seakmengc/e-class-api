@@ -8,29 +8,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ClassCategory extends Model
 {
-  protected $fillable = ['class_id', 'name', 'weight'];
+	protected $fillable = ['class_id', 'name', 'weight'];
 
-  public function class(): BelongsTo
-  {
-    return $this->belongsTo(Classes::class, 'class_id');
-  }
+	public function class(): BelongsTo
+	{
+		return $this->belongsTo(Classes::class, 'class_id');
+	}
 
-  public function exams(): HasMany
-  {
-    if (auth()->id() == $this->teacher_id)
-      return $this->hasMany(Exam::class);
+	public function exams(): HasMany
+	{
+		if (auth()->id() == $this->teacher_id) {
+			return $this->hasMany(Exam::class);
+		}
 
-    return $this->hasMany(Exam::class)->where('publishes_at', '!=', null)->where('publishes_at', '<=', now());
-  }
-
-  public static function boot()
-  {
-    parent::boot();
-
-    // static::retrieved(function (ClassCategory $classCategory) {
-    //   foreach ($classCategory->exams as &$exam) {
-    //     $exam = $exam->hiddenBasedRole();
-    //   }
-    // });
-  }
+		return $this->hasMany(Exam::class)->where('publishes_at', '!=', null)->where('publishes_at', '<=', now());
+	}
 }

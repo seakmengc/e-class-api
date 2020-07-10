@@ -18,7 +18,7 @@ type Exam {
     name: String!
     possible: Float!
     description: String
-    qa: [Question!]
+    qa: [Question!] @method(name: "hiddenBasedRole")
     attempts: Int!
     due_at: String
     publishes_at: String
