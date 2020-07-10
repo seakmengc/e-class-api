@@ -13,12 +13,12 @@ class ClassContentPolicy
 
     public function view(User $user, ClassContent $classContent)
     {
-        return $user->isATeacherOf($classContent->class_id);
+        return $this->determine($user, $classContent->class_id);
     }
 
     public function create(User $user, $injected)
     {
-        return $user->isATeacherOf($injected['class_id']);
+        return $this->isATeacherOf($injected['class_id']);
     }
 
     /**
@@ -30,7 +30,7 @@ class ClassContentPolicy
      */
     public function update(User $user, ClassContent $classContent)
     {
-        return $user->isATeacherOf($classContent->class_id);
+        return $this->isATeacherOf($classContent->class_id);
     }
 
     /**
@@ -42,6 +42,11 @@ class ClassContentPolicy
      */
     public function delete(User $user, ClassContent $classContent)
     {
-        return $user->isATeacherOf($classContent->class_id);
+        return $this->isATeacherOf($classContent->class_id);
+    }
+
+    public function determine(User $user, $classId)
+    {
+        return $user->isATeacherOf($classId) or $user->isAStudentIn($classId);
     }
 }
