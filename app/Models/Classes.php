@@ -41,7 +41,7 @@ class Classes extends Model
 
 	public function classAttendances(): HasMany
 	{
-		return $this->hasMany(ClassAttendance::class, 'class_id');
+		return $this->hasMany(ClassAttendance::class, 'class_id')->orderBy('date', 'desc');
 	}
 
 	public function exams(): HasMany
