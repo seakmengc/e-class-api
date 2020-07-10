@@ -14,9 +14,9 @@ class UpdateClassAttendance
     {
         $classAttendance =  ClassAttendance::findOrFail($args['id']);
 
-        $studentAttendances = collect($args['student_attendances']);
-        $classAttendance->studentAttendances->each(function ($studentAttendance) use ($studentAttendances) {
-            $data = $studentAttendances->where('id', $studentAttendance->id)->first();
+        $studentAttendancesInput = collect($args['student_attendances']);
+        $classAttendance->studentAttendances->each(function ($studentAttendance) use ($studentAttendancesInput) {
+            $data = $studentAttendancesInput->where('student_id', $studentAttendance->id)->first();
             if ($data)
                 $studentAttendance->update($data);
         });

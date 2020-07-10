@@ -17,7 +17,7 @@ input CreateStudentAttendanceInput {
 }
 
 input UpdateStudentAttendanceInput {
-    id: ID!
+    student_id: Int!
     attendance_type: AttendanceType!
 }
 
