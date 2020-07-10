@@ -16,7 +16,7 @@ extend type Query {
         @can(ability: "viewAny", injectArgs: "true")
     classAttendance(id: ID! @eq): ClassAttendance
         @first
-        @can(ability: "view", injectArgs: "true")
+        @can(ability: "view", find: "id")
 }
 
 extend type Mutation @guard {
