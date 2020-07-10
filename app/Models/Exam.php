@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Events\ClassUpdated;
-use App\Traits\TimestampsShouldInHumanReadable;
-use Arr;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
+use Arr;
+use App\Traits\TimestampsShouldInHumanReadable;
+use App\Events\ClassUpdated;
 
 class Exam extends Model
 {
@@ -87,6 +87,11 @@ class Exam extends Model
 
         static::saving(function (Exam $exam) {
             $exam->possible = $exam->qa->sum('points');
+        });
+
+        static::addGlobalScope('for_teacher', function ($query) {
+            if (!DB::table('classes')->where('teacher_id', auth()->id())->exists())
+                $query->where('publishes_at', '!=', null)->where('publishes_at', '<=', now());
         });
     }
 }

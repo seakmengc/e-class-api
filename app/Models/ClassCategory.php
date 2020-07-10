@@ -18,10 +18,6 @@ class ClassCategory extends Model
 
 	public function exams(): HasMany
 	{
-		if (auth()->id() == DB::table('classes')->where('class_id', $this->getAttribute('class_id'))->pluck('teacher_id')->first()) {
-			return $this->hasMany(Exam::class);
-		}
-
-		return $this->hasMany(Exam::class)->where('publishes_at', '!=', null)->where('publishes_at', '<=', now());
+		return $this->hasMany(Exam::class);
 	}
 }
