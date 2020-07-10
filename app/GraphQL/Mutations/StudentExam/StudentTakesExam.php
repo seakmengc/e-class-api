@@ -31,7 +31,7 @@ class StudentTakesExam
             throw new CustomException('Number of attempts has exceeded');
 
         $studentExam->fill($args);
-        $studentExam->resolveUploadedFileInAnswer($args['answers']);
+        $studentExam->resolveUploadedFileInAnswer($args['answer']);
         if (isset($studentExam->attempts))
             $studentExam->increment('attempts');
         else
