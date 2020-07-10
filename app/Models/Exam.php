@@ -38,10 +38,8 @@ class Exam extends Model
 
         array_walk($obj['qa'], function (&$q) {
             if (isset($q['possibles']))
-                unset($q['possibles']);
+                $q['possibles'] = null;
         });
-
-        dump($obj);
 
         return $obj['qa'];
     }
