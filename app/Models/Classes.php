@@ -62,7 +62,7 @@ class Classes extends Model
 	{
 		$studentIds = $this->students()->pluck('id')->toArray();
 
-		$scores = DB::table('student_has_classes')->whereIn('student_id', $studentIds)->where('class_id', $args['class_id'])->get();
+		$scores = DB::table('student_has_classes')->whereIn('student_id', $studentIds)->where('class_id', $this->id)->get();
 
 		$overall = $this->classCategories()->sum('weight');
 
