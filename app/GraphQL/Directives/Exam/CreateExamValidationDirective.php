@@ -15,8 +15,8 @@ class CreateExamValidationDirective extends ValidationDirective
             'description' => ['bail', 'string'],
             'qa' => ['bail', 'array'],
             'attempts' => ['bail', 'required', 'integer'],
-            'publishes_at' => ['bail', 'date', 'before_or_equal:now'],
-            'due_at' => ['bail', 'date', 'before_or_equal:now'],
+            'publishes_at' => ['bail', 'date', 'after_or_equal:now'],
+            'due_at' => ['bail', 'date', 'after_or_equal:now'],
         ];
     }
 }
