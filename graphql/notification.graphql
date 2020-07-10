@@ -9,7 +9,7 @@ type Notification {
     data: NotificationData!
     is_read: Boolean! @method(name: "isRead")
     created_at: String
-    read_at: DateTimeTz
+    read_at: String
 }
 
 extend type Mutation @guard {

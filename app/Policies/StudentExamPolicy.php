@@ -14,9 +14,15 @@ class StudentExamPolicy
 
     public function viewAny(User $user, $injected)
     {
-        $classId = Classes::findOrFail($injected['class_id'])->pluck('id')->first();
+        $classId = Exam::findOrFail($injected['exam_id'])->pluck('class_id')->first();
 
-        return $user->isAStudentIn($classId);
+        // return $user->isATeacherOf($classId) || $user->isAStudentIn($classId);
+        return $user->isATeacherOf($classId);
+    }
+
+    public function viewOwnAny(User $user, $injected)
+    {
+        return $user->isAStudentIn($injected['class_id']);
     }
 
     /**

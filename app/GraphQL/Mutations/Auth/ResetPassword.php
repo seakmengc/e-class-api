@@ -7,8 +7,6 @@ use Carbon\Carbon;
 use Exception;
 use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Request;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

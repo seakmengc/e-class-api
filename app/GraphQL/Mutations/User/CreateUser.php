@@ -24,8 +24,8 @@ class CreateUser
 
         $user = User::create($args);
         $user->identity()->create($args);
+        $user->assignRole($args['role_id']);
 
-        //TODO: assign role
         DB::commit();
 
         return $user;

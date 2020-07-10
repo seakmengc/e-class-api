@@ -4,8 +4,8 @@ type StudentExam {
     attempts: Int! #auto increment on saving
     answer: [ExamAnswer!]
     points: Float #auto calculate when grading
-    created_at: DateTimeTz
-    updated_at: DateTimeTz
+    created_at: String
+    updated_at: String
 }
 
 type ExamAnswer {
@@ -45,7 +45,11 @@ extend type Mutation @guard {
     studentTakesExam(input: StudentExamInput! @spread): StudentExam!
         @createStudentExamValidation
         @inject(context: "user.id", name: "student_id")
-        @can(ability: "create", injectArgs: "true", model: "App\\Models\\StudentExam")
+        @can(
+            ability: "create"
+            injectArgs: "true"
+            model: "App\\Models\\StudentExam"
+        )
     gradeStudentExam(input: GradeStudentExamInput! @spread): StudentExam!
         @gradeStudentExamValidation
         @can(ability: "grade", find: "id", model: "App\\Models\\StudentExam")
@@ -54,10 +58,13 @@ extend type Mutation @guard {
 extend type Query @guard {
     #intended for students
     myExamsInClass(class_id: ID! @eq): [StudentExam!]
-        @can(ability: "viewAny", injectArgs: "true")
+        @can(ability: "viewOwnAny", injectArgs: "true")
     myExam(id: ID! @eq): StudentExam @can(ability: "view", find: "id") @first
     #intended for teachers in grading exam part
     studentExam(id: ID! @eq): StudentExam!
-        @find
+        @first
         @can(ability: "view", find: "id")
+    studentExams(exam_id: ID! @eq): [StudentExam]
+        @field(resolver: "Exam\\GetStudentExams")
+        @can(ability: "viewAny", injectArgs: "true")
 }

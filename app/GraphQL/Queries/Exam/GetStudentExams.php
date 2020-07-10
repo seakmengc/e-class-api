@@ -6,7 +6,7 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 use GraphQL\Type\Definition\ResolveInfo;
 use App\Models\Exam;
 
-class GetStudentExamIds
+class GetStudentExams
 {
     /**
      * Return a value for the field.
@@ -19,8 +19,8 @@ class GetStudentExamIds
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $exam =  Exam::whereId($args['id'])->first();
+        $exam =  Exam::whereId($args['exam_id'])->firstOrFail();
 
-        return $exam->submittings()->pluck('id');
+        return $exam->submittings;
     }
 }

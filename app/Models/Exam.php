@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\ClassUpdated;
 use App\Traits\TimestampsShouldInHumanReadable;
+use Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -31,7 +32,15 @@ class Exam extends Model
         if (auth()->id() === $this->class->teacher_id)
             return $this;
 
-        return collect($this)->except(['qa']);
+        $obj = $this->toArray();
+
+        shuffle($obj['qa']);
+
+        array_walk($obj['qa'], function (&$q) {
+            unset($q['possibles']);
+        });
+
+        return $obj;
     }
 
     public function isDue()
