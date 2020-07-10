@@ -37,8 +37,8 @@ class Exam extends Model
         shuffle($obj['qa']);
 
         array_walk($obj['qa'], function (&$q) {
-            if (isset($q['possibles']))
-                $q['possibles'] = null;
+            if (isset($q['answers']))
+                $q['answers'] = null;
         });
 
         return $obj['qa'];

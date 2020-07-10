@@ -14,8 +14,8 @@ $factory->define(App\Models\Exam::class, function (Faker $faker) {
                 'id' => 1,
                 'question' => "What is Algorithm?",
                 'type' => 'qcm',
-                'answers' => ["abc", "bcd", "efg", "hig"],
-                'possibles' => ["abc", "bcd"],
+                'possibles' => ["abc", "bcd", "efg", "hig"],
+                'answers' => ["abc", "bcd"],
                 'points' => 5,
             ],
             [
