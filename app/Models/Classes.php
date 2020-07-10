@@ -80,8 +80,8 @@ class Classes extends Model
 		parent::boot();
 
 		static::retrieved(function (Classes $class) {
-			if (auth()->id() != $classCategory->class->teacher_id) {
-				$classCategory->exams->each(function (&$exam) {
+			if (auth()->id() != $class->teacher_id) {
+				$class->exams->each(function (&$exam) {
 					$exam = $exam->hiddenBasedRole();
 				});
 			}
