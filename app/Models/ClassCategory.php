@@ -27,10 +27,10 @@ class ClassCategory extends Model
   {
     parent::boot();
 
-    static::retrieved(function (ClassCategory $classCategory) {
-      foreach ($classCategory->exams as &$exam) {
-        $exam = $exam->hiddenBasedRole();
-      }
-    });
+    // static::retrieved(function (ClassCategory $classCategory) {
+    //   foreach ($classCategory->exams as &$exam) {
+    //     $exam = $exam->hiddenBasedRole();
+    //   }
+    // });
   }
 }

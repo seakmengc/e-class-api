@@ -79,10 +79,10 @@ class Classes extends Model
 	{
 		parent::boot();
 
-		static::retrieved(function (Classes $class) {
-			foreach ($class->exams as &$exam) {
-				$exam = $exam->hiddenBasedRole();
-			}
-		});
+		// static::retrieved(function (Classes $class) {
+		// 	foreach ($class->exams as &$exam) {
+		// 		$exam = $exam->hiddenBasedRole();
+		// 	}
+		// });
 	}
 }
