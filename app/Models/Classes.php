@@ -60,7 +60,6 @@ class Classes extends Model
 
 	public function getStudentScores()
 	{
-		dump($this);
 		$studentIds = $this->students()->pluck('id')->toArray();
 
 		$scores = DB::table('student_has_classes')->whereIn('student_id', $studentIds)->where('class_id', $this->id)->get();

@@ -17,7 +17,6 @@ class UpdateClassAttendance
         $studentAttendancesInput = collect($args['student_attendances']);
         $classAttendance->studentAttendances->each(function ($studentAttendance) use ($studentAttendancesInput) {
             $data = $studentAttendancesInput->where('student_id', $studentAttendance->student_id)->first();
-            dump($data, $studentAttendance);
             if ($data)
                 $studentAttendance->update($data);
         });
