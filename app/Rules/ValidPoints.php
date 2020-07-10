@@ -28,7 +28,6 @@ class ValidPoints implements Rule
     public function passes($attribute, $value)
     {
         $qId = Arr::get($this->args, 'answer.' . explode('.', $attribute)[1] . '.id');
-        // dd($attribute, $value, $this->question, $this->args, $id, 'answer' . explode('.', $attribute)[1] . '.id');
         $possiblePoints = $this->question->firstWhere('id', $qId)['points'];
 
         return $value <= $possiblePoints;
