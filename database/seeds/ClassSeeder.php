@@ -51,7 +51,7 @@ class ClassSeeder extends Seeder
 
                 $forums->each(function ($forum) use ($students) {
                     $forum->comments()->createMany(factory(Comment::class, 2)->make([
-                        'author_id' => $students[rand(0, 9)]->id
+                        'author_id' => $students[rand(0, 9)]->id,
                     ])->toArray());
                 });
             });
@@ -71,24 +71,24 @@ class ClassSeeder extends Seeder
             factory(Schedule::class, 3)->create([
                 'class_id' => $class->id
             ])->each(function ($schedule) use ($class, $students) {
-                factory(ScheduleSession::class, 3)->create([
+                factory(ScheduleSession::class)->create([
                     'schedule_id' => $schedule->id
                 ])->each(function ($scheduleSession) use ($class, $students) {
-                    $scheduleSession->attendances()->createMany(factory(ClassAttendance::class, 3)->make([
-                        'schedule_session_id' => $scheduleSession->id,
-                        'class_id' => $class->id
-                    ])->toArray())->each(function ($classAttendance) use ($students) {
-                        $classAttendance->studentAttendances()->createMany([
-                            [
-                                'student_id' => $students[rand(0, 9)]->id,
-                                'attendance_type' => ['absence', 'present', 'permission'][rand(0, 2)]
-                            ],
-                            [
-                                'student_id' => $students[rand(0, 9)]->id,
-                                'attendance_type' => ['absence', 'present', 'permission'][rand(0, 2)]
-                            ]
-                        ]);
-                    });
+                    // $scheduleSession->attendances()->createMany(factory(ClassAttendance::class, 3)->make([
+                    //     'schedule_session_id' => $scheduleSession->id,
+                    //     'class_id' => $class->id
+                    // ])->toArray())->each(function ($classAttendance) use ($students) {
+                    //     $classAttendance->studentAttendances()->createMany([
+                    //         [
+                    //             'student_id' => $students[rand(0, 9)]->id,
+                    //             'attendance_type' => ['absence', 'present', 'permission'][rand(0, 2)]
+                    //         ],
+                    //         [
+                    //             'student_id' => $students[rand(0, 9)]->id,
+                    //             'attendance_type' => ['absence', 'present', 'permission'][rand(0, 2)]
+                    //         ]
+                    //     ]);
+                    // });
                 });
             });
         });
