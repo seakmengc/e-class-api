@@ -80,12 +80,12 @@ extend type Mutation @guard {
     deleteExam(id: ID! @eq): Exam! @delete @can(ability: "delete", find: "id")
 }
 
-extend type Query {
+extend type Query @guard {
     #students and teacher access to the same query
     exam(id: ID! @eq): Exam!
         @field(resolver: "Exam\\FindExamFor")
         @can(ability: "view", find: "id")
     #students and teacher access to the same query
     exams(class_id: ID! @eq): [Exam!] @all
-    # @can(ability: "viewAny", injectArgs: "true")
+        @can(ability: "viewAny", injectArgs: "true")
 }

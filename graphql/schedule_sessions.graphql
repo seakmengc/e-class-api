@@ -28,7 +28,7 @@ input UpdateScheduleSessionInput {
     end_time: String! @rules(apply: ["date_format:H:i", "after:start_time"])
 }
 
-extend type Mutation {
+extend type Mutation @guard {
     createScheduleSession(
         input: CreateScheduleSessionInput! @spread
     ): ScheduleSession! @create @canAccess(requiredRole: "admin")
@@ -40,6 +40,6 @@ extend type Mutation {
         @canAccess(requiredRole: "admin")
 }
 
-extend type Query {
+extend type Query @guard {
     scheduleSession(id: ID! @eq): ScheduleSession! @find
 }

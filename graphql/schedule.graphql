@@ -29,7 +29,7 @@ input UpdateScheduleInput {
     day: Day!
 }
 
-extend type Mutation {
+extend type Mutation @guard {
     createSchedule(input: CreateScheduleInput! @spread): Schedule!
         @create
         @canAccess(requiredRole: "admin")
@@ -41,6 +41,6 @@ extend type Mutation {
         @canAccess(requiredRole: "admin")
 }
 
-extend type Query {
+extend type Query @guard {
     schedule(id: ID! @eq): Schedule! @find
 }

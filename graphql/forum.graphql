@@ -44,11 +44,11 @@ extend type Mutation @guard {
     deleteForum(id: ID! @eq): Forum! @delete @can(ability: "delete", find: "id")
 }
 
-extend type Query {
+extend type Query @guard {
     myForums: [Forum!]
     forumsInClass(class_id: ID! @eq): [Forum!]
         @all
         @can(ability: "viewAny", injectArgs: "true")
     forum(id: ID! @eq): Forum @first
-    # @can(ability: "view", find: "id")
+    @can(ability: "view", find: "id")
 }
