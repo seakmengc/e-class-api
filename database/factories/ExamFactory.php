@@ -32,7 +32,7 @@ $factory->define(App\Models\Exam::class, function (Faker $faker) {
             ]
         ],
         'attempts' => $faker->numberBetween(1, 10),
-        'publishes_at' => $faker->dateTime(),
-        'due_at' => $faker->dateTime(),
+        'publishes_at' => now(),
+        'due_at' => now()->addWeek(),
     ];
 });
