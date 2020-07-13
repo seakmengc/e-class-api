@@ -11,9 +11,9 @@ class CreateStudentExamValidationDirective extends ValidationDirective
     {
         return [
             'exam_id' => ['bail', 'required', 'integer', 'exists:exams,id'],
-            // 'answer.*.id' => ['required', 'distinct'],
-            // 'answer.*.answers' => ['array'],
-            // 'answer.*.file' => ['file'],
+            'answer.*.id' => ['required', 'distinct'],
+            'answer.*.answers' => ['array'],
+            'answer.*.file' => ['file'],
         ];
     }
 }
